@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { apiError } from "@/lib/api";
+import { apiError, withErrorHandling } from "@/lib/api";
 
-export async function GET(
+export const GET = withErrorHandling(async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ username: string }> }
 ) {
@@ -13,7 +13,7 @@ export async function GET(
     select: {
       id: true,
       username: true,
-      email: true,
+      avatarUrl: true,
       createdAt: true,
       posts: {
         orderBy: { createdAt: "desc" },
@@ -22,6 +22,7 @@ export async function GET(
           title: true,
           body: true,
           createdAt: true,
+          author: { select: { id: true, username: true } },
           channel: { select: { slug: true, name: true } },
           _count: { select: { replies: true, reactions: true } },
         },
@@ -33,6 +34,8 @@ export async function GET(
     return apiError("User not found", 404);
   }
 
+  const postCount = await prisma.post.count({ where: { authorId: user.id } });
+  const replyCount = await prisma.reply.count({ where: { authorId: user.id } });
   const postReactions = await prisma.reaction.count({
     where: { post: { authorId: user.id } },
   });
@@ -42,7 +45,13 @@ export async function GET(
   const totalReactions = postReactions + replyReactions;
 
   return NextResponse.json({
-    ...user,
+    id: user.id,
+    username: user.username,
+    avatarUrl: user.avatarUrl,
+    createdAt: user.createdAt,
+    postCount,
+    replyCount,
     totalReactions,
+    posts: user.posts,
   });
-}
+});

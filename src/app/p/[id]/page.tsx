@@ -1,10 +1,11 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import { ReactionBar } from "@/components/ReactionBar"
 import { ReplyList } from "@/components/ReplyList"
 import { NewReplyForm } from "@/components/NewReplyForm"
+import { ContentActions } from "@/components/ContentActions"
 import { useSession } from "@/hooks/useSession"
 
 function timeAgo(dateStr: string) {
@@ -29,12 +30,18 @@ export default function PostPage() {
   const [post, setPost] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetch(`/api/posts/${id}`)
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { setPost(data); setLoading(false) })
-      .catch(() => setLoading(false))
+  const loadPost = useCallback(async () => {
+    try {
+      const data = await fetch(`/api/posts/${id}`).then(r => r.ok ? r.json() : null)
+      setPost(data)
+    } finally {
+      setLoading(false)
+    }
   }, [id])
+
+  useEffect(() => {
+    loadPost()
+  }, [loadPost])
 
   if (loading) return <div className="text-center text-gray-500 py-12">Loading...</div>
   if (!post) return <div className="text-center text-gray-500 py-12">Post not found</div>
@@ -51,17 +58,21 @@ export default function PostPage() {
           <span>{post._count?.replies ?? 0} replies</span>
         </div>
         <p className="text-gray-200 whitespace-pre-wrap leading-relaxed mb-4">{post.body}</p>
-        <ReactionBar
-          targetId={post.id}
-          type="post"
-          reactions={post.reactions ?? []}
-          currentUserId={user?.id}
-        />
+        <div className="flex items-center gap-2">
+          <ReactionBar
+            targetId={post.id}
+            type="post"
+            reactions={post.reactions ?? []}
+            currentUserId={user?.id}
+            onSuccess={loadPost}
+          />
+          <ContentActions targetId={post.id} targetType="post" onSuccess={loadPost} />
+        </div>
       </article>
 
       <div className="mb-6">
         <h2 className="text-lg font-semibold mb-3">Replies</h2>
-        <ReplyList replies={post.replies ?? []} currentUserId={user?.id} />
+        <ReplyList replies={post.replies ?? []} currentUserId={user?.id} onSuccess={loadPost} />
       </div>
 
       {sessionLoading ? (

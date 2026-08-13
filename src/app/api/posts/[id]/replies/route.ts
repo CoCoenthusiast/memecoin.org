@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
-import { apiError, getBody } from "@/lib/api";
+import { apiError, getBody, withErrorHandling } from "@/lib/api";
 
-export async function POST(
+export const POST = withErrorHandling(async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -14,6 +14,9 @@ export async function POST(
 
   if (!body.body || body.body.length < 1) {
     return apiError("Body is required");
+  }
+  if (body.body.length > 10000) {
+    return apiError("Body must be at most 10000 characters");
   }
 
   const post = await prisma.post.findUnique({ where: { id } });
@@ -30,4 +33,4 @@ export async function POST(
   });
 
   return NextResponse.json(reply, { status: 201 });
-}
+});

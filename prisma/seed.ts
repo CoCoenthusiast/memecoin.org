@@ -33,7 +33,7 @@ async function main() {
     prisma.user.upsert({
       where: { email: "alice@example.com" },
       update: {},
-      create: { username: "alice", email: "alice@example.com", password },
+      create: { username: "alice", email: "alice@example.com", password, role: "ADMIN" },
     }),
     prisma.user.upsert({
       where: { email: "bob@example.com" },

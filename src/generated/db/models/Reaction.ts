@@ -504,6 +504,7 @@ export type ReactionCreateOrConnectWithoutUserInput = {
 
 export type ReactionCreateManyUserInputEnvelope = {
   data: Prisma.ReactionCreateManyUserInput | Prisma.ReactionCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReactionUpsertWithWhereUniqueWithoutUserInput = {
@@ -557,6 +558,7 @@ export type ReactionCreateOrConnectWithoutPostInput = {
 
 export type ReactionCreateManyPostInputEnvelope = {
   data: Prisma.ReactionCreateManyPostInput | Prisma.ReactionCreateManyPostInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReactionUpsertWithWhereUniqueWithoutPostInput = {
@@ -598,6 +600,7 @@ export type ReactionCreateOrConnectWithoutReplyInput = {
 
 export type ReactionCreateManyReplyInputEnvelope = {
   data: Prisma.ReactionCreateManyReplyInput | Prisma.ReactionCreateManyReplyInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReactionUpsertWithWhereUniqueWithoutReplyInput = {
@@ -1451,6 +1454,7 @@ export type ReactionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Reactions.
    */
   data: Prisma.ReactionCreateManyInput | Prisma.ReactionCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1469,6 +1473,7 @@ export type ReactionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Reactions.
    */
   data: Prisma.ReactionCreateManyInput | Prisma.ReactionCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

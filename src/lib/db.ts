@@ -1,7 +1,4 @@
-import path from "path";
 import { PrismaClient } from "@/generated/db/client";
-
-process.env.DATABASE_URL = `file:${path.resolve(process.cwd(), "prisma/dev.db")}`;
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 

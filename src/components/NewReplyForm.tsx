@@ -45,6 +45,7 @@ export function NewReplyForm({ postId }: { postId: string }) {
             onChange={(e) => setBody(e.target.value)}
             required
             rows={3}
+            maxLength={10000}
             className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
             placeholder="Write a reply..."
           />

@@ -7,6 +7,7 @@ type ReactionBarProps = {
   type: "post" | "reply"
   reactions: Array<{ id: string; type: string; userId: string }>
   currentUserId?: string
+  onSuccess?: () => void
 }
 
 const EMOJIS: Record<string, string> = {
@@ -18,7 +19,7 @@ const EMOJIS: Record<string, string> = {
 
 const TYPES = ["Like", "Dislike", "Funny", "Sad"]
 
-export function ReactionBar({ targetId, type, reactions, currentUserId }: ReactionBarProps) {
+export function ReactionBar({ targetId, type, reactions, currentUserId, onSuccess }: ReactionBarProps) {
   const { user } = useSession()
   const router = useRouter()
 
@@ -32,13 +33,13 @@ export function ReactionBar({ targetId, type, reactions, currentUserId }: Reacti
     if (type === "post") body.postId = targetId
     else body.replyId = targetId
 
-    await fetch("/api/reactions", {
+    const res = await fetch("/api/reactions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     })
 
-    router.refresh()
+    if (res.ok) onSuccess?.()
   }
 
   const counts: Record<string, number> = {}

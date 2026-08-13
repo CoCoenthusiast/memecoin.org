@@ -76,6 +76,7 @@ export default function RegisterPage() {
               className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               placeholder="••••••••"
               required
+              minLength={8}
             />
           </div>
 

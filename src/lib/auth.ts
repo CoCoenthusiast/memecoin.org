@@ -5,6 +5,17 @@ import { redirect } from "next/navigation";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
+export type AuthUser = {
+  id: string;
+  username: string;
+  email: string;
+  role: "USER" | "ADMIN";
+};
+
+export function isAdmin(user: { role: string }): boolean {
+  return user.role === "ADMIN";
+}
+
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10);
 }
@@ -16,20 +27,36 @@ export async function verifyPassword(
   return bcrypt.compare(password, hash);
 }
 
-export function signToken(payload: { userId: string }): string {
+export function signToken(payload: { userId: string; role: string }): string {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
 }
 
-export function verifyToken(token: string): { userId: string } | null {
+export function sessionCookieOptions(maxAge: number) {
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    sameSite: "lax" as const,
+    maxAge,
+  };
+}
+
+export function verifyToken(token: string): {
+  userId: string;
+  role: string;
+} | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as { userId: string };
+    return jwt.verify(token, JWT_SECRET) as {
+      userId: string;
+      role: string;
+    };
   } catch {
     return null;
   }
 }
 
 export async function getSession(): Promise<{
-  user: { id: string; username: string; email: string };
+  user: AuthUser;
 } | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
@@ -41,7 +68,7 @@ export async function getSession(): Promise<{
   const { prisma } = await import("@/lib/db");
   const user = await prisma.user.findUnique({
     where: { id: payload.userId },
-    select: { id: true, username: true, email: true },
+    select: { id: true, username: true, email: true, role: true },
   });
   if (!user) return null;
 
@@ -49,9 +76,18 @@ export async function getSession(): Promise<{
 }
 
 export async function requireAuth(): Promise<{
-  user: { id: string; username: string; email: string };
+  user: AuthUser;
 }> {
   const session = await getSession();
   if (!session) redirect("/login");
+  return session;
+}
+
+export async function requireAdmin(): Promise<{
+  user: AuthUser;
+}> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  if (!isAdmin(session.user)) redirect("/");
   return session;
 }

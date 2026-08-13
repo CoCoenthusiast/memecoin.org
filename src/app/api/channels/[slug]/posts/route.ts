@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
-import { apiError, getBody } from "@/lib/api";
+import { apiError, getBody, withErrorHandling } from "@/lib/api";
 
-export async function POST(
+export const POST = withErrorHandling(async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -16,8 +16,8 @@ export async function POST(
     return apiError("Title must be between 1 and 200 characters");
   }
 
-  if (!body.body || body.body.length < 1 || body.body.length > 50000) {
-    return apiError("Body must be between 1 and 50000 characters");
+  if (!body.body || body.body.length < 1 || body.body.length > 10000) {
+    return apiError("Body must be between 1 and 10000 characters");
   }
 
   const channel = await prisma.channel.findUnique({ where: { slug } });
@@ -35,4 +35,4 @@ export async function POST(
   });
 
   return NextResponse.json(post, { status: 201 });
-}
+});

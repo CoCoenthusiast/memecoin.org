@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
-import { hashPassword, signToken } from "@/lib/auth";
-import { apiError, getBody } from "@/lib/api";
+import { hashPassword, signToken, sessionCookieOptions } from "@/lib/auth";
+import { apiError, getBody, withErrorHandling } from "@/lib/api";
 
-export async function POST(request: NextRequest) {
+export const POST = withErrorHandling(async function POST(
+  request: NextRequest
+) {
   const body = await getBody<{ username: string; email: string; password: string }>(request);
 
   if (!body.username || !body.email || !body.password) {
@@ -19,8 +21,8 @@ export async function POST(request: NextRequest) {
     return apiError("Invalid email format");
   }
 
-  if (body.password.length < 6) {
-    return apiError("Password must be at least 6 characters");
+  if (body.password.length < 8) {
+    return apiError("Password must be at least 8 characters");
   }
 
   const existingUser = await prisma.user.findFirst({
@@ -44,18 +46,17 @@ export async function POST(request: NextRequest) {
       email: body.email,
       password: hashedPassword,
     },
-    select: { id: true, username: true, email: true },
+    select: { id: true, username: true, email: true, role: true },
   });
 
-  const token = signToken({ userId: user.id });
+  const token = signToken({ userId: user.id, role: user.role });
 
   const cookieStore = await cookies();
-  cookieStore.set("token", token, {
-    httpOnly: true,
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-    sameSite: "lax",
-  });
+  cookieStore.set(
+    "token",
+    token,
+    sessionCookieOptions(60 * 60 * 24 * 7)
+  );
 
   return NextResponse.json({ user }, { status: 201 });
-}
+});

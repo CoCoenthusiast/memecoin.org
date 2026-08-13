@@ -95,7 +95,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
             id="body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            maxLength={50000}
+            maxLength={10000}
             required
             rows={10}
             className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"

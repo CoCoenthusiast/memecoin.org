@@ -69,3 +69,13 @@ export type Reply = Prisma.ReplyModel
  * 
  */
 export type Reaction = Prisma.ReactionModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel
+/**
+ * Model ProfileComment
+ * 
+ */
+export type ProfileComment = Prisma.ProfileCommentModel

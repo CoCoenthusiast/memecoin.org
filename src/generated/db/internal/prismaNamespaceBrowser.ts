@@ -53,7 +53,9 @@ export const ModelName = {
   Channel: 'Channel',
   Post: 'Post',
   Reply: 'Reply',
-  Reaction: 'Reaction'
+  Reaction: 'Reaction',
+  Report: 'Report',
+  ProfileComment: 'ProfileComment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -63,6 +65,9 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
@@ -74,6 +79,8 @@ export const UserScalarFieldEnum = {
   username: 'username',
   email: 'email',
   password: 'password',
+  role: 'role',
+  avatarUrl: 'avatarUrl',
   createdAt: 'createdAt'
 } as const
 
@@ -128,12 +135,45 @@ export const ReactionScalarFieldEnum = {
 export type ReactionScalarFieldEnum = (typeof ReactionScalarFieldEnum)[keyof typeof ReactionScalarFieldEnum]
 
 
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  reason: 'reason',
+  status: 'status',
+  createdAt: 'createdAt',
+  reporterId: 'reporterId',
+  postId: 'postId',
+  replyId: 'replyId',
+  reportedUserId: 'reportedUserId'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+export const ProfileCommentScalarFieldEnum = {
+  id: 'id',
+  body: 'body',
+  createdAt: 'createdAt',
+  authorId: 'authorId',
+  profileUserId: 'profileUserId'
+} as const
+
+export type ProfileCommentScalarFieldEnum = (typeof ProfileCommentScalarFieldEnum)[keyof typeof ProfileCommentScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {

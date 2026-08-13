@@ -203,6 +203,7 @@ export type ReplyWhereInput = {
   parent?: Prisma.XOR<Prisma.ReplyNullableScalarRelationFilter, Prisma.ReplyWhereInput> | null
   replies?: Prisma.ReplyListRelationFilter
   reactions?: Prisma.ReactionListRelationFilter
+  reports?: Prisma.ReportListRelationFilter
 }
 
 export type ReplyOrderByWithRelationInput = {
@@ -218,6 +219,7 @@ export type ReplyOrderByWithRelationInput = {
   parent?: Prisma.ReplyOrderByWithRelationInput
   replies?: Prisma.ReplyOrderByRelationAggregateInput
   reactions?: Prisma.ReactionOrderByRelationAggregateInput
+  reports?: Prisma.ReportOrderByRelationAggregateInput
 }
 
 export type ReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -236,6 +238,7 @@ export type ReplyWhereUniqueInput = Prisma.AtLeast<{
   parent?: Prisma.XOR<Prisma.ReplyNullableScalarRelationFilter, Prisma.ReplyWhereInput> | null
   replies?: Prisma.ReplyListRelationFilter
   reactions?: Prisma.ReactionListRelationFilter
+  reports?: Prisma.ReportListRelationFilter
 }, "id">
 
 export type ReplyOrderByWithAggregationInput = {
@@ -274,6 +277,7 @@ export type ReplyCreateInput = {
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUncheckedCreateInput = {
@@ -286,6 +290,7 @@ export type ReplyUncheckedCreateInput = {
   parentId?: string | null
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUpdateInput = {
@@ -298,6 +303,7 @@ export type ReplyUpdateInput = {
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateInput = {
@@ -310,6 +316,7 @@ export type ReplyUncheckedUpdateInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyCreateManyInput = {
@@ -512,10 +519,6 @@ export type ReplyUpdateManyWithoutParentNestedInput = {
   deleteMany?: Prisma.ReplyScalarWhereInput | Prisma.ReplyScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type ReplyUncheckedUpdateManyWithoutParentNestedInput = {
   create?: Prisma.XOR<Prisma.ReplyCreateWithoutParentInput, Prisma.ReplyUncheckedCreateWithoutParentInput> | Prisma.ReplyCreateWithoutParentInput[] | Prisma.ReplyUncheckedCreateWithoutParentInput[]
   connectOrCreate?: Prisma.ReplyCreateOrConnectWithoutParentInput | Prisma.ReplyCreateOrConnectWithoutParentInput[]
@@ -546,6 +549,22 @@ export type ReplyUpdateOneWithoutReactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ReplyUpdateToOneWithWhereWithoutReactionsInput, Prisma.ReplyUpdateWithoutReactionsInput>, Prisma.ReplyUncheckedUpdateWithoutReactionsInput>
 }
 
+export type ReplyCreateNestedOneWithoutReportsInput = {
+  create?: Prisma.XOR<Prisma.ReplyCreateWithoutReportsInput, Prisma.ReplyUncheckedCreateWithoutReportsInput>
+  connectOrCreate?: Prisma.ReplyCreateOrConnectWithoutReportsInput
+  connect?: Prisma.ReplyWhereUniqueInput
+}
+
+export type ReplyUpdateOneWithoutReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.ReplyCreateWithoutReportsInput, Prisma.ReplyUncheckedCreateWithoutReportsInput>
+  connectOrCreate?: Prisma.ReplyCreateOrConnectWithoutReportsInput
+  upsert?: Prisma.ReplyUpsertWithoutReportsInput
+  disconnect?: Prisma.ReplyWhereInput | boolean
+  delete?: Prisma.ReplyWhereInput | boolean
+  connect?: Prisma.ReplyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReplyUpdateToOneWithWhereWithoutReportsInput, Prisma.ReplyUpdateWithoutReportsInput>, Prisma.ReplyUncheckedUpdateWithoutReportsInput>
+}
+
 export type ReplyCreateWithoutAuthorInput = {
   id?: string
   body: string
@@ -555,6 +574,7 @@ export type ReplyCreateWithoutAuthorInput = {
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUncheckedCreateWithoutAuthorInput = {
@@ -566,6 +586,7 @@ export type ReplyUncheckedCreateWithoutAuthorInput = {
   parentId?: string | null
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyCreateOrConnectWithoutAuthorInput = {
@@ -575,6 +596,7 @@ export type ReplyCreateOrConnectWithoutAuthorInput = {
 
 export type ReplyCreateManyAuthorInputEnvelope = {
   data: Prisma.ReplyCreateManyAuthorInput | Prisma.ReplyCreateManyAuthorInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReplyUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -615,6 +637,7 @@ export type ReplyCreateWithoutPostInput = {
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUncheckedCreateWithoutPostInput = {
@@ -626,6 +649,7 @@ export type ReplyUncheckedCreateWithoutPostInput = {
   parentId?: string | null
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyCreateOrConnectWithoutPostInput = {
@@ -635,6 +659,7 @@ export type ReplyCreateOrConnectWithoutPostInput = {
 
 export type ReplyCreateManyPostInputEnvelope = {
   data: Prisma.ReplyCreateManyPostInput | Prisma.ReplyCreateManyPostInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReplyUpsertWithWhereUniqueWithoutPostInput = {
@@ -662,6 +687,7 @@ export type ReplyCreateWithoutRepliesInput = {
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUncheckedCreateWithoutRepliesInput = {
@@ -673,6 +699,7 @@ export type ReplyUncheckedCreateWithoutRepliesInput = {
   postId: string
   parentId?: string | null
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyCreateOrConnectWithoutRepliesInput = {
@@ -689,6 +716,7 @@ export type ReplyCreateWithoutParentInput = {
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUncheckedCreateWithoutParentInput = {
@@ -700,6 +728,7 @@ export type ReplyUncheckedCreateWithoutParentInput = {
   postId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutReplyInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyCreateOrConnectWithoutParentInput = {
@@ -709,6 +738,7 @@ export type ReplyCreateOrConnectWithoutParentInput = {
 
 export type ReplyCreateManyParentInputEnvelope = {
   data: Prisma.ReplyCreateManyParentInput | Prisma.ReplyCreateManyParentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ReplyUpsertWithoutRepliesInput = {
@@ -731,6 +761,7 @@ export type ReplyUpdateWithoutRepliesInput = {
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateWithoutRepliesInput = {
@@ -742,6 +773,7 @@ export type ReplyUncheckedUpdateWithoutRepliesInput = {
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUpsertWithWhereUniqueWithoutParentInput = {
@@ -769,6 +801,7 @@ export type ReplyCreateWithoutReactionsInput = {
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyUncheckedCreateWithoutReactionsInput = {
@@ -780,6 +813,7 @@ export type ReplyUncheckedCreateWithoutReactionsInput = {
   postId: string
   parentId?: string | null
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReplyInput
 }
 
 export type ReplyCreateOrConnectWithoutReactionsInput = {
@@ -807,6 +841,7 @@ export type ReplyUpdateWithoutReactionsInput = {
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateWithoutReactionsInput = {
@@ -818,6 +853,71 @@ export type ReplyUncheckedUpdateWithoutReactionsInput = {
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReplyNestedInput
+}
+
+export type ReplyCreateWithoutReportsInput = {
+  id?: string
+  body: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  author: Prisma.UserCreateNestedOneWithoutRepliesInput
+  post: Prisma.PostCreateNestedOneWithoutRepliesInput
+  parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
+  replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutReplyInput
+}
+
+export type ReplyUncheckedCreateWithoutReportsInput = {
+  id?: string
+  body: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authorId: string
+  postId: string
+  parentId?: string | null
+  replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutReplyInput
+}
+
+export type ReplyCreateOrConnectWithoutReportsInput = {
+  where: Prisma.ReplyWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReplyCreateWithoutReportsInput, Prisma.ReplyUncheckedCreateWithoutReportsInput>
+}
+
+export type ReplyUpsertWithoutReportsInput = {
+  update: Prisma.XOR<Prisma.ReplyUpdateWithoutReportsInput, Prisma.ReplyUncheckedUpdateWithoutReportsInput>
+  create: Prisma.XOR<Prisma.ReplyCreateWithoutReportsInput, Prisma.ReplyUncheckedCreateWithoutReportsInput>
+  where?: Prisma.ReplyWhereInput
+}
+
+export type ReplyUpdateToOneWithWhereWithoutReportsInput = {
+  where?: Prisma.ReplyWhereInput
+  data: Prisma.XOR<Prisma.ReplyUpdateWithoutReportsInput, Prisma.ReplyUncheckedUpdateWithoutReportsInput>
+}
+
+export type ReplyUpdateWithoutReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
+  post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
+  parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
+  replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutReplyNestedInput
+}
+
+export type ReplyUncheckedUpdateWithoutReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  postId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyCreateManyAuthorInput = {
@@ -838,6 +938,7 @@ export type ReplyUpdateWithoutAuthorInput = {
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateWithoutAuthorInput = {
@@ -849,6 +950,7 @@ export type ReplyUncheckedUpdateWithoutAuthorInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateManyWithoutAuthorInput = {
@@ -878,6 +980,7 @@ export type ReplyUpdateWithoutPostInput = {
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateWithoutPostInput = {
@@ -889,6 +992,7 @@ export type ReplyUncheckedUpdateWithoutPostInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateManyWithoutPostInput = {
@@ -918,6 +1022,7 @@ export type ReplyUpdateWithoutParentInput = {
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateWithoutParentInput = {
@@ -929,6 +1034,7 @@ export type ReplyUncheckedUpdateWithoutParentInput = {
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutReplyNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReplyNestedInput
 }
 
 export type ReplyUncheckedUpdateManyWithoutParentInput = {
@@ -948,11 +1054,13 @@ export type ReplyUncheckedUpdateManyWithoutParentInput = {
 export type ReplyCountOutputType = {
   replies: number
   reactions: number
+  reports: number
 }
 
 export type ReplyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   replies?: boolean | ReplyCountOutputTypeCountRepliesArgs
   reactions?: boolean | ReplyCountOutputTypeCountReactionsArgs
+  reports?: boolean | ReplyCountOutputTypeCountReportsArgs
 }
 
 /**
@@ -979,6 +1087,13 @@ export type ReplyCountOutputTypeCountReactionsArgs<ExtArgs extends runtime.Types
   where?: Prisma.ReactionWhereInput
 }
 
+/**
+ * ReplyCountOutputType without action
+ */
+export type ReplyCountOutputTypeCountReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReportWhereInput
+}
+
 
 export type ReplySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -993,6 +1108,7 @@ export type ReplySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   parent?: boolean | Prisma.Reply$parentArgs<ExtArgs>
   replies?: boolean | Prisma.Reply$repliesArgs<ExtArgs>
   reactions?: boolean | Prisma.Reply$reactionsArgs<ExtArgs>
+  reports?: boolean | Prisma.Reply$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.ReplyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reply"]>
 
@@ -1039,6 +1155,7 @@ export type ReplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   parent?: boolean | Prisma.Reply$parentArgs<ExtArgs>
   replies?: boolean | Prisma.Reply$repliesArgs<ExtArgs>
   reactions?: boolean | Prisma.Reply$reactionsArgs<ExtArgs>
+  reports?: boolean | Prisma.Reply$reportsArgs<ExtArgs>
   _count?: boolean | Prisma.ReplyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReplyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1060,6 +1177,7 @@ export type $ReplyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     parent: Prisma.$ReplyPayload<ExtArgs> | null
     replies: Prisma.$ReplyPayload<ExtArgs>[]
     reactions: Prisma.$ReactionPayload<ExtArgs>[]
+    reports: Prisma.$ReportPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1468,6 +1586,7 @@ export interface Prisma__ReplyClient<T, Null = never, ExtArgs extends runtime.Ty
   parent<T extends Prisma.Reply$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reply$parentArgs<ExtArgs>>): Prisma.Prisma__ReplyClient<runtime.Types.Result.GetResult<Prisma.$ReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   replies<T extends Prisma.Reply$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reply$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reactions<T extends Prisma.Reply$reactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reply$reactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reports<T extends Prisma.Reply$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Reply$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1733,6 +1852,7 @@ export type ReplyCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * The data used to create many Replies.
    */
   data: Prisma.ReplyCreateManyInput | Prisma.ReplyCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1751,6 +1871,7 @@ export type ReplyCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many Replies.
    */
   data: Prisma.ReplyCreateManyInput | Prisma.ReplyCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
@@ -1962,6 +2083,30 @@ export type Reply$reactionsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ReactionScalarFieldEnum | Prisma.ReactionScalarFieldEnum[]
+}
+
+/**
+ * Reply.reports
+ */
+export type Reply$reportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Report
+   */
+  select?: Prisma.ReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Report
+   */
+  omit?: Prisma.ReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReportInclude<ExtArgs> | null
+  where?: Prisma.ReportWhereInput
+  orderBy?: Prisma.ReportOrderByWithRelationInput | Prisma.ReportOrderByWithRelationInput[]
+  cursor?: Prisma.ReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
 }
 
 /**

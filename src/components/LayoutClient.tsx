@@ -17,11 +17,23 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-      <div className="flex">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="flex-1 p-4 md:p-8 min-h-screen">
-          <Suspense fallback={null}>{children}</Suspense>
-        </main>
+      <div className="flex flex-col min-h-screen">
+        <div className="flex flex-1">
+          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          <main className="flex-1 p-4 md:p-8 min-h-screen">
+            <Suspense fallback={null}>{children}</Suspense>
+          </main>
+        </div>
+        <footer className="text-xs text-gray-600 text-center py-4 px-4 border-t border-gray-800">
+          <Link href="/terms" className="hover:text-gray-400 transition-colors">Terms</Link>
+          {" · "}
+          <Link href="/privacy" className="hover:text-gray-400 transition-colors">Privacy</Link>
+          {" · "}
+          <Link href="/disclaimer" className="hover:text-gray-400 transition-colors">Disclaimer</Link>
+          {" · "}
+          <Link href="/about" className="hover:text-gray-400 transition-colors">About</Link>
+          {" · © 2026 memecoins.org"}
+        </footer>
       </div>
     </>
   )

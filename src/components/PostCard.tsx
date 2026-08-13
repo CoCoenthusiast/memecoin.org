@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ContentActions } from "@/components/ContentActions"
 
 type PostCardProps = {
   post: {
@@ -10,6 +11,7 @@ type PostCardProps = {
     channel?: { slug: string; name: string }
     _count: { replies: number; reactions: number }
   }
+  onContentAction?: () => void
 }
 
 function timeAgo(dateStr: string) {
@@ -28,12 +30,13 @@ function timeAgo(dateStr: string) {
   return `${months}mo ago`
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, onContentAction }: PostCardProps) {
   const preview = post.body.length > 150 ? post.body.slice(0, 150) + "..." : post.body
 
   return (
-    <Link href={`/p/${post.id}`} className="block group">
-      <div className="bg-[#111827]/80 border border-gray-800 rounded-2xl shadow-lg shadow-black/20 p-5 transition-all duration-200 hover:border-green-500/40 hover:shadow-green-500/10 hover:-translate-y-0.5">
+    <div className="relative block group transition-transform duration-200 hover:-translate-y-0.5">
+      <Link href={`/p/${post.id}`} className="absolute inset-0 z-0" aria-label={post.title} />
+      <div className="bg-[#111827]/80 border border-gray-800 rounded-2xl shadow-lg shadow-black/20 p-5 transition-all duration-200 group-hover:border-green-500/40 group-hover:shadow-green-500/10">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
             <h3 className="text-white font-bold tracking-tight truncate transition-colors group-hover:text-green-400">{post.title}</h3>
@@ -54,9 +57,8 @@ export default function PostCard({ post }: PostCardProps) {
           <span>
             by{" "}
             <Link
-              href={`/u/${post.author.username}`}
-              onClick={(e) => e.stopPropagation()}
-              className="text-gray-300 hover:text-white transition-colors"
+              href={`/profile/${post.author.username}`}
+              className="relative z-10 text-gray-300 hover:text-white transition-colors"
             >
               {post.author.username}
             </Link>
@@ -64,8 +66,11 @@ export default function PostCard({ post }: PostCardProps) {
           <span>{timeAgo(post.createdAt)}</span>
           <span className="text-green-400 font-medium">{post._count.replies} replies</span>
           <span>{post._count.reactions} reactions</span>
+          <div className="relative z-10 ml-auto">
+            <ContentActions targetId={post.id} targetType="post" onSuccess={onContentAction} />
+          </div>
         </div>
       </div>
-    </Link>
+    </div>
   )
 }

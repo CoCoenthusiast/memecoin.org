@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { apiError } from "@/lib/api";
+import { apiError, withErrorHandling } from "@/lib/api";
 
-export async function GET(
+export const GET = withErrorHandling(async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -25,4 +25,4 @@ export async function GET(
   }
 
   return NextResponse.json(channel);
-}
+});

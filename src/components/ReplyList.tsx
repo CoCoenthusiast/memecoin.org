@@ -1,4 +1,6 @@
+import Link from "next/link"
 import { ReactionBar } from "@/components/ReactionBar"
+import { ContentActions } from "@/components/ContentActions"
 
 type ReplyListProps = {
   replies: Array<{
@@ -9,6 +11,7 @@ type ReplyListProps = {
     reactions: Array<{ id: string; type: string; userId: string }>
   }>
   currentUserId?: string
+  onSuccess?: () => void
 }
 
 function timeAgo(dateStr: string) {
@@ -27,7 +30,7 @@ function timeAgo(dateStr: string) {
   return `${months}mo ago`
 }
 
-export function ReplyList({ replies, currentUserId }: ReplyListProps) {
+export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps) {
   if (replies.length === 0) {
     return <p className="text-sm text-gray-500 py-4">No replies yet.</p>
   }
@@ -38,16 +41,25 @@ export function ReplyList({ replies, currentUserId }: ReplyListProps) {
         <div key={reply.id} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
           <p className="text-sm text-gray-200 whitespace-pre-wrap">{reply.body}</p>
           <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
-            <span>{reply.author.username}</span>
+            <span>
+              <Link
+                href={`/profile/${reply.author.username}`}
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                {reply.author.username}
+              </Link>
+            </span>
             <span>{timeAgo(reply.createdAt)}</span>
           </div>
-          <div className="mt-2">
+          <div className="mt-2 flex items-center gap-2">
             <ReactionBar
               targetId={reply.id}
               type="reply"
               reactions={reply.reactions}
               currentUserId={currentUserId}
+              onSuccess={onSuccess}
             />
+            <ContentActions targetId={reply.id} targetType="reply" onSuccess={onSuccess} />
           </div>
         </div>
       ))}

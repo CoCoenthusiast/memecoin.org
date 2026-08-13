@@ -1,7 +1,10 @@
 "use client"
 import { useState, useEffect, createContext, useContext, useCallback } from "react"
 
-type Session = { user: { id: string; username: string; email: string } | null; loading: boolean }
+type Session = {
+  user: { id: string; username: string; email: string; role: "USER" | "ADMIN" } | null
+  loading: boolean
+}
 
 const SessionContext = createContext<Session & { refresh: () => Promise<void> }>({ user: null, loading: true, refresh: async () => {} })
 

@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
-import { apiError, getBody } from "@/lib/api";
+import { apiError, getBody, withErrorHandling } from "@/lib/api";
 
 const VALID_TYPES = ["Like", "Dislike", "Funny", "Sad"] as const;
 
-export async function POST(request: NextRequest) {
+export const POST = withErrorHandling(async function POST(
+  request: NextRequest
+) {
   const { user } = await requireAuth();
 
   const body = await getBody<{
@@ -60,4 +62,4 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json(reaction, { status: 201 });
-}
+});

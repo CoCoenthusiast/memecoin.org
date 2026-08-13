@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import PostCard from "@/components/PostCard"
@@ -10,12 +10,18 @@ export default function ChannelPage() {
   const [channel, setChannel] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetch(`/api/channels/${slug}`)
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { setChannel(data); setLoading(false) })
-      .catch(() => setLoading(false))
+  const loadChannel = useCallback(async () => {
+    try {
+      const data = await fetch(`/api/channels/${slug}`).then(r => r.ok ? r.json() : null)
+      setChannel(data)
+    } finally {
+      setLoading(false)
+    }
   }, [slug])
+
+  useEffect(() => {
+    loadChannel()
+  }, [loadChannel])
 
   if (loading) return <div className="text-center text-gray-500 py-12">Loading...</div>
   if (!channel) return <div className="text-center text-gray-500 py-12">Channel not found</div>
@@ -37,7 +43,7 @@ export default function ChannelPage() {
           <p className="text-gray-500 text-center py-8">No posts yet. Be the first!</p>
         )}
         {channel.posts?.map((post: any) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} post={post} onContentAction={loadChannel} />
         ))}
       </div>
     </div>
