@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
 import { CHANNELS } from "@/lib/constants"
 import { useRouter } from "next/navigation"
+import { Logo } from "@/components/Logo"
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { user, loading } = useSession()
@@ -29,11 +30,9 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
     <div className="flex flex-col h-full bg-gray-900">
       <div className="px-6 py-5 border-b border-gray-800">
         <div className="flex items-center justify-between gap-2">
-          <Link href="/" onClick={onClose} className="flex items-center gap-3 text-xl font-black text-[#4ade80] hover:text-green-300 transition-colors">
-            memecoins.org
-            <span className="bg-green-500/10 text-green-400 rounded-full px-2 py-0.5 text-xs font-semibold">
-              LIVE
-            </span>
+          <Link href="/" onClick={onClose} className="flex items-center gap-2 text-xl font-black text-[#4ade80] hover:text-green-300 transition-colors">
+            <Logo size={28} />
+            degenscult
           </Link>
           <button
             onClick={() => setSearchOpen((v) => !v)}

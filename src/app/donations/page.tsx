@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Donations · memecoins.org",
+  title: "Donations · degenscult",
 }
 
 export default function DonationsPage() {
@@ -8,7 +8,7 @@ export default function DonationsPage() {
       <h1 className="text-2xl font-bold text-gray-100 mb-6">Donations</h1>
 
       <p className="text-gray-200 mb-4">
-        Donations to memecoins.org are completely optional. There&apos;s no benefit
+        Donations to degenscult are completely optional. There&apos;s no benefit
         attached to them — no special access, no premium features, and no say in
         how the project is run.
       </p>

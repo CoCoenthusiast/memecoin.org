@@ -1,4 +1,4 @@
-# memecoins.org
+# degenscult
 
 A community forum for memecoin discussion and trading culture — built for people trading on Ethereum, Solana, and beyond.
 

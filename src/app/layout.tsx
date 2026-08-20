@@ -15,8 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "memecoins.org",
+  title: "degenscult",
   description: "Community forum for memecoin discussion and trading culture",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

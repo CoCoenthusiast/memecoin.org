@@ -34,6 +34,8 @@ export const GET = withErrorHandling(async function GET(
     return apiError("Post not found", 404);
   }
 
+  prisma.post.update({ where: { id }, data: { viewCount: { increment: 1 } } }).catch(() => {});
+
   return NextResponse.json({ ...post, replies, reactions: postReactions });
 });
 

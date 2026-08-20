@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" width="1500" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0a0f1a"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#4ade80" stop-opacity="0.12"/>
+      <stop offset="50%" stop-color="#4ade80" stop-opacity="0.18"/>
+      <stop offset="70%" stop-color="#4ade80" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1500" height="500" fill="url(#bg)"/>
+
+  <!-- Grid lines horizontal -->
+  <g stroke="#4ade80" stroke-width="0.4" opacity="0.08">
+    <line x1="0" y1="100" x2="1500" y2="100"/>
+    <line x1="0" y1="200" x2="1500" y2="200"/>
+    <line x1="0" y1="300" x2="1500" y2="300"/>
+    <line x1="0" y1="400" x2="1500" y2="400"/>
+  </g>
+
+  <!-- Grid lines vertical -->
+  <g stroke="#4ade80" stroke-width="0.4" opacity="0.08">
+    <line x1="150" y1="0" x2="150" y2="500"/>
+    <line x1="300" y1="0" x2="300" y2="500"/>
+    <line x1="450" y1="0" x2="450" y2="500"/>
+    <line x1="600" y1="0" x2="600" y2="500"/>
+    <line x1="750" y1="0" x2="750" y2="500"/>
+    <line x1="900" y1="0" x2="900" y2="500"/>
+    <line x1="1050" y1="0" x2="1050" y2="500"/>
+    <line x1="1200" y1="0" x2="1200" y2="500"/>
+    <line x1="1350" y1="0" x2="1350" y2="500"/>
+  </g>
+
+  <!-- Scattered small diamonds left -->
+  <g stroke="#4ade80" stroke-width="1" fill="none" opacity="0.15" stroke-linejoin="round">
+    <polygon points="120,250 140,270 120,290 100,270"/>
+    <polygon points="250,150 265,165 250,180 235,165"/>
+    <polygon points="350,350 365,365 350,380 335,365"/>
+    <polygon points="180,100 190,110 180,120 170,110"/>
+    <polygon points="400,200 412,212 400,224 388,212"/>
+  </g>
+
+  <!-- Scattered small diamonds right -->
+  <g stroke="#4ade80" stroke-width="1" fill="none" opacity="0.15" stroke-linejoin="round">
+    <polygon points="1380,250 1400,270 1380,290 1360,270"/>
+    <polygon points="1250,150 1265,165 1250,180 1235,165"/>
+    <polygon points="1150,350 1165,365 1150,380 1135,365"/>
+    <polygon points="1320,100 1330,110 1320,120 1310,110"/>
+    <polygon points="1100,200 1112,212 1100,224 1088,212"/>
+  </g>
+
+  <!-- Diagonal line accents left -->
+  <g stroke="#4ade80" stroke-width="0.6" opacity="0.1" stroke-linecap="round">
+    <line x1="50" y1="50" x2="200" y2="200"/>
+    <line x1="50" y1="450" x2="200" y2="300"/>
+    <line x1="280" y1="50" x2="350" y2="120"/>
+    <line x1="280" y1="450" x2="350" y2="380"/>
+  </g>
+
+  <!-- Diagonal line accents right -->
+  <g stroke="#4ade80" stroke-width="0.6" opacity="0.1" stroke-linecap="round">
+    <line x1="1450" y1="50" x2="1300" y2="200"/>
+    <line x1="1450" y1="450" x2="1300" y2="300"/>
+    <line x1="1220" y1="50" x2="1150" y2="120"/>
+    <line x1="1220" y1="450" x2="1150" y2="380"/>
+  </g>
+
+  <!-- Center glow -->
+  <ellipse cx="750" cy="250" rx="300" ry="200" fill="url(#fade)" opacity="0.4"/>
+
+  <!-- Main diamond -->
+  <polygon points="750,100 950,250 750,400 550,250"
+    fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Inner diamond -->
+  <polygon points="750,155 895,250 750,345 605,250"
+    fill="none" stroke="#4ade80" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.2"/>
+
+  <!-- Eye -->
+  <path d="M630,250 Q750,185 870,250 Q750,315 630,250"
+    fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Pupil -->
+  <circle cx="750" cy="250" r="12" fill="#4ade80" stroke="none"/>
+  <circle cx="745" cy="245" r="3.5" fill="#0a0f1a" stroke="none"/>
+
+  <!-- Horizontal line through center -->
+  <g stroke="#4ade80" stroke-width="0.5" opacity="0.12" stroke-linecap="round">
+    <line x1="0" y1="250" x2="500" y2="250"/>
+    <line x1="1000" y1="250" x2="1500" y2="250"/>
+  </g>
+
+  <!-- Corner brackets -->
+  <g stroke="#4ade80" stroke-width="1.2" opacity="0.25" stroke-linecap="round">
+    <line x1="30" y1="30" x2="70" y2="30"/>
+    <line x1="30" y1="30" x2="30" y2="70"/>
+    <line x1="1470" y1="30" x2="1430" y2="30"/>
+    <line x1="1470" y1="30" x2="1470" y2="70"/>
+    <line x1="30" y1="470" x2="70" y2="470"/>
+    <line x1="30" y1="470" x2="30" y2="430"/>
+    <line x1="1470" y1="470" x2="1430" y2="470"/>
+    <line x1="1470" y1="470" x2="1470" y2="430"/>
+  </g>
+</svg>

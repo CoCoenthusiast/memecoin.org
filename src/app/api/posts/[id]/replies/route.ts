@@ -32,5 +32,7 @@ export const POST = withErrorHandling(async function POST(
     },
   });
 
+  prisma.post.update({ where: { id }, data: { lastActivityAt: new Date() } }).catch(() => {});
+
   return NextResponse.json(reply, { status: 201 });
 });

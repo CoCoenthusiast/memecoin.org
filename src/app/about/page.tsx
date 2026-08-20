@@ -18,7 +18,7 @@ export default function AboutPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-8 md:py-12">
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-100 mb-8">About memecoins.org</h1>
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-100 mb-8">About degenscult</h1>
 
       <p className="text-gray-200 text-lg leading-relaxed mb-6">
         I created this forum to be a real place for people who are into memecoins. Whether you&apos;re a complete beginner or you&apos;ve been in this market for years, the idea is that everyone can share ideas, ask questions and help each other in one place — without that mess of a Discord or Telegram group where everything disappears after a day.

@@ -12,6 +12,7 @@ export const GET = withErrorHandling(async function GET(
     where: { slug },
     include: {
       posts: {
+        orderBy: { lastActivityAt: "desc" },
         include: {
           author: { select: { id: true, username: true } },
           _count: { select: { replies: true, reactions: true } },

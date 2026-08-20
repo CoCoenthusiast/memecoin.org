@@ -7,6 +7,7 @@ type PostCardProps = {
     title: string
     body: string
     createdAt: string
+    viewCount?: number
     author: { id: string; username: string }
     channel?: { slug: string; name: string }
     _count: { replies: number; reactions: number }
@@ -32,6 +33,11 @@ function timeAgo(dateStr: string) {
 
 export default function PostCard({ post, onContentAction }: PostCardProps) {
   const preview = post.body.length > 150 ? post.body.slice(0, 150) + "..." : post.body
+  const isHot =
+    Date.now() - new Date(post.createdAt).getTime() <= 10 * 60 * 1000 ||
+    post._count.replies >= 3 ||
+    post._count.reactions >= 5 ||
+    (post.viewCount ?? 0) >= 20
 
   return (
     <div className="relative block group transition-transform duration-200 hover:-translate-y-0.5">
@@ -46,9 +52,11 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
               </span>
             )}
           </div>
-          <span className="rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-semibold text-green-400">
-            HOT
-          </span>
+          {isHot && (
+            <span className="rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-semibold text-green-400">
+              HOT
+            </span>
+          )}
         </div>
 
         <p className="mt-2 text-sm text-gray-400 leading-relaxed">{preview}</p>

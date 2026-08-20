@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms of Use · memecoins.org",
+  title: "Terms of Use · degenscult",
 }
 
 export default function TermsPage() {
@@ -7,7 +7,7 @@ export default function TermsPage() {
     <div className="max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-100 mb-6">Terms of Use</h1>
       <p className="text-gray-200 mb-6">
-        By using memecoins.org, you agree to the following terms.
+        By using degenscult, you agree to the following terms.
       </p>
 
       <section className="mb-6">
@@ -27,7 +27,7 @@ export default function TermsPage() {
       <section className="mb-6">
         <h2 className="text-lg font-semibold text-gray-100 mb-2">3. User-published content</h2>
         <p className="text-gray-200">
-          You are solely responsible for the content you publish. memecoins.org does not verify, endorse, or take responsibility for the accuracy of information posted by users.
+          You are solely responsible for the content you publish. degenscult does not verify, endorse, or take responsibility for the accuracy of information posted by users.
         </p>
       </section>
 
@@ -53,7 +53,7 @@ export default function TermsPage() {
       </section>
 
       <p className="text-gray-200">
-        Questions: <a href="mailto:contato@memecoins.org" className="text-gray-400 hover:text-white transition-colors">contato@memecoins.org</a>
+        Questions: <a href="mailto:contato@degenscult" className="text-gray-400 hover:text-white transition-colors">contato@degenscult</a>
       </p>
     </div>
   )

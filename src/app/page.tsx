@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { Logo } from "@/components/Logo"
 
 type Channel = {
   id: string
@@ -27,7 +28,10 @@ export default function Home() {
   return (
     <div>
       <div className="text-center py-12 md:py-20">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-gray-100">memecoins.org</h1>
+        <div className="flex items-center justify-center gap-3">
+          <Logo size={48} />
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-gray-100">degenscult</h1>
+        </div>
         <p className="mt-4 text-lg text-gray-400 max-w-lg mx-auto">
           Community forum for memecoin discussion and trading culture
         </p>

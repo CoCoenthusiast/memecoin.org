@@ -32,7 +32,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
           <Link href="/disclaimer" className="hover:text-gray-400 transition-colors">Disclaimer</Link>
           {" · "}
           <Link href="/about" className="hover:text-gray-400 transition-colors">About</Link>
-          {" · © 2026 memecoins.org"}
+          {" · © 2026 degenscult"}
         </footer>
       </div>
     </>

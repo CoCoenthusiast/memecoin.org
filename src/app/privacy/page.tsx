@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy · memecoins.org",
+  title: "Privacy Policy · degenscult",
 }
 
 export default function PrivacyPage() {
@@ -48,7 +48,7 @@ export default function PrivacyPage() {
       <section className="mb-6">
         <h2 className="text-lg font-semibold text-gray-100 mb-2">6. Contact</h2>
         <p className="text-gray-200">
-          <a href="mailto:contato@memecoins.org" className="text-gray-400 hover:text-white transition-colors">contato@memecoins.org</a>
+          <a href="mailto:contato@degenscult" className="text-gray-400 hover:text-white transition-colors">contato@degenscult</a>
         </p>
       </section>
     </div>

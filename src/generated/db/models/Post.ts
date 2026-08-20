@@ -20,8 +20,18 @@ export type PostModel = runtime.Types.Result.DefaultSelection<Prisma.$PostPayloa
 
 export type AggregatePost = {
   _count: PostCountAggregateOutputType | null
+  _avg: PostAvgAggregateOutputType | null
+  _sum: PostSumAggregateOutputType | null
   _min: PostMinAggregateOutputType | null
   _max: PostMaxAggregateOutputType | null
+}
+
+export type PostAvgAggregateOutputType = {
+  viewCount: number | null
+}
+
+export type PostSumAggregateOutputType = {
+  viewCount: number | null
 }
 
 export type PostMinAggregateOutputType = {
@@ -30,6 +40,8 @@ export type PostMinAggregateOutputType = {
   body: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  viewCount: number | null
+  lastActivityAt: Date | null
   authorId: string | null
   channelId: string | null
 }
@@ -40,6 +52,8 @@ export type PostMaxAggregateOutputType = {
   body: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  viewCount: number | null
+  lastActivityAt: Date | null
   authorId: string | null
   channelId: string | null
 }
@@ -50,11 +64,21 @@ export type PostCountAggregateOutputType = {
   body: number
   createdAt: number
   updatedAt: number
+  viewCount: number
+  lastActivityAt: number
   authorId: number
   channelId: number
   _all: number
 }
 
+
+export type PostAvgAggregateInputType = {
+  viewCount?: true
+}
+
+export type PostSumAggregateInputType = {
+  viewCount?: true
+}
 
 export type PostMinAggregateInputType = {
   id?: true
@@ -62,6 +86,8 @@ export type PostMinAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  viewCount?: true
+  lastActivityAt?: true
   authorId?: true
   channelId?: true
 }
@@ -72,6 +98,8 @@ export type PostMaxAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  viewCount?: true
+  lastActivityAt?: true
   authorId?: true
   channelId?: true
 }
@@ -82,6 +110,8 @@ export type PostCountAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  viewCount?: true
+  lastActivityAt?: true
   authorId?: true
   channelId?: true
   _all?: true
@@ -125,6 +155,18 @@ export type PostAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: PostAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: PostSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: PostMinAggregateInputType
@@ -155,6 +197,8 @@ export type PostGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: PostCountAggregateInputType | true
+  _avg?: PostAvgAggregateInputType
+  _sum?: PostSumAggregateInputType
   _min?: PostMinAggregateInputType
   _max?: PostMaxAggregateInputType
 }
@@ -165,9 +209,13 @@ export type PostGroupByOutputType = {
   body: string
   createdAt: Date
   updatedAt: Date
+  viewCount: number
+  lastActivityAt: Date
   authorId: string
   channelId: string
   _count: PostCountAggregateOutputType | null
+  _avg: PostAvgAggregateOutputType | null
+  _sum: PostSumAggregateOutputType | null
   _min: PostMinAggregateOutputType | null
   _max: PostMaxAggregateOutputType | null
 }
@@ -196,6 +244,8 @@ export type PostWhereInput = {
   body?: Prisma.StringFilter<"Post"> | string
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  viewCount?: Prisma.IntFilter<"Post"> | number
+  lastActivityAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   authorId?: Prisma.StringFilter<"Post"> | string
   channelId?: Prisma.StringFilter<"Post"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -211,6 +261,8 @@ export type PostOrderByWithRelationInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
@@ -229,6 +281,8 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   body?: Prisma.StringFilter<"Post"> | string
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  viewCount?: Prisma.IntFilter<"Post"> | number
+  lastActivityAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   authorId?: Prisma.StringFilter<"Post"> | string
   channelId?: Prisma.StringFilter<"Post"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -244,11 +298,15 @@ export type PostOrderByWithAggregationInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   _count?: Prisma.PostCountOrderByAggregateInput
+  _avg?: Prisma.PostAvgOrderByAggregateInput
   _max?: Prisma.PostMaxOrderByAggregateInput
   _min?: Prisma.PostMinOrderByAggregateInput
+  _sum?: Prisma.PostSumOrderByAggregateInput
 }
 
 export type PostScalarWhereWithAggregatesInput = {
@@ -260,6 +318,8 @@ export type PostScalarWhereWithAggregatesInput = {
   body?: Prisma.StringWithAggregatesFilter<"Post"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
+  viewCount?: Prisma.IntWithAggregatesFilter<"Post"> | number
+  lastActivityAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
   authorId?: Prisma.StringWithAggregatesFilter<"Post"> | string
   channelId?: Prisma.StringWithAggregatesFilter<"Post"> | string
 }
@@ -270,6 +330,8 @@ export type PostCreateInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
@@ -283,6 +345,8 @@ export type PostUncheckedCreateInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
@@ -296,6 +360,8 @@ export type PostUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
@@ -309,6 +375,8 @@ export type PostUncheckedUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
@@ -322,6 +390,8 @@ export type PostCreateManyInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
   channelId: string
 }
@@ -332,6 +402,8 @@ export type PostUpdateManyMutationInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PostUncheckedUpdateManyInput = {
@@ -340,6 +412,8 @@ export type PostUncheckedUpdateManyInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -360,8 +434,14 @@ export type PostCountOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
+}
+
+export type PostAvgOrderByAggregateInput = {
+  viewCount?: Prisma.SortOrder
 }
 
 export type PostMaxOrderByAggregateInput = {
@@ -370,6 +450,8 @@ export type PostMaxOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
 }
@@ -380,8 +462,14 @@ export type PostMinOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+  lastActivityAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
+}
+
+export type PostSumOrderByAggregateInput = {
+  viewCount?: Prisma.SortOrder
 }
 
 export type PostScalarRelationFilter = {
@@ -478,6 +566,14 @@ export type PostUncheckedUpdateManyWithoutChannelNestedInput = {
   deleteMany?: Prisma.PostScalarWhereInput | Prisma.PostScalarWhereInput[]
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type PostCreateNestedOneWithoutRepliesInput = {
   create?: Prisma.XOR<Prisma.PostCreateWithoutRepliesInput, Prisma.PostUncheckedCreateWithoutRepliesInput>
   connectOrCreate?: Prisma.PostCreateOrConnectWithoutRepliesInput
@@ -530,6 +626,8 @@ export type PostCreateWithoutAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
@@ -542,6 +640,8 @@ export type PostUncheckedCreateWithoutAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
@@ -583,6 +683,8 @@ export type PostScalarWhereInput = {
   body?: Prisma.StringFilter<"Post"> | string
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  viewCount?: Prisma.IntFilter<"Post"> | number
+  lastActivityAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   authorId?: Prisma.StringFilter<"Post"> | string
   channelId?: Prisma.StringFilter<"Post"> | string
 }
@@ -593,6 +695,8 @@ export type PostCreateWithoutChannelInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
@@ -605,6 +709,8 @@ export type PostUncheckedCreateWithoutChannelInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
@@ -643,6 +749,8 @@ export type PostCreateWithoutRepliesInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
@@ -655,6 +763,8 @@ export type PostUncheckedCreateWithoutRepliesInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
   channelId: string
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
@@ -683,6 +793,8 @@ export type PostUpdateWithoutRepliesInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
@@ -695,6 +807,8 @@ export type PostUncheckedUpdateWithoutRepliesInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
@@ -707,6 +821,8 @@ export type PostCreateWithoutReactionsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
@@ -719,6 +835,8 @@ export type PostUncheckedCreateWithoutReactionsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
@@ -747,6 +865,8 @@ export type PostUpdateWithoutReactionsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
@@ -759,6 +879,8 @@ export type PostUncheckedUpdateWithoutReactionsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
@@ -771,6 +893,8 @@ export type PostCreateWithoutReportsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
@@ -783,6 +907,8 @@ export type PostUncheckedCreateWithoutReportsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
@@ -811,6 +937,8 @@ export type PostUpdateWithoutReportsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
@@ -823,6 +951,8 @@ export type PostUncheckedUpdateWithoutReportsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
@@ -835,6 +965,8 @@ export type PostCreateManyAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   channelId: string
 }
 
@@ -844,6 +976,8 @@ export type PostUpdateWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
@@ -856,6 +990,8 @@ export type PostUncheckedUpdateWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
@@ -868,6 +1004,8 @@ export type PostUncheckedUpdateManyWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -877,6 +1015,8 @@ export type PostCreateManyChannelInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
+  lastActivityAt?: Date | string
   authorId: string
 }
 
@@ -886,6 +1026,8 @@ export type PostUpdateWithoutChannelInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
@@ -898,6 +1040,8 @@ export type PostUncheckedUpdateWithoutChannelInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
@@ -910,6 +1054,8 @@ export type PostUncheckedUpdateManyWithoutChannelInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -968,6 +1114,8 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
+  lastActivityAt?: boolean
   authorId?: boolean
   channelId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -984,6 +1132,8 @@ export type PostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
+  lastActivityAt?: boolean
   authorId?: boolean
   channelId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -996,6 +1146,8 @@ export type PostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
+  lastActivityAt?: boolean
   authorId?: boolean
   channelId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1008,11 +1160,13 @@ export type PostSelectScalar = {
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
+  lastActivityAt?: boolean
   authorId?: boolean
   channelId?: boolean
 }
 
-export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "createdAt" | "updatedAt" | "authorId" | "channelId", ExtArgs["result"]["post"]>
+export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "createdAt" | "updatedAt" | "viewCount" | "lastActivityAt" | "authorId" | "channelId", ExtArgs["result"]["post"]>
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
@@ -1045,6 +1199,8 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     body: string
     createdAt: Date
     updatedAt: Date
+    viewCount: number
+    lastActivityAt: Date
     authorId: string
     channelId: string
   }, ExtArgs["result"]["post"]>
@@ -1480,6 +1636,8 @@ export interface PostFieldRefs {
   readonly body: Prisma.FieldRef<"Post", 'String'>
   readonly createdAt: Prisma.FieldRef<"Post", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Post", 'DateTime'>
+  readonly viewCount: Prisma.FieldRef<"Post", 'Int'>
+  readonly lastActivityAt: Prisma.FieldRef<"Post", 'DateTime'>
   readonly authorId: Prisma.FieldRef<"Post", 'String'>
   readonly channelId: Prisma.FieldRef<"Post", 'String'>
 }

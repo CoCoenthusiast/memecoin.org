@@ -35,7 +35,7 @@ export const GET = withErrorHandling(async function GET(
 
   const posts = await prisma.post.findMany({
     where,
-    orderBy: { createdAt: "desc" },
+    orderBy: { lastActivityAt: "desc" },
     include: {
       author: { select: { id: true, username: true } },
       channel: { select: { slug: true, name: true } },
