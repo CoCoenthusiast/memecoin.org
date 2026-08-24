@@ -2,9 +2,11 @@
 import { useState, FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useSession } from "@/hooks/useSession"
 
 export default function RegisterPage() {
   const router = useRouter()
+  const { refresh } = useSession()
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -30,8 +32,8 @@ export default function RegisterPage() {
       return
     }
 
+    await refresh()
     router.push("/")
-    router.refresh()
   }
 
   return (

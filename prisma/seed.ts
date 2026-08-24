@@ -1,8 +1,11 @@
 import "dotenv/config";
 import { PrismaClient } from "../src/generated/db/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 const CHANNELS = [
   { slug: "general", name: "General Chat", description: "Open discussion about memecoins and trading" },
@@ -27,31 +30,49 @@ async function main() {
   }
   console.log("Channels created.");
 
-  const password = await bcrypt.hash("password123", 10);
+  const passwords = {
+    alice: crypto.randomBytes(8).toString("hex"),
+    bob: crypto.randomBytes(8).toString("hex"),
+    charlie: crypto.randomBytes(8).toString("hex"),
+    diana: crypto.randomBytes(8).toString("hex"),
+  };
+
+  const hashes = {
+    alice: await bcrypt.hash(passwords.alice, 10),
+    bob: await bcrypt.hash(passwords.bob, 10),
+    charlie: await bcrypt.hash(passwords.charlie, 10),
+    diana: await bcrypt.hash(passwords.diana, 10),
+  };
 
   const users = await Promise.all([
     prisma.user.upsert({
       where: { email: "alice@example.com" },
-      update: {},
-      create: { username: "alice", email: "alice@example.com", password, role: "ADMIN" },
+      update: { password: hashes.alice },
+      create: { username: "alice", email: "alice@example.com", password: hashes.alice, role: "ADMIN" },
     }),
     prisma.user.upsert({
       where: { email: "bob@example.com" },
-      update: {},
-      create: { username: "bob", email: "bob@example.com", password },
+      update: { password: hashes.bob },
+      create: { username: "bob", email: "bob@example.com", password: hashes.bob },
     }),
     prisma.user.upsert({
       where: { email: "charlie@example.com" },
-      update: {},
-      create: { username: "charlie", email: "charlie@example.com", password },
+      update: { password: hashes.charlie },
+      create: { username: "charlie", email: "charlie@example.com", password: hashes.charlie },
     }),
     prisma.user.upsert({
       where: { email: "diana@example.com" },
-      update: {},
-      create: { username: "diana", email: "diana@example.com", password },
+      update: { password: hashes.diana },
+      create: { username: "diana", email: "diana@example.com", password: hashes.diana },
     }),
   ]);
   console.log("Users created.");
+  console.log("\n--- TESTE USUÁRIOS ---");
+  console.log("alice@example.com :", passwords.alice);
+  console.log("bob@example.com   :", passwords.bob);
+  console.log("charlie@example.com:", passwords.charlie);
+  console.log("diana@example.com  :", passwords.diana);
+  console.log("----------------------\n");
 
   const [alice, bob, charlie, diana] = users;
 
