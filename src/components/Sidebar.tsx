@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { Logo } from "@/components/Logo"
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { user, loading } = useSession()
+  const { user, loading, refresh } = useSession()
   const router = useRouter()
 
   const [searchOpen, setSearchOpen] = useState(false)
@@ -144,10 +144,11 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
             <button
               onClick={async () => {
                 await fetch("/api/auth/logout", { method: "POST" })
+                await refresh()
                 router.push("/")
                 router.refresh()
               }}
-              className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+              className="text-sm text-[#4ade80] hover:text-green-300 transition-colors"
             >
               Log out
             </button>
