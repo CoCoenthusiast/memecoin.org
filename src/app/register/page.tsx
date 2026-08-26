@@ -52,6 +52,7 @@ export default function RegisterPage() {
               className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               placeholder="cooltrader"
               required
+              maxLength={20}
             />
           </div>
 
@@ -65,6 +66,7 @@ export default function RegisterPage() {
               className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               placeholder="you@example.com"
               required
+              maxLength={254}
             />
           </div>
 

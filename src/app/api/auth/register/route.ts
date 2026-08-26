@@ -17,6 +17,14 @@ export const POST = withErrorHandling(async function POST(
     return apiError("Username must be 3-20 alphanumeric characters");
   }
 
+  if (body.username.length > 20) {
+    return apiError("Username must be at most 20 characters");
+  }
+
+  if (body.email.length > 254) {
+    return apiError("Email must be at most 254 characters");
+  }
+
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
     return apiError("Invalid email format");
   }

@@ -1,43 +1,56 @@
 "use client"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { AuthGuard } from "@/components/AuthGuard"
 
-export function NewReplyForm({ postId }: { postId: string }) {
+export function NewReplyForm({ postId, onSuccess }: { postId: string; onSuccess?: () => void }) {
   const [body, setBody] = useState("")
   const [error, setError] = useState("")
   const [submitting, setSubmitting] = useState(false)
-  const router = useRouter()
+  const [optimistic, setOptimistic] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
     setSubmitting(true)
 
+    const text = body.trim()
+    setOptimistic(text)
+    setBody("")
+
     try {
       const res = await fetch(`/api/posts/${postId}/replies`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body }),
+        body: JSON.stringify({ body: text }),
       })
 
       if (!res.ok) {
         const data = await res.json()
         setError(data.error || "Failed to post reply")
-        setSubmitting(false)
+        setBody(text)
+        setOptimistic(null)
         return
       }
 
-      setBody("")
-      router.refresh()
+      setOptimistic(null)
+      onSuccess?.()
     } catch {
       setError("Something went wrong")
+      setBody(text)
+      setOptimistic(null)
+    } finally {
       setSubmitting(false)
     }
   }
 
   return (
     <AuthGuard>
+      {optimistic && (
+        <div className="mb-3 p-4 bg-gray-900/50 border border-gray-800/50 rounded-xl opacity-60">
+          <p className="text-sm text-gray-200 whitespace-pre-wrap">{optimistic}</p>
+          <span className="text-xs text-gray-500 mt-1 inline-block">sending...</span>
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <textarea

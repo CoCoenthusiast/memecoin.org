@@ -10,7 +10,7 @@ export const POST = withErrorHandling(async function POST(
   const { user } = await requireAuth();
   const { slug } = await params;
 
-  const body = await getBody<{ title: string; body: string }>(request);
+  const body = await getBody<{ title: string; body: string; imageUrl?: string }>(request);
 
   if (!body.title || body.title.length < 1 || body.title.length > 200) {
     return apiError("Title must be between 1 and 200 characters");
@@ -18,6 +18,10 @@ export const POST = withErrorHandling(async function POST(
 
   if (!body.body || body.body.length < 1 || body.body.length > 10000) {
     return apiError("Body must be between 1 and 10000 characters");
+  }
+
+  if (body.imageUrl && !body.imageUrl.startsWith("/uploads/post-images/")) {
+    return apiError("Invalid image URL");
   }
 
   const channel = await prisma.channel.findUnique({ where: { slug } });
@@ -29,6 +33,7 @@ export const POST = withErrorHandling(async function POST(
     data: {
       title: body.title,
       body: body.body,
+      imageUrl: body.imageUrl || null,
       authorId: user.id,
       channelId: channel.id,
     },
