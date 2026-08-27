@@ -99,7 +99,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
                   disabled={busyId === report.id}
                   className="px-3 py-1.5 rounded-lg bg-transparent border border-red-500 text-red-400 text-sm font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50"
                 >
-                  Apagar conteúdo
+                  Delete content
                 </button>
               )}
               {report.reply && (
@@ -108,7 +108,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
                   disabled={busyId === report.id}
                   className="px-3 py-1.5 rounded-lg bg-transparent border border-red-500 text-red-400 text-sm font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50"
                 >
-                  Apagar conteúdo
+                  Delete content
                 </button>
               )}
               <button
@@ -116,7 +116,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
                 disabled={busyId === report.id}
                 className="px-3 py-1.5 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] text-sm font-medium hover:bg-green-500/10 transition-colors disabled:opacity-50"
               >
-                Ignorar denúncia
+                Dismiss report
               </button>
             </div>
           </div>

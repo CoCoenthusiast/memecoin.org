@@ -6,7 +6,6 @@ type PostCardProps = {
     id: string
     title: string
     body: string
-    imageUrl?: string | null
     createdAt: string
     viewCount?: number
     author: { id: string; username: string }
@@ -61,14 +60,6 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
         </div>
 
         <p className="mt-2 text-sm text-gray-400 leading-relaxed">{preview}</p>
-
-        {post.imageUrl && (
-          <img
-            src={post.imageUrl}
-            alt={post.title}
-            className="mt-3 max-h-64 w-full object-cover rounded-xl border border-gray-800"
-          />
-        )}
 
         <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
           <span>

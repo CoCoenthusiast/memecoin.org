@@ -12,9 +12,15 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [submitting, setSubmitting] = useState(false)
   const [sending, setSending] = useState(false)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
-  const fileRef = useRef<HTMLInputElement>(null)
+  const imageRef = useRef<HTMLInputElement>(null)
+  const videoRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+
+  const activeSlug = channelSlug || selectedChannel
+  const isPnlFlex = activeSlug === "pnl-flex"
+  const hasMedia = !!imageUrl || !!videoUrl
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -36,6 +42,8 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
 
       const data = await res.json()
       setImageUrl(data.imageUrl)
+      setVideoUrl(null)
+      if (videoRef.current) videoRef.current.value = ""
     } catch {
       setError("Failed to upload image")
     } finally {
@@ -43,9 +51,43 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
     }
   }
 
+  async function handleVideoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+    setError("")
+
+    try {
+      const form = new FormData()
+      form.append("video", file)
+
+      const res = await fetch("/api/upload/post-video", { method: "POST", body: form })
+      if (!res.ok) {
+        const data = await res.json()
+        setError(data.error || "Failed to upload video")
+        return
+      }
+
+      const data = await res.json()
+      setVideoUrl(data.videoUrl)
+      setImageUrl(null)
+      if (imageRef.current) imageRef.current.value = ""
+    } catch {
+      setError("Failed to upload video")
+    } finally {
+      setUploading(false)
+    }
+  }
+
   function removeImage() {
     setImageUrl(null)
-    if (fileRef.current) fileRef.current.value = ""
+    if (imageRef.current) imageRef.current.value = ""
+  }
+
+  function removeVideo() {
+    setVideoUrl(null)
+    if (videoRef.current) videoRef.current.value = ""
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -58,6 +100,11 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
       return
     }
 
+    if (!body.trim() || body.trim().length < 10) {
+      setError("Please write a message of at least 10 characters")
+      return
+    }
+
     setSubmitting(true)
     setSending(true)
 
@@ -65,7 +112,12 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
       const res = await fetch(`/api/channels/${slug}/posts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, body, imageUrl: imageUrl || undefined }),
+        body: JSON.stringify({
+          title,
+          body,
+          imageUrl: imageUrl || undefined,
+          videoUrl: videoUrl || undefined,
+        }),
       })
 
       if (!res.ok) {
@@ -147,37 +199,73 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
-            Image (optional)
-          </label>
-          {imageUrl ? (
-            <div className="relative inline-block">
-              <img
-                src={imageUrl}
-                alt="Preview"
-                className="max-h-48 rounded-xl border border-gray-800"
+        {isPnlFlex && (
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Image (optional)
+            </label>
+            {imageUrl ? (
+              <div className="relative inline-block">
+                <img
+                  src={imageUrl}
+                  alt="Preview"
+                  className="max-h-48 rounded-xl border border-gray-800"
+                />
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="absolute top-2 right-2 bg-gray-900/80 text-gray-400 hover:text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
+                >
+                  x
+                </button>
+              </div>
+            ) : (
+              <input
+                ref={imageRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleImageUpload}
+                disabled={uploading || !!videoUrl}
+                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-gray-800 file:text-gray-300 hover:file:bg-gray-700 file:cursor-pointer disabled:opacity-50"
               />
-              <button
-                type="button"
-                onClick={removeImage}
-                className="absolute top-2 right-2 bg-gray-900/80 text-gray-400 hover:text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
-              >
-                x
-              </button>
-            </div>
-          ) : (
-            <input
-              ref={fileRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              onChange={handleImageUpload}
-              disabled={uploading}
-              className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-gray-800 file:text-gray-300 hover:file:bg-gray-700 file:cursor-pointer"
-            />
-          )}
-          {uploading && <p className="text-xs text-gray-500 mt-1">Uploading...</p>}
-        </div>
+            )}
+          </div>
+        )}
+
+        {isPnlFlex && (
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Video (optional, PnL Flex only)
+            </label>
+            {videoUrl ? (
+              <div className="relative inline-block">
+                <video
+                  src={videoUrl}
+                  controls
+                  className="max-h-48 rounded-xl border border-gray-800"
+                />
+                <button
+                  type="button"
+                  onClick={removeVideo}
+                  className="absolute top-2 right-2 bg-gray-900/80 text-gray-400 hover:text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
+                >
+                  x
+                </button>
+              </div>
+            ) : (
+              <input
+                ref={videoRef}
+                type="file"
+                accept="video/mp4,video/webm,video/quicktime"
+                onChange={handleVideoUpload}
+                disabled={uploading || !!imageUrl}
+                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-gray-800 file:text-gray-300 hover:file:bg-gray-700 file:cursor-pointer disabled:opacity-50"
+              />
+            )}
+          </div>
+        )}
+
+        {uploading && <p className="text-xs text-gray-500">Uploading...</p>}
 
         {error && (
           <div className="text-sm text-red-400 bg-red-900/20 border border-red-800 rounded-xl px-4 py-2">

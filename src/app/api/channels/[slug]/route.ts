@@ -18,6 +18,7 @@ export const GET = withErrorHandling(async function GET(
           title: true,
           body: true,
           imageUrl: true,
+          videoUrl: true,
           createdAt: true,
           viewCount: true,
           author: { select: { id: true, username: true } },

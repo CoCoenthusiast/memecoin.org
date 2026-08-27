@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
 
-const VALID_REASONS = ["Spam", "Golpe/Scam", "Conteúdo ofensivo", "Outro"];
+const VALID_REASONS = ["Spam", "Scam", "Offensive content", "Other"];
 
 export const POST = withErrorHandling(async function POST(
   request: NextRequest

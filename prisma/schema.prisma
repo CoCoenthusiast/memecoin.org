@@ -49,6 +49,7 @@ model Post {
   updatedAt DateTime @updatedAt
 
   imageUrl        String?
+  videoUrl        String?
   viewCount       Int      @default(0)
   lastActivityAt  DateTime @default(now())
 

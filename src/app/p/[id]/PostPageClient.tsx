@@ -1,12 +1,12 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { ReactionBar } from "@/components/ReactionBar"
 import { ReplyList } from "@/components/ReplyList"
 import { NewReplyForm } from "@/components/NewReplyForm"
 import { ContentActions } from "@/components/ContentActions"
 import { useSession } from "@/hooks/useSession"
-
 function timeAgo(dateStr: string) {
   const now = Date.now()
   const then = new Date(dateStr).getTime()
@@ -28,7 +28,20 @@ type PostPageClientProps = {
 
 export default function PostPageClient({ post: initialPost }: PostPageClientProps) {
   const { user, loading: sessionLoading } = useSession()
+  const router = useRouter()
   const [post, setPost] = useState(initialPost)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), [])
+
+  useEffect(() => {
+    if (!lightboxOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxOpen(false)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [lightboxOpen])
 
   const loadPost = useCallback(async () => {
     const data = await fetch(`/api/posts/${post.id}`).then(r => r.ok ? r.json() : null)
@@ -37,10 +50,28 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
 
   useEffect(() => { loadPost() }, [loadPost])
 
+  const handlePostDeleted = useCallback(() => {
+    if (post.channel?.slug) {
+      router.push(`/c/${post.channel.slug}`)
+    }
+  }, [post.channel?.slug, router])
+
   if (!post) return <div className="text-center text-gray-500 py-12">Post not found</div>
 
   return (
     <div>
+      {lightboxOpen && post.imageUrl && (
+        <div
+          onClick={closeLightbox}
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-zoom-out"
+        >
+          <img
+            src={post.imageUrl}
+            alt={post.title}
+            className="max-h-[90vh] max-w-[90vw] object-contain"
+          />
+        </div>
+      )}
       <article className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
         <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
         <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
@@ -52,11 +83,25 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
         </div>
         <p className="text-gray-200 whitespace-pre-wrap leading-relaxed mb-4">{post.body}</p>
         {post.imageUrl && (
-          <img
-            src={post.imageUrl}
-            alt={post.title}
-            className="mb-4 max-h-96 w-full object-cover rounded-xl border border-gray-800"
-          />
+          <div className="mb-4">
+            <p className="text-[11px] text-gray-500 mb-1">Attachment</p>
+            <img
+              src={post.imageUrl}
+              alt={post.title}
+              onClick={() => setLightboxOpen(true)}
+              className="max-h-[400px] max-w-lg w-auto object-contain rounded-xl border border-gray-800 bg-black/20 cursor-zoom-in"
+            />
+          </div>
+        )}
+        {post.videoUrl && (
+          <div className="mb-4">
+            <p className="text-[11px] text-gray-500 mb-1">Attachment</p>
+            <video
+              src={post.videoUrl}
+              controls
+              className="max-h-96 w-full object-cover rounded-xl border border-gray-800"
+            />
+          </div>
         )}
         <div className="flex items-center gap-2">
           <ReactionBar
@@ -66,7 +111,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
             currentUserId={user?.id}
             onSuccess={loadPost}
           />
-          <ContentActions targetId={post.id} targetType="post" onSuccess={loadPost} />
+          <ContentActions targetId={post.id} targetType="post" onSuccess={handlePostDeleted} />
         </div>
       </article>
 

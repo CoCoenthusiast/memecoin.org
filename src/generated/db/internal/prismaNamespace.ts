@@ -1003,6 +1003,7 @@ export const PostScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   imageUrl: 'imageUrl',
+  videoUrl: 'videoUrl',
   viewCount: 'viewCount',
   lastActivityAt: 'lastActivityAt',
   authorId: 'authorId',
