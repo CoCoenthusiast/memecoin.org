@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://degenscult.vercel.app"),
   title: "degenscult",
   description: "Community forum for memecoin discussion and trading culture",
   icons: {

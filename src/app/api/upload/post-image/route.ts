@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 const MAX_SIZE = 5 * 1024 * 1024;
-const MIME_EXT: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-};
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const BUCKET = "post-images";
 
 export const POST = withErrorHandling(async function POST(
   request: NextRequest
@@ -22,20 +18,39 @@ export const POST = withErrorHandling(async function POST(
     return apiError("No file provided");
   }
 
-  const ext = MIME_EXT[file.type];
-  if (!ext) {
+  if (!ALLOWED_TYPES.includes(file.type)) {
     return apiError("Invalid file type. Only JPEG, PNG or WebP are allowed");
   }
   if (file.size > MAX_SIZE) {
     return apiError("File too large. Maximum size is 5MB");
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const dir = path.join(process.cwd(), "public", "uploads", "post-images");
-  await mkdir(dir, { recursive: true });
+  const ext = file.type === "image/jpeg" ? "jpg" : file.type === "image/png" ? "png" : "webp";
   const fileName = `${user.id}-${Date.now()}.${ext}`;
-  await writeFile(path.join(dir, fileName), buffer);
 
-  const imageUrl = `/uploads/post-images/${fileName}`;
-  return NextResponse.json({ imageUrl });
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  const { error: uploadError } = await supabaseAdmin.storage
+    .from(BUCKET)
+    .upload(fileName, buffer, { contentType: file.type });
+
+  if (uploadError) {
+    if (uploadError.message.includes("Bucket not found")) {
+      await supabaseAdmin.storage.createBucket(BUCKET, { public: true });
+      const { error: retryError } = await supabaseAdmin.storage
+        .from(BUCKET)
+        .upload(fileName, buffer, { contentType: file.type });
+      if (retryError) {
+        return apiError("Failed to upload image");
+      }
+    } else {
+      return apiError("Failed to upload image");
+    }
+  }
+
+  const { data: urlData } = supabaseAdmin.storage
+    .from(BUCKET)
+    .getPublicUrl(fileName);
+
+  return NextResponse.json({ imageUrl: urlData.publicUrl });
 });

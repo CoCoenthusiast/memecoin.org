@@ -20,8 +20,16 @@ export const POST = withErrorHandling(async function POST(
     return apiError("Body must be between 1 and 10000 characters");
   }
 
-  if (body.imageUrl && !body.imageUrl.startsWith("/uploads/post-images/")) {
-    return apiError("Invalid image URL");
+  if (body.imageUrl) {
+    try {
+      const url = new URL(body.imageUrl);
+      const supabaseHost = process.env.SUPABASE_URL ? new URL(process.env.SUPABASE_URL).host : "";
+      if (url.protocol !== "https:" || url.host !== supabaseHost) {
+        return apiError("Invalid image URL");
+      }
+    } catch {
+      return apiError("Invalid image URL");
+    }
   }
 
   const channel = await prisma.channel.findUnique({ where: { slug } });
