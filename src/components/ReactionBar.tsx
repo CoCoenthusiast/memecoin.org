@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/hooks/useSession"
 
@@ -26,6 +26,10 @@ export function ReactionBar({ targetId, type, reactions, currentUserId, onSucces
   const [localReactions, setLocalReactions] = useState(reactions)
   const [pending, setPending] = useState<string | null>(null)
 
+  useEffect(() => {
+    setLocalReactions(reactions)
+  }, [reactions])
+
   async function handleReaction(reactionType: string) {
     if (!user) {
       router.push("/login")
@@ -41,10 +45,10 @@ export function ReactionBar({ targetId, type, reactions, currentUserId, onSucces
     const toggledOff = !!existing
 
     if (toggledOff) {
-      setLocalReactions((rs) => rs.filter((r) => r !== existing))
+      setLocalReactions((rs) => rs.filter((r) => r.id !== existing.id))
     } else {
       setLocalReactions((rs) => [
-        ...rs,
+        ...rs.filter((r) => r.userId !== user.id),
         { id: `opt-${Date.now()}`, type: reactionType, userId: user.id },
       ])
     }
