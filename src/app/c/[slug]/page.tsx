@@ -40,7 +40,8 @@ export default async function ChannelPage({ params }: Props) {
     where: { slug },
     include: {
       posts: {
-        orderBy: { lastActivityAt: "desc" },
+        orderBy: [{ pinned: "desc" }, { lastActivityAt: "desc" }],
+        take: 50,
         select: {
           id: true,
           title: true,
@@ -48,7 +49,8 @@ export default async function ChannelPage({ params }: Props) {
           imageUrl: true,
           createdAt: true,
           viewCount: true,
-          author: { select: { id: true, username: true } },
+          pinned: true,
+          author: { select: { id: true, username: true, avatarUrl: true } },
           _count: { select: { replies: true, reactions: true } },
         },
       },

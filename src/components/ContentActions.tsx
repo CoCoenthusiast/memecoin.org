@@ -72,7 +72,7 @@ export function ContentActions({ targetId, targetType, onSuccess }: ContentActio
       {error && <span className="text-xs text-red-400">{error}</span>}
 
       {reported ? (
-        <span className="text-xs font-medium text-green-400">Reported ✓</span>
+        <span className="text-xs font-medium text-neon">Reported ✓</span>
       ) : (
         <button
           onClick={(e) => {

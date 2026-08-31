@@ -34,6 +34,9 @@ export const POST = withErrorHandling(async function POST(
     if (!post) {
       return apiError("Post not found", 404);
     }
+    if (post.authorId === user.id) {
+      return apiError("You cannot report your own content");
+    }
 
     const existing = await prisma.report.findUnique({
       where: { reporterId_postId: { reporterId: user.id, postId: body.postId! } },
@@ -56,6 +59,9 @@ export const POST = withErrorHandling(async function POST(
     const reply = await prisma.reply.findUnique({ where: { id: body.replyId! } });
     if (!reply) {
       return apiError("Reply not found", 404);
+    }
+    if (reply.authorId === user.id) {
+      return apiError("You cannot report your own content");
     }
 
     const existing = await prisma.report.findUnique({

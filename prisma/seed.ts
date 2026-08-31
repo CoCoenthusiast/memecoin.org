@@ -48,22 +48,22 @@ async function main() {
     prisma.user.upsert({
       where: { email: "alice@example.com" },
       update: { password: hashes.alice },
-      create: { username: "alice", email: "alice@example.com", password: hashes.alice, role: "ADMIN" },
+      create: { username: "alice", usernameLower: "alice", email: "alice@example.com", password: hashes.alice, role: "ADMIN" },
     }),
     prisma.user.upsert({
       where: { email: "bob@example.com" },
       update: { password: hashes.bob },
-      create: { username: "bob", email: "bob@example.com", password: hashes.bob },
+      create: { username: "bob", usernameLower: "bob", email: "bob@example.com", password: hashes.bob },
     }),
     prisma.user.upsert({
       where: { email: "charlie@example.com" },
       update: { password: hashes.charlie },
-      create: { username: "charlie", email: "charlie@example.com", password: hashes.charlie },
+      create: { username: "charlie", usernameLower: "charlie", email: "charlie@example.com", password: hashes.charlie },
     }),
     prisma.user.upsert({
       where: { email: "diana@example.com" },
       update: { password: hashes.diana },
-      create: { username: "diana", email: "diana@example.com", password: hashes.diana },
+      create: { username: "diana", usernameLower: "diana", email: "diana@example.com", password: hashes.diana },
     }),
   ]);
   console.log("Users created.");

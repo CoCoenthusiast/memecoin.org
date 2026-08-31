@@ -7,9 +7,10 @@ export const GET = withErrorHandling(async function GET(
   { params }: { params: Promise<{ username: string }> }
 ) {
   const { username } = await params;
+  const usernameLower = username.toLowerCase();
 
   const user = await prisma.user.findUnique({
-    where: { username },
+    where: { usernameLower },
     select: {
       id: true,
       username: true,
@@ -22,11 +23,18 @@ export const GET = withErrorHandling(async function GET(
           title: true,
           body: true,
           createdAt: true,
-          author: { select: { id: true, username: true } },
+          pinned: true,
+          author: { select: { id: true, username: true, avatarUrl: true } },
           channel: { select: { slug: true, name: true } },
           _count: { select: { replies: true, reactions: true } },
         },
       },
+      replies: {
+        select: {
+          _count: { select: { reactions: true } },
+        },
+      },
+      _count: { select: { posts: true, replies: true } },
     },
   });
 
@@ -34,14 +42,10 @@ export const GET = withErrorHandling(async function GET(
     return apiError("User not found", 404);
   }
 
-  const postCount = await prisma.post.count({ where: { authorId: user.id } });
-  const replyCount = await prisma.reply.count({ where: { authorId: user.id } });
-  const postReactions = await prisma.reaction.count({
-    where: { post: { authorId: user.id } },
-  });
-  const replyReactions = await prisma.reaction.count({
-    where: { reply: { authorId: user.id } },
-  });
+  const postCount = user._count.posts;
+  const replyCount = user._count.replies;
+  const postReactions = user.posts.reduce((sum, p) => sum + p._count.reactions, 0);
+  const replyReactions = user.replies.reduce((sum, r) => sum + r._count.reactions, 0);
   const totalReactions = postReactions + replyReactions;
 
   return NextResponse.json({

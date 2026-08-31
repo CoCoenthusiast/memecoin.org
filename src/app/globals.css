@@ -12,6 +12,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --color-neon: #4ade80;
+  --color-neon-glow: #22c55e;
+  --color-neon-light: #86efac;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

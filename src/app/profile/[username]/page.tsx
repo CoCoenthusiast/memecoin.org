@@ -120,11 +120,11 @@ export default function ProfilePage() {
               <img
                 src={profile.avatarUrl}
                 alt={profile.username}
-                className="w-20 h-20 rounded-full object-cover border border-gray-700"
+                className="w-36 h-36 rounded-xl object-cover border border-gray-700"
               />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center">
-                <svg className="w-10 h-10 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+              <div className="w-36 h-36 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center">
+                <svg className="w-16 h-16 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                 </svg>
               </div>
@@ -148,7 +148,7 @@ export default function ProfilePage() {
                 <div className="text-xs text-gray-500">Replies</div>
               </div>
               <div>
-                <div className="text-xl font-bold text-green-400">{profile.totalReactions}</div>
+                <div className="text-xl font-bold text-neon">{profile.totalReactions}</div>
                 <div className="text-xs text-gray-500">Reactions received</div>
               </div>
             </div>
@@ -157,9 +157,9 @@ export default function ProfilePage() {
               <div className="mt-4">
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-3 py-1.5 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] text-sm font-medium hover:bg-green-500/10 transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
                 >
-                  Trocar foto
+                  Change photo
                 </button>
                 <input
                   ref={fileInputRef}
@@ -182,7 +182,7 @@ export default function ProfilePage() {
           onClick={() => setActiveTab("posts")}
           className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
             activeTab === "posts"
-              ? "text-[#4ade80] border-[#4ade80]"
+              ? "text-neon border-neon"
               : "text-gray-500 border-transparent hover:text-gray-300"
           }`}
         >
@@ -192,11 +192,11 @@ export default function ProfilePage() {
           onClick={() => setActiveTab("mural")}
           className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
             activeTab === "mural"
-              ? "text-[#4ade80] border-[#4ade80]"
+              ? "text-neon border-neon"
               : "text-gray-500 border-transparent hover:text-gray-300"
           }`}
         >
-          Mural ({comments.length})
+          Wall ({comments.length})
         </button>
       </div>
 
@@ -220,14 +220,14 @@ export default function ProfilePage() {
                 required
                 rows={2}
                 maxLength={1000}
-                className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
+                className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
                 placeholder="Leave a comment on this profile..."
               />
               {commentError && <p className="text-sm text-red-400">{commentError}</p>}
               <button
                 type="submit"
                 disabled={posting}
-                className="px-4 py-2 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] text-sm font-medium hover:bg-green-500/10 transition-colors disabled:opacity-50"
+                className="px-4 py-2 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors disabled:opacity-50"
               >
                 {posting ? "Posting..." : "Post comment"}
               </button>

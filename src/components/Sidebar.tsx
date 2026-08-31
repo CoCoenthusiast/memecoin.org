@@ -5,6 +5,7 @@ import { useSession } from "@/hooks/useSession"
 import { CHANNELS } from "@/lib/constants"
 import { useRouter } from "next/navigation"
 import { Logo } from "@/components/Logo"
+import { NotificationsBell } from "@/components/NotificationsBell"
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { user, loading, refresh } = useSession()
@@ -30,20 +31,23 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
     <div className="flex flex-col h-full bg-gray-900">
       <div className="px-6 py-5 border-b border-gray-800">
         <div className="flex items-center justify-between gap-2">
-          <Link href="/" onClick={onClose} className="flex items-center gap-2 text-xl font-black text-[#4ade80] hover:text-green-300 transition-colors">
+          <Link href="/" onClick={onClose} className="flex items-center gap-2 text-xl font-black text-neon hover:text-neon-light transition-colors">
             <Logo size={28} />
             degenscult
           </Link>
-          <button
-            onClick={() => setSearchOpen((v) => !v)}
-            aria-label="Search"
-            title="Search"
-            className="p-2 rounded-lg text-gray-400 hover:text-[#4ade80] hover:bg-gray-800 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-1">
+            <NotificationsBell onNavigate={onClose} />
+            <button
+              onClick={() => setSearchOpen((v) => !v)}
+              aria-label="Search"
+              title="Search"
+              className="p-2 rounded-lg text-gray-400 hover:text-neon hover:bg-gray-800 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+              </svg>
+            </button>
+          </div>
         </div>
         <p className="mt-1 text-sm text-gray-400">GM degens 🚀</p>
 
@@ -56,14 +60,14 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
                 if (e.key === "Enter") handleSearch()
               }}
               placeholder="Search..."
-              className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4ade80] focus:border-transparent text-sm"
+              className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent text-sm"
             />
             <label className="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
               <input
                 type="checkbox"
                 checked={titlesAndFirstPostOnly}
                 onChange={(e) => setTitlesAndFirstPostOnly(e.target.checked)}
-                className="accent-[#4ade80]"
+                className="accent-neon"
               />
               Search titles and first posts only
             </label>
@@ -72,7 +76,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
                 type="checkbox"
                 checked={titlesOnly}
                 onChange={(e) => setTitlesOnly(e.target.checked)}
-                className="accent-[#4ade80]"
+                className="accent-neon"
               />
               Search titles only
             </label>
@@ -83,11 +87,11 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
                 if (e.key === "Enter") handleSearch()
               }}
               placeholder="Member"
-              className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4ade80] focus:border-transparent text-sm"
+              className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent text-sm"
             />
             <button
               onClick={handleSearch}
-              className="w-full py-2 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] text-sm font-medium hover:bg-green-500/10 transition-colors"
+              className="w-full py-2 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
             >
               Search
             </button>
@@ -118,11 +122,21 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
           </Link>
         </div>
 
+        <div className="pt-1">
+          <Link
+            href="/leaderboard"
+            onClick={onClose}
+            className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+          >
+            Leaderboard
+          </Link>
+        </div>
+
         <div className="pt-4">
           <Link
             href="/new-post"
             onClick={onClose}
-            className="flex items-center justify-center w-full px-4 py-2.5 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] text-sm font-medium hover:bg-green-500/10 transition-colors"
+            className="flex items-center justify-center w-full px-4 py-2.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
           >
             New Post
           </Link>
@@ -148,7 +162,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
                 router.push("/")
                 router.refresh()
               }}
-              className="text-sm text-[#4ade80] hover:text-green-300 transition-colors"
+              className="text-sm text-neon hover:text-neon-light transition-colors"
             >
               Log out
             </button>
@@ -165,7 +179,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
             <Link
               href="/register"
               onClick={onClose}
-              className="flex-1 text-center px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors"
+              className="flex-1 text-center px-3 py-2 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium transition-all duration-200 hover:bg-neon-glow/10 hover:shadow-[0_0_20px_-4px] hover:shadow-neon-glow/40"
             >
               Register
             </Link>

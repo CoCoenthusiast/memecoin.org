@@ -35,12 +35,12 @@ export default function AboutPage() {
       <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-4">
         <div className="text-sm text-gray-400 mb-3">Wallet address (Solana):</div>
         <div className="flex items-center gap-2">
-          <code className="flex-1 bg-gray-950 border border-gray-800 rounded-lg px-4 py-3 text-[#4ade80] font-mono text-sm break-all select-all">
+          <code className="flex-1 bg-gray-950 border border-gray-800 rounded-lg px-4 py-3 text-neon font-mono text-sm break-all select-all">
             {WALLET_ADDRESS}
           </code>
           <button
             onClick={copyWallet}
-            className="px-4 py-3 rounded-lg bg-[#4ade80] text-gray-950 text-sm font-semibold hover:bg-green-300 transition-colors whitespace-nowrap"
+            className="px-4 py-3 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-semibold transition-all duration-200 hover:bg-neon-glow/10 hover:shadow-[0_0_20px_-4px] hover:shadow-neon-glow/40 whitespace-nowrap"
           >
             {copied ? "Copied!" : "Copy"}
           </button>

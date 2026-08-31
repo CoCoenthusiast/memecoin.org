@@ -55,7 +55,8 @@ export const ModelName = {
   Reply: 'Reply',
   Reaction: 'Reaction',
   Report: 'Report',
-  ProfileComment: 'ProfileComment'
+  ProfileComment: 'ProfileComment',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,6 +78,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
+  usernameLower: 'usernameLower',
   email: 'email',
   password: 'password',
   role: 'role',
@@ -107,6 +109,7 @@ export const PostScalarFieldEnum = {
   videoUrl: 'videoUrl',
   viewCount: 'viewCount',
   lastActivityAt: 'lastActivityAt',
+  pinned: 'pinned',
   authorId: 'authorId',
   channelId: 'channelId'
 } as const
@@ -162,6 +165,19 @@ export const ProfileCommentScalarFieldEnum = {
 } as const
 
 export type ProfileCommentScalarFieldEnum = (typeof ProfileCommentScalarFieldEnum)[keyof typeof ProfileCommentScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  actorId: 'actorId',
+  postId: 'postId',
+  message: 'message',
+  read: 'read',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

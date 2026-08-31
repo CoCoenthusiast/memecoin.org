@@ -3,6 +3,7 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { CHANNELS } from "@/lib/constants"
 import { AuthGuard } from "@/components/AuthGuard"
+import { FormatToolbar } from "@/components/FormatToolbar"
 
 export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [title, setTitle] = useState("")
@@ -16,11 +17,11 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [uploading, setUploading] = useState(false)
   const imageRef = useRef<HTMLInputElement>(null)
   const videoRef = useRef<HTMLInputElement>(null)
+  const bodyRef = useRef<HTMLTextAreaElement>(null)
   const router = useRouter()
 
   const activeSlug = channelSlug || selectedChannel
   const isPnlFlex = activeSlug === "pnl-flex"
-  const hasMedia = !!imageUrl || !!videoUrl
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -156,7 +157,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
             onChange={(e) => setTitle(e.target.value)}
             maxLength={200}
             required
-            className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
             placeholder="Post title"
           />
         </div>
@@ -171,7 +172,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
               value={selectedChannel}
               onChange={(e) => setSelectedChannel(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
             >
               <option value="">Select a channel</option>
               {CHANNELS.map((channel) => (
@@ -187,14 +188,16 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
           <label htmlFor="body" className="block text-sm font-medium text-gray-300 mb-1">
             Body
           </label>
+          <FormatToolbar value={body} onChange={setBody} textareaRef={bodyRef} />
           <textarea
             id="body"
+            ref={bodyRef}
             value={body}
             onChange={(e) => setBody(e.target.value)}
             maxLength={10000}
             required
             rows={10}
-            className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
+            className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
             placeholder="Write your post..."
           />
         </div>
@@ -226,7 +229,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
                 accept="image/jpeg,image/png,image/webp"
                 onChange={handleImageUpload}
                 disabled={uploading || !!videoUrl}
-                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-gray-800 file:text-gray-300 hover:file:bg-gray-700 file:cursor-pointer disabled:opacity-50"
+                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border file:border-neon-glow file:bg-transparent file:text-neon-glow hover:file:bg-neon-glow/10 file:cursor-pointer disabled:opacity-50"
               />
             )}
           </div>
@@ -259,7 +262,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
                 accept="video/mp4,video/webm,video/quicktime"
                 onChange={handleVideoUpload}
                 disabled={uploading || !!imageUrl}
-                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-gray-800 file:text-gray-300 hover:file:bg-gray-700 file:cursor-pointer disabled:opacity-50"
+                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border file:border-neon-glow file:bg-transparent file:text-neon-glow hover:file:bg-neon-glow/10 file:cursor-pointer disabled:opacity-50"
               />
             )}
           </div>
@@ -276,7 +279,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
         <button
           type="submit"
           disabled={submitting || uploading}
-          className="w-full px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2.5 rounded-xl bg-transparent border border-neon-glow text-neon-glow font-medium transition-all duration-200 hover:bg-neon-glow/10 hover:shadow-[0_0_20px_-4px] hover:shadow-neon-glow/40 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {submitting ? "Posting..." : "Create Post"}
         </button>

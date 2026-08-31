@@ -44,6 +44,7 @@ export type PostMinAggregateOutputType = {
   videoUrl: string | null
   viewCount: number | null
   lastActivityAt: Date | null
+  pinned: boolean | null
   authorId: string | null
   channelId: string | null
 }
@@ -58,6 +59,7 @@ export type PostMaxAggregateOutputType = {
   videoUrl: string | null
   viewCount: number | null
   lastActivityAt: Date | null
+  pinned: boolean | null
   authorId: string | null
   channelId: string | null
 }
@@ -72,6 +74,7 @@ export type PostCountAggregateOutputType = {
   videoUrl: number
   viewCount: number
   lastActivityAt: number
+  pinned: number
   authorId: number
   channelId: number
   _all: number
@@ -96,6 +99,7 @@ export type PostMinAggregateInputType = {
   videoUrl?: true
   viewCount?: true
   lastActivityAt?: true
+  pinned?: true
   authorId?: true
   channelId?: true
 }
@@ -110,6 +114,7 @@ export type PostMaxAggregateInputType = {
   videoUrl?: true
   viewCount?: true
   lastActivityAt?: true
+  pinned?: true
   authorId?: true
   channelId?: true
 }
@@ -124,6 +129,7 @@ export type PostCountAggregateInputType = {
   videoUrl?: true
   viewCount?: true
   lastActivityAt?: true
+  pinned?: true
   authorId?: true
   channelId?: true
   _all?: true
@@ -225,6 +231,7 @@ export type PostGroupByOutputType = {
   videoUrl: string | null
   viewCount: number
   lastActivityAt: Date
+  pinned: boolean
   authorId: string
   channelId: string
   _count: PostCountAggregateOutputType | null
@@ -262,6 +269,7 @@ export type PostWhereInput = {
   videoUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   viewCount?: Prisma.IntFilter<"Post"> | number
   lastActivityAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  pinned?: Prisma.BoolFilter<"Post"> | boolean
   authorId?: Prisma.StringFilter<"Post"> | string
   channelId?: Prisma.StringFilter<"Post"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -269,6 +277,7 @@ export type PostWhereInput = {
   replies?: Prisma.ReplyListRelationFilter
   reactions?: Prisma.ReactionListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type PostOrderByWithRelationInput = {
@@ -281,6 +290,7 @@ export type PostOrderByWithRelationInput = {
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  pinned?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
@@ -288,6 +298,7 @@ export type PostOrderByWithRelationInput = {
   replies?: Prisma.ReplyOrderByRelationAggregateInput
   reactions?: Prisma.ReactionOrderByRelationAggregateInput
   reports?: Prisma.ReportOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -303,6 +314,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   videoUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   viewCount?: Prisma.IntFilter<"Post"> | number
   lastActivityAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  pinned?: Prisma.BoolFilter<"Post"> | boolean
   authorId?: Prisma.StringFilter<"Post"> | string
   channelId?: Prisma.StringFilter<"Post"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -310,6 +322,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   replies?: Prisma.ReplyListRelationFilter
   reactions?: Prisma.ReactionListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type PostOrderByWithAggregationInput = {
@@ -322,6 +335,7 @@ export type PostOrderByWithAggregationInput = {
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  pinned?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   _count?: Prisma.PostCountOrderByAggregateInput
@@ -344,6 +358,7 @@ export type PostScalarWhereWithAggregatesInput = {
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   viewCount?: Prisma.IntWithAggregatesFilter<"Post"> | number
   lastActivityAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
+  pinned?: Prisma.BoolWithAggregatesFilter<"Post"> | boolean
   authorId?: Prisma.StringWithAggregatesFilter<"Post"> | string
   channelId?: Prisma.StringWithAggregatesFilter<"Post"> | string
 }
@@ -358,11 +373,13 @@ export type PostCreateInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutPostInput
 }
 
 export type PostUncheckedCreateInput = {
@@ -375,11 +392,13 @@ export type PostUncheckedCreateInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostUpdateInput = {
@@ -392,11 +411,13 @@ export type PostUpdateInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateInput = {
@@ -409,11 +430,13 @@ export type PostUncheckedUpdateInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostCreateManyInput = {
@@ -426,6 +449,7 @@ export type PostCreateManyInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
   channelId: string
 }
@@ -440,6 +464,7 @@ export type PostUpdateManyMutationInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PostUncheckedUpdateManyInput = {
@@ -452,6 +477,7 @@ export type PostUncheckedUpdateManyInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -476,6 +502,7 @@ export type PostCountOrderByAggregateInput = {
   videoUrl?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  pinned?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
 }
@@ -494,6 +521,7 @@ export type PostMaxOrderByAggregateInput = {
   videoUrl?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  pinned?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
 }
@@ -508,6 +536,7 @@ export type PostMinOrderByAggregateInput = {
   videoUrl?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   lastActivityAt?: Prisma.SortOrder
+  pinned?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
 }
@@ -618,6 +647,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type PostCreateNestedOneWithoutRepliesInput = {
   create?: Prisma.XOR<Prisma.PostCreateWithoutRepliesInput, Prisma.PostUncheckedCreateWithoutRepliesInput>
   connectOrCreate?: Prisma.PostCreateOrConnectWithoutRepliesInput
@@ -664,6 +697,20 @@ export type PostUpdateOneWithoutReportsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PostUpdateToOneWithWhereWithoutReportsInput, Prisma.PostUpdateWithoutReportsInput>, Prisma.PostUncheckedUpdateWithoutReportsInput>
 }
 
+export type PostCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.PostCreateWithoutNotificationsInput, Prisma.PostUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.PostCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.PostWhereUniqueInput
+}
+
+export type PostUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.PostCreateWithoutNotificationsInput, Prisma.PostUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.PostCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.PostUpsertWithoutNotificationsInput
+  connect?: Prisma.PostWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PostUpdateToOneWithWhereWithoutNotificationsInput, Prisma.PostUpdateWithoutNotificationsInput>, Prisma.PostUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type PostCreateWithoutAuthorInput = {
   id?: string
   title: string
@@ -674,10 +721,12 @@ export type PostCreateWithoutAuthorInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutAuthorInput = {
@@ -690,10 +739,12 @@ export type PostUncheckedCreateWithoutAuthorInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutAuthorInput = {
@@ -735,6 +786,7 @@ export type PostScalarWhereInput = {
   videoUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   viewCount?: Prisma.IntFilter<"Post"> | number
   lastActivityAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  pinned?: Prisma.BoolFilter<"Post"> | boolean
   authorId?: Prisma.StringFilter<"Post"> | string
   channelId?: Prisma.StringFilter<"Post"> | string
 }
@@ -749,10 +801,12 @@ export type PostCreateWithoutChannelInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutChannelInput = {
@@ -765,10 +819,12 @@ export type PostUncheckedCreateWithoutChannelInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutChannelInput = {
@@ -807,10 +863,12 @@ export type PostCreateWithoutRepliesInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutRepliesInput = {
@@ -823,10 +881,12 @@ export type PostUncheckedCreateWithoutRepliesInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
   channelId: string
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutRepliesInput = {
@@ -855,10 +915,12 @@ export type PostUpdateWithoutRepliesInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutRepliesInput = {
@@ -871,10 +933,12 @@ export type PostUncheckedUpdateWithoutRepliesInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostCreateWithoutReactionsInput = {
@@ -887,10 +951,12 @@ export type PostCreateWithoutReactionsInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutReactionsInput = {
@@ -903,10 +969,12 @@ export type PostUncheckedCreateWithoutReactionsInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutReactionsInput = {
@@ -935,10 +1003,12 @@ export type PostUpdateWithoutReactionsInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutReactionsInput = {
@@ -951,10 +1021,12 @@ export type PostUncheckedUpdateWithoutReactionsInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostCreateWithoutReportsInput = {
@@ -967,10 +1039,12 @@ export type PostCreateWithoutReportsInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   author: Prisma.UserCreateNestedOneWithoutPostsInput
   channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
   replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutPostInput
 }
 
 export type PostUncheckedCreateWithoutReportsInput = {
@@ -983,10 +1057,12 @@ export type PostUncheckedCreateWithoutReportsInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
   channelId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutReportsInput = {
@@ -1015,10 +1091,12 @@ export type PostUpdateWithoutReportsInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutReportsInput = {
@@ -1031,10 +1109,100 @@ export type PostUncheckedUpdateWithoutReportsInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutPostNestedInput
+}
+
+export type PostCreateWithoutNotificationsInput = {
+  id?: string
+  title: string
+  body: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  imageUrl?: string | null
+  videoUrl?: string | null
+  viewCount?: number
+  lastActivityAt?: Date | string
+  pinned?: boolean
+  author: Prisma.UserCreateNestedOneWithoutPostsInput
+  channel: Prisma.ChannelCreateNestedOneWithoutPostsInput
+  replies?: Prisma.ReplyCreateNestedManyWithoutPostInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutPostInput
+  reports?: Prisma.ReportCreateNestedManyWithoutPostInput
+}
+
+export type PostUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  title: string
+  body: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  imageUrl?: string | null
+  videoUrl?: string | null
+  viewCount?: number
+  lastActivityAt?: Date | string
+  pinned?: boolean
+  authorId: string
+  channelId: string
+  replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutPostInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutPostInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutPostInput
+}
+
+export type PostCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.PostWhereUniqueInput
+  create: Prisma.XOR<Prisma.PostCreateWithoutNotificationsInput, Prisma.PostUncheckedCreateWithoutNotificationsInput>
+}
+
+export type PostUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.PostUpdateWithoutNotificationsInput, Prisma.PostUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.PostCreateWithoutNotificationsInput, Prisma.PostUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.PostWhereInput
+}
+
+export type PostUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.PostWhereInput
+  data: Prisma.XOR<Prisma.PostUpdateWithoutNotificationsInput, Prisma.PostUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type PostUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
+  channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
+  replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+}
+
+export type PostUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  channelId?: Prisma.StringFieldUpdateOperationsInput | string
+  replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostCreateManyAuthorInput = {
@@ -1047,6 +1215,7 @@ export type PostCreateManyAuthorInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   channelId: string
 }
 
@@ -1060,10 +1229,12 @@ export type PostUpdateWithoutAuthorInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channel?: Prisma.ChannelUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutAuthorInput = {
@@ -1076,10 +1247,12 @@ export type PostUncheckedUpdateWithoutAuthorInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateManyWithoutAuthorInput = {
@@ -1092,6 +1265,7 @@ export type PostUncheckedUpdateManyWithoutAuthorInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1105,6 +1279,7 @@ export type PostCreateManyChannelInput = {
   videoUrl?: string | null
   viewCount?: number
   lastActivityAt?: Date | string
+  pinned?: boolean
   authorId: string
 }
 
@@ -1118,10 +1293,12 @@ export type PostUpdateWithoutChannelInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   author?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateWithoutChannelInput = {
@@ -1134,10 +1311,12 @@ export type PostUncheckedUpdateWithoutChannelInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutPostNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutPostNestedInput
   reports?: Prisma.ReportUncheckedUpdateManyWithoutPostNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostUncheckedUpdateManyWithoutChannelInput = {
@@ -1150,6 +1329,7 @@ export type PostUncheckedUpdateManyWithoutChannelInput = {
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1162,12 +1342,14 @@ export type PostCountOutputType = {
   replies: number
   reactions: number
   reports: number
+  notifications: number
 }
 
 export type PostCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   replies?: boolean | PostCountOutputTypeCountRepliesArgs
   reactions?: boolean | PostCountOutputTypeCountReactionsArgs
   reports?: boolean | PostCountOutputTypeCountReportsArgs
+  notifications?: boolean | PostCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -1201,6 +1383,13 @@ export type PostCountOutputTypeCountReportsArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.ReportWhereInput
 }
 
+/**
+ * PostCountOutputType without action
+ */
+export type PostCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1212,6 +1401,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   videoUrl?: boolean
   viewCount?: boolean
   lastActivityAt?: boolean
+  pinned?: boolean
   authorId?: boolean
   channelId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1219,6 +1409,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   replies?: boolean | Prisma.Post$repliesArgs<ExtArgs>
   reactions?: boolean | Prisma.Post$reactionsArgs<ExtArgs>
   reports?: boolean | Prisma.Post$reportsArgs<ExtArgs>
+  notifications?: boolean | Prisma.Post$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.PostCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["post"]>
 
@@ -1232,6 +1423,7 @@ export type PostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   videoUrl?: boolean
   viewCount?: boolean
   lastActivityAt?: boolean
+  pinned?: boolean
   authorId?: boolean
   channelId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1248,6 +1440,7 @@ export type PostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   videoUrl?: boolean
   viewCount?: boolean
   lastActivityAt?: boolean
+  pinned?: boolean
   authorId?: boolean
   channelId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1264,17 +1457,19 @@ export type PostSelectScalar = {
   videoUrl?: boolean
   viewCount?: boolean
   lastActivityAt?: boolean
+  pinned?: boolean
   authorId?: boolean
   channelId?: boolean
 }
 
-export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "createdAt" | "updatedAt" | "imageUrl" | "videoUrl" | "viewCount" | "lastActivityAt" | "authorId" | "channelId", ExtArgs["result"]["post"]>
+export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "createdAt" | "updatedAt" | "imageUrl" | "videoUrl" | "viewCount" | "lastActivityAt" | "pinned" | "authorId" | "channelId", ExtArgs["result"]["post"]>
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
   replies?: boolean | Prisma.Post$repliesArgs<ExtArgs>
   reactions?: boolean | Prisma.Post$reactionsArgs<ExtArgs>
   reports?: boolean | Prisma.Post$reportsArgs<ExtArgs>
+  notifications?: boolean | Prisma.Post$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.PostCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PostIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1294,6 +1489,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     replies: Prisma.$ReplyPayload<ExtArgs>[]
     reactions: Prisma.$ReactionPayload<ExtArgs>[]
     reports: Prisma.$ReportPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1305,6 +1501,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     videoUrl: string | null
     viewCount: number
     lastActivityAt: Date
+    pinned: boolean
     authorId: string
     channelId: string
   }, ExtArgs["result"]["post"]>
@@ -1706,6 +1903,7 @@ export interface Prisma__PostClient<T, Null = never, ExtArgs extends runtime.Typ
   replies<T extends Prisma.Post$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reactions<T extends Prisma.Post$reactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$reactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.Post$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.Post$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1744,6 +1942,7 @@ export interface PostFieldRefs {
   readonly videoUrl: Prisma.FieldRef<"Post", 'String'>
   readonly viewCount: Prisma.FieldRef<"Post", 'Int'>
   readonly lastActivityAt: Prisma.FieldRef<"Post", 'DateTime'>
+  readonly pinned: Prisma.FieldRef<"Post", 'Boolean'>
   readonly authorId: Prisma.FieldRef<"Post", 'String'>
   readonly channelId: Prisma.FieldRef<"Post", 'String'>
 }
@@ -2211,6 +2410,30 @@ export type Post$reportsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * Post.notifications
+ */
+export type Post$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

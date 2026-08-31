@@ -52,3 +52,8 @@ export type Report = Prisma.ReportModel
  * 
  */
 export type ProfileComment = Prisma.ProfileCommentModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

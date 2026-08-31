@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 const MAX_SIZE = 2 * 1024 * 1024;
-const MIME_EXT: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-};
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const BUCKET = "avatars";
+
+async function ensureBucketPublic() {
+  const { error } = await supabaseAdmin.storage.updateBucket(BUCKET, { public: true });
+  if (error && error.message.includes("Bucket not found")) {
+    await supabaseAdmin.storage.createBucket(BUCKET, { public: true });
+  }
+}
 
 export const POST = withErrorHandling(async function POST(
   request: NextRequest,
@@ -18,8 +21,11 @@ export const POST = withErrorHandling(async function POST(
 ) {
   const { user } = await requireAuth();
   const { username } = await params;
+  const usernameLower = username.toLowerCase();
 
-  const profile = await prisma.user.findUnique({ where: { username } });
+  const profile = await prisma.user.findUnique({
+    where: { usernameLower },
+  });
   if (!profile) {
     return apiError("User not found", 404);
   }
@@ -33,21 +39,33 @@ export const POST = withErrorHandling(async function POST(
     return apiError("No file provided");
   }
 
-  const ext = MIME_EXT[file.type];
-  if (!ext) {
+  if (!ALLOWED_TYPES.includes(file.type)) {
     return apiError("Invalid file type. Only JPEG, PNG or WebP are allowed");
   }
   if (file.size > MAX_SIZE) {
     return apiError("File too large. Maximum size is 2MB");
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const dir = path.join(process.cwd(), "public", "uploads", "avatars");
-  await mkdir(dir, { recursive: true });
-  const fileName = `${profile.id}.${ext}`;
-  await writeFile(path.join(dir, fileName), buffer);
+  await ensureBucketPublic();
 
-  const avatarUrl = `/uploads/avatars/${fileName}`;
+  const ext = file.type === "image/jpeg" ? "jpg" : file.type === "image/png" ? "png" : "webp";
+  const fileName = `${user.id}-${Date.now()}.${ext}`;
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  const { error: uploadError } = await supabaseAdmin.storage
+    .from(BUCKET)
+    .upload(fileName, buffer, { contentType: file.type });
+
+  if (uploadError) {
+    return apiError("Failed to upload avatar");
+  }
+
+  const { data: urlData } = supabaseAdmin.storage
+    .from(BUCKET)
+    .getPublicUrl(fileName);
+
+  const avatarUrl = urlData.publicUrl;
   await prisma.user.update({
     where: { id: profile.id },
     data: { avatarUrl },

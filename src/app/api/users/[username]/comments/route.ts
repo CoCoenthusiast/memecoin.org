@@ -8,8 +8,11 @@ export const GET = withErrorHandling(async function GET(
   { params }: { params: Promise<{ username: string }> }
 ) {
   const { username } = await params;
+  const usernameLower = username.toLowerCase();
 
-  const profile = await prisma.user.findUnique({ where: { username } });
+  const profile = await prisma.user.findUnique({
+    where: { usernameLower },
+  });
   if (!profile) {
     return apiError("User not found", 404);
   }
@@ -34,8 +37,11 @@ export const POST = withErrorHandling(async function POST(
 ) {
   const { user } = await requireAuth();
   const { username } = await params;
+  const usernameLower = username.toLowerCase();
 
-  const profile = await prisma.user.findUnique({ where: { username } });
+  const profile = await prisma.user.findUnique({
+    where: { usernameLower },
+  });
   if (!profile) {
     return apiError("User not found", 404);
   }

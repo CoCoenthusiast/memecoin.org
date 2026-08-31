@@ -12,7 +12,8 @@ export const GET = withErrorHandling(async function GET(
     where: { slug },
     include: {
       posts: {
-        orderBy: { lastActivityAt: "desc" },
+        orderBy: [{ pinned: "desc" }, { lastActivityAt: "desc" }],
+        take: 50,
         select: {
           id: true,
           title: true,
@@ -21,7 +22,8 @@ export const GET = withErrorHandling(async function GET(
           videoUrl: true,
           createdAt: true,
           viewCount: true,
-          author: { select: { id: true, username: true } },
+          pinned: true,
+          author: { select: { id: true, username: true, avatarUrl: true } },
           _count: { select: { replies: true, reactions: true } },
         },
       },

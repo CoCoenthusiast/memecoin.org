@@ -32,7 +32,24 @@ export const POST = withErrorHandling(async function POST(
     },
   });
 
-  prisma.post.update({ where: { id }, data: { lastActivityAt: new Date() } }).catch(() => {});
+  if (post.authorId !== user.id) {
+    prisma.notification
+      .create({
+        data: {
+          userId: post.authorId,
+          actorId: user.id,
+          postId: id,
+          message: `${user.username} replied to your post "${post.title}"`,
+        },
+      })
+      .catch((e) => {
+        console.error("Failed to create notification", e);
+      });
+  }
+
+  prisma.post.update({ where: { id }, data: { lastActivityAt: new Date() } }).catch((e) => {
+    console.error("Failed to update post lastActivityAt", e);
+  });
 
   return NextResponse.json(reply, { status: 201 });
 });

@@ -27,21 +27,37 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
   async function handleDelete(reportId: string, targetType: "post" | "reply", targetId: string) {
     setBusyId(reportId)
     setError("")
-    const res = await fetch(`/api/${targetType}s/${targetId}`, { method: "DELETE" })
-    if (!res.ok) {
-      const data = await res.json()
-      setError(data.error || "Failed to delete content")
+    try {
+      const res = await fetch(`/api/${targetType}s/${targetId}`, { method: "DELETE" })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        setError(data.error || "Failed to delete content")
+      } else {
+        router.refresh()
+      }
+    } catch {
+      setError("Something went wrong")
+    } finally {
+      setBusyId(null)
     }
-    setBusyId(null)
-    router.refresh()
   }
 
   async function handleResolve(reportId: string) {
     setBusyId(reportId)
     setError("")
-    await fetch(`/api/reports/${reportId}`, { method: "PATCH" })
-    setBusyId(null)
-    router.refresh()
+    try {
+      const res = await fetch(`/api/reports/${reportId}`, { method: "PATCH" })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        setError(data.error || "Failed to dismiss report")
+      } else {
+        router.refresh()
+      }
+    } catch {
+      setError("Something went wrong")
+    } finally {
+      setBusyId(null)
+    }
   }
 
   if (reports.length === 0) {
@@ -78,11 +94,11 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
                     <img
                       src={report.reportedUser.avatarUrl}
                       alt={report.reportedUser.username}
-                      className="w-6 h-6 rounded-full object-cover border border-gray-700"
+                      className="w-10 h-10 rounded-full object-cover border border-gray-700"
                     />
                   ) : (
-                    <div className="w-6 h-6 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center">
-                      <svg className="w-3.5 h-3.5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                    <div className="w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                       </svg>
                     </div>
@@ -114,7 +130,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
               <button
                 onClick={() => handleResolve(report.id)}
                 disabled={busyId === report.id}
-                className="px-3 py-1.5 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] text-sm font-medium hover:bg-green-500/10 transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors disabled:opacity-50"
               >
                 Dismiss report
               </button>

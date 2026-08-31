@@ -1,13 +1,14 @@
 import Link from "next/link"
 import { ReactionBar } from "@/components/ReactionBar"
 import { ContentActions } from "@/components/ContentActions"
+import { FormattedText } from "@/components/FormattedText"
 
 type ReplyListProps = {
   replies: Array<{
     id: string
     body: string
     createdAt: string
-    author: { id: string; username: string }
+    author: { id: string; username: string; avatarUrl?: string | null }
     reactions: Array<{ id: string; type: string; userId: string }>
   }>
   currentUserId?: string
@@ -39,9 +40,18 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
     <div className="space-y-4">
       {replies.map((reply) => (
         <div key={reply.id} className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-          <p className="text-sm text-gray-200 whitespace-pre-wrap">{reply.body}</p>
+          <p className="text-sm text-gray-200 whitespace-pre-wrap">
+            <FormattedText text={reply.body} />
+          </p>
           <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
-            <span>
+            <span className="flex items-center gap-1.5">
+              {reply.author.avatarUrl && (
+                <img
+                  src={reply.author.avatarUrl}
+                  alt={reply.author.username}
+                  className="w-8 h-8 rounded-lg object-cover border border-gray-700"
+                />
+              )}
               <Link
                 href={`/profile/${reply.author.username}`}
                 className="text-gray-300 hover:text-white transition-colors"

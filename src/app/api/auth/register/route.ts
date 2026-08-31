@@ -35,12 +35,12 @@ export const POST = withErrorHandling(async function POST(
 
   const existingUser = await prisma.user.findFirst({
     where: {
-      OR: [{ username: body.username }, { email: body.email }],
+      OR: [{ usernameLower: body.username.toLowerCase() }, { email: body.email }],
     },
   });
 
   if (existingUser) {
-    if (existingUser.username === body.username) {
+    if (existingUser.usernameLower === body.username.toLowerCase()) {
       return apiError("Username already taken", 409);
     }
     return apiError("Email already taken", 409);
@@ -51,6 +51,7 @@ export const POST = withErrorHandling(async function POST(
   const user = await prisma.user.create({
     data: {
       username: body.username,
+      usernameLower: body.username.toLowerCase(),
       email: body.email,
       password: hashedPassword,
     },

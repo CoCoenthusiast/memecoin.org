@@ -4,7 +4,7 @@ export function Logo({ size = 28 }: { size?: number }) {
       width={size}
       height={size}
       viewBox="0 0 40 40"
-      stroke="#4ade80"
+      stroke="var(--color-neon)"
       strokeWidth="1.5"
       fill="none"
       strokeLinecap="round"
@@ -17,7 +17,7 @@ export function Logo({ size = 28 }: { size?: number }) {
       <path d="M11,20 Q20,13 29,20 Q20,27 11,20" />
 
       {/* Pupil */}
-      <circle cx="20" cy="20" r="2" fill="#4ade80" stroke="none" />
+      <circle cx="20" cy="20" r="2" fill="var(--color-neon)" stroke="none" />
     </svg>
   )
 }

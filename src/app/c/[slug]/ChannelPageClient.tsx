@@ -21,7 +21,7 @@ export default function ChannelPageClient({ channel: initialChannel }: { channel
       </div>
       <Link
         href={`/new-post?channel=${channel.slug}`}
-        className="inline-block mb-6 px-4 py-2 rounded-lg bg-transparent border border-[#4ade80] text-[#4ade80] hover:bg-green-500/10 transition-colors"
+        className="inline-block mb-6 px-4 py-2 rounded-lg bg-transparent border border-neon-glow text-neon-glow hover:bg-neon-glow/10 transition-colors"
       >
         + New Post
       </Link>

@@ -13,14 +13,14 @@ export const GET = withErrorHandling(async function GET(
     prisma.post.findUnique({
       where: { id },
       include: {
-        author: { select: { id: true, username: true } },
+        author: { select: { id: true, username: true, avatarUrl: true } },
         channel: { select: { id: true, slug: true, name: true } },
       },
     }),
     prisma.reply.findMany({
       where: { postId: id },
       include: {
-        author: { select: { id: true, username: true } },
+        author: { select: { id: true, username: true, avatarUrl: true } },
         reactions: { select: { id: true, type: true, userId: true } },
       },
     }),
@@ -34,7 +34,9 @@ export const GET = withErrorHandling(async function GET(
     return apiError("Post not found", 404);
   }
 
-  prisma.post.update({ where: { id }, data: { viewCount: { increment: 1 } } }).catch(() => {});
+  prisma.post.update({ where: { id }, data: { viewCount: { increment: 1 } } }).catch((e) => {
+    console.error("Failed to increment view count", e);
+  });
 
   return NextResponse.json({ ...post, replies, reactions: postReactions });
 });

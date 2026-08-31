@@ -17,6 +17,7 @@ enum Role {
 model User {
   id        String   @id @default(cuid())
   username  String   @unique
+  usernameLower String @unique
   email     String   @unique
   password  String
   role      Role     @default(USER)
@@ -30,6 +31,8 @@ model User {
   reportsReceived        Report[]         @relation("ReportedUser")
   writtenProfileComments ProfileComment[] @relation("ProfileCommentAuthor")
   profileComments        ProfileComment[] @relation("ProfileCommentProfileUser")
+  notifications          Notification[]   @relation("NotificationRecipient")
+  sentNotifications      Notification[]   @relation("NotificationActor")
 }
 
 model Channel {
@@ -52,6 +55,7 @@ model Post {
   videoUrl        String?
   viewCount       Int      @default(0)
   lastActivityAt  DateTime @default(now())
+  pinned          Boolean  @default(false)
 
   author   User    @relation(fields: [authorId], references: [id])
   authorId String
@@ -62,6 +66,7 @@ model Post {
   replies   Reply[]
   reactions Reaction[]
   reports   Report[]
+  notifications Notification[]
 }
 
 model Reply {
@@ -133,4 +138,21 @@ model ProfileComment {
 
   profileUser   User @relation("ProfileCommentProfileUser", fields: [profileUserId], references: [id])
   profileUserId String
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  actorId   String
+  postId    String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation("NotificationRecipient", fields: [userId], references: [id], onDelete: Cascade)
+  actor User @relation("NotificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
 }
