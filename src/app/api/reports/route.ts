@@ -5,6 +5,21 @@ import { apiError, getBody, withErrorHandling } from "@/lib/api";
 
 const VALID_REASONS = ["Spam", "Scam", "Offensive content", "Other"];
 
+function notifyAdmins(message: string, postId: string, actorId: string) {
+  prisma.user
+    .findMany({ where: { role: "ADMIN" }, select: { id: true } })
+    .then((admins) => {
+      Promise.allSettled(
+        admins.map((a) =>
+          prisma.notification.create({
+            data: { userId: a.id, actorId, postId, message },
+          })
+        )
+      );
+    })
+    .catch((e) => console.error("Failed to notify admins of report", e));
+}
+
 export const POST = withErrorHandling(async function POST(
   request: NextRequest
 ) {
@@ -52,11 +67,15 @@ export const POST = withErrorHandling(async function POST(
         postId: body.postId,
       },
     });
+    notifyAdmins(`${user.username} reported a post: "${post.title}"`, body.postId!, user.id);
     return NextResponse.json(report, { status: 201 });
   }
 
   if (hasReply) {
-    const reply = await prisma.reply.findUnique({ where: { id: body.replyId! } });
+    const reply = await prisma.reply.findUnique({
+      where: { id: body.replyId! },
+      select: { authorId: true, post: { select: { id: true, title: true } } },
+    });
     if (!reply) {
       return apiError("Reply not found", 404);
     }
@@ -78,6 +97,11 @@ export const POST = withErrorHandling(async function POST(
         replyId: body.replyId,
       },
     });
+    notifyAdmins(
+      `${user.username} reported a reply on post "${reply.post.title}"`,
+      reply.post.id,
+      user.id
+    );
     return NextResponse.json(report, { status: 201 });
   }
 

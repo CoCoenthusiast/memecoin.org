@@ -51,6 +51,11 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
 
   useEffect(() => { loadPost() }, [loadPost])
 
+  useEffect(() => {
+    const interval = setInterval(() => loadPost(), 30000)
+    return () => clearInterval(interval)
+  }, [loadPost])
+
   const handlePostDeleted = useCallback(() => {
     if (post.channel?.slug) {
       router.push(`/c/${post.channel.slug}`)
