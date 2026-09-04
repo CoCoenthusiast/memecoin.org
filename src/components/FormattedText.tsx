@@ -1,12 +1,19 @@
+"use client";
 import React from "react";
+import Link from "next/link";
+import { StyledUsername } from "@/components/StyledUsername";
 
-const TOKEN_REGEX = /(`[^`]+`)|(\*\*[^*]+\*\*)|(https?:\/\/[^\s]+)/g;
+const TOKEN_REGEX =
+  /(`[^`]+`)|(\*\*[^*]+\*\*)|(https?:\/\/[^\s]+)|(@[A-Za-z0-9_]+)/g;
+
+export type MentionData = { nameStyle?: string | null; isVip?: boolean };
+export type MentionDataMap = Record<string, MentionData>;
 
 function stripTrailingPunct(url: string): string {
   return url.replace(/[.,;:!?]+$/, "");
 }
 
-function renderInline(text: string): React.ReactNode {
+function renderInline(text: string, mentionData: MentionDataMap): React.ReactNode {
   const nodes: React.ReactNode[] = [];
   let lastIndex = 0;
   let key = 0;
@@ -16,7 +23,7 @@ function renderInline(text: string): React.ReactNode {
     if (match.index > lastIndex) {
       nodes.push(text.slice(lastIndex, match.index));
     }
-    const [, code, bold, url] = match;
+    const [, code, bold, url, mention] = match;
     const k = `seg-${key++}`;
     if (code) {
       nodes.push(
@@ -46,6 +53,33 @@ function renderInline(text: string): React.ReactNode {
           {href}
         </a>
       );
+    } else if (mention) {
+      const username = mention.slice(1);
+      const md = mentionData[username.toLowerCase()];
+      const hasStyle = !!(md && md.nameStyle);
+      nodes.push(
+        <Link
+          key={k}
+          href={`/profile/${username}`}
+          onClick={(e) => e.stopPropagation()}
+          className={
+            hasStyle
+              ? ""
+              : "text-neon font-semibold hover:text-neon-light underline decoration-neon/30 underline-offset-2 transition-colors"
+          }
+        >
+          <StyledUsername
+            username={mention}
+            nameStyle={md?.nameStyle}
+            isVip={md?.isVip}
+            className={
+              hasStyle
+                ? "font-semibold text-neon underline decoration-neon/30 underline-offset-2"
+                : ""
+            }
+          />
+        </Link>
+      );
     }
     lastIndex = TOKEN_REGEX.lastIndex;
   }
@@ -55,6 +89,12 @@ function renderInline(text: string): React.ReactNode {
   return nodes.length > 0 ? nodes : text;
 }
 
-export function FormattedText({ text }: { text: string }) {
-  return <>{renderInline(text)}</>;
+export function FormattedText({
+  text,
+  mentionData = {},
+}: {
+  text: string;
+  mentionData?: MentionDataMap;
+}) {
+  return <>{renderInline(text, mentionData)}</>;
 }

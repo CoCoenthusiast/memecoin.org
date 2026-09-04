@@ -2,7 +2,14 @@
 import { useState, useEffect, createContext, useContext, useCallback } from "react"
 
 type Session = {
-  user: { id: string; username: string; email: string; role: "USER" | "ADMIN" } | null
+  user: {
+    id: string
+    username: string
+    email: string
+    role: "USER" | "ADMIN"
+    isVip: boolean
+    vipExpiresAt: string | null
+  } | null
   loading: boolean
 }
 

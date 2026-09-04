@@ -24,7 +24,7 @@ export const GET = withErrorHandling(async function GET(
       id: true,
       body: true,
       createdAt: true,
-      author: { select: { id: true, username: true, avatarUrl: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
     },
   });
 
@@ -64,7 +64,7 @@ export const POST = withErrorHandling(async function POST(
       id: true,
       body: true,
       createdAt: true,
-      author: { select: { id: true, username: true, avatarUrl: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
     },
   });
 

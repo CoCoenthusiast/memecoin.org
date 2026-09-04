@@ -8,6 +8,9 @@ import { NewReplyForm } from "@/components/NewReplyForm"
 import { ContentActions } from "@/components/ContentActions"
 import { FormattedText } from "@/components/FormattedText"
 import { useSession } from "@/hooks/useSession"
+import { StyledUsername } from "@/components/StyledUsername"
+import { isUserVip } from "@/lib/vip"
+import { useMentionData, extractMentions } from "@/hooks/useMentionData"
 function timeAgo(dateStr: string) {
   const now = Date.now()
   const then = new Date(dateStr).getTime()
@@ -32,6 +35,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
   const router = useRouter()
   const [post, setPost] = useState(initialPost)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const mentionData = useMentionData(post ? extractMentions(post.body) : [])
 
   const closeLightbox = useCallback(() => setLightboxOpen(false), [])
 
@@ -90,14 +94,18 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
               />
             )}
             <Link href={`/profile/${post.author.username}`} className="text-gray-300 hover:text-white transition-colors">
-              {post.author.username}
+              <StyledUsername
+                username={post.author.username}
+                nameStyle={post.author.nameStyle}
+                isVip={isUserVip(post.author)}
+              />
             </Link>
           </span>
           <span>{timeAgo(post.createdAt)}</span>
           <span>{post._count?.replies ?? 0} replies</span>
         </div>
         <p className="text-gray-200 whitespace-pre-wrap leading-relaxed mb-4">
-          <FormattedText text={post.body} />
+          <FormattedText text={post.body} mentionData={mentionData} />
         </p>
         {post.imageUrl && (
           <div className="mb-4">
@@ -128,7 +136,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
             currentUserId={user?.id}
             onSuccess={loadPost}
           />
-          <ContentActions targetId={post.id} targetType="post" onSuccess={handlePostDeleted} />
+          <ContentActions targetId={post.id} targetType="post" authorId={post.author.id} createdAt={post.createdAt} onSuccess={handlePostDeleted} />
         </div>
       </article>
 

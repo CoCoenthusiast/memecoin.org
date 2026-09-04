@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import PostCard from "@/components/PostCard"
+import { StyledUsername } from "@/components/StyledUsername"
+import { isUserVip } from "@/lib/vip"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -90,7 +92,11 @@ export default function SearchPage() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-lg font-bold text-gray-100 group-hover:text-neon transition-colors">
-                  {memberProfile.username}
+                  <StyledUsername
+                    username={memberProfile.username}
+                    nameStyle={memberProfile.nameStyle}
+                    isVip={isUserVip(memberProfile)}
+                  />
                 </div>
                 <div className="text-sm text-gray-400">Member since {formatDate(memberProfile.createdAt)}</div>
                 <div className="flex gap-5 mt-2 text-xs text-gray-500">

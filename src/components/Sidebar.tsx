@@ -112,6 +112,18 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
           </Link>
         ))}
 
+        {user && user.role === "ADMIN" && (
+          <div className="pt-3">
+            <Link
+              href="/admin/reports"
+              onClick={onClose}
+              className="block px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+            >
+              Admin Panel
+            </Link>
+          </div>
+        )}
+
         <div className="pt-3">
           <Link
             href="/about"

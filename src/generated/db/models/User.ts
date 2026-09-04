@@ -32,6 +32,10 @@ export type UserMinAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   avatarUrl: string | null
+  bannerUrl: string | null
+  isVip: boolean | null
+  vipExpiresAt: Date | null
+  nameStyle: string | null
   createdAt: Date | null
 }
 
@@ -43,6 +47,10 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   role: $Enums.Role | null
   avatarUrl: string | null
+  bannerUrl: string | null
+  isVip: boolean | null
+  vipExpiresAt: Date | null
+  nameStyle: string | null
   createdAt: Date | null
 }
 
@@ -54,6 +62,10 @@ export type UserCountAggregateOutputType = {
   password: number
   role: number
   avatarUrl: number
+  bannerUrl: number
+  isVip: number
+  vipExpiresAt: number
+  nameStyle: number
   createdAt: number
   _all: number
 }
@@ -67,6 +79,10 @@ export type UserMinAggregateInputType = {
   password?: true
   role?: true
   avatarUrl?: true
+  bannerUrl?: true
+  isVip?: true
+  vipExpiresAt?: true
+  nameStyle?: true
   createdAt?: true
 }
 
@@ -78,6 +94,10 @@ export type UserMaxAggregateInputType = {
   password?: true
   role?: true
   avatarUrl?: true
+  bannerUrl?: true
+  isVip?: true
+  vipExpiresAt?: true
+  nameStyle?: true
   createdAt?: true
 }
 
@@ -89,6 +109,10 @@ export type UserCountAggregateInputType = {
   password?: true
   role?: true
   avatarUrl?: true
+  bannerUrl?: true
+  isVip?: true
+  vipExpiresAt?: true
+  nameStyle?: true
   createdAt?: true
   _all?: true
 }
@@ -173,6 +197,10 @@ export type UserGroupByOutputType = {
   password: string
   role: $Enums.Role
   avatarUrl: string | null
+  bannerUrl: string | null
+  isVip: boolean
+  vipExpiresAt: Date | null
+  nameStyle: string | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -205,6 +233,10 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  bannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isVip?: Prisma.BoolFilter<"User"> | boolean
+  vipExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -225,6 +257,10 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVip?: Prisma.SortOrder
+  vipExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   posts?: Prisma.PostOrderByRelationAggregateInput
   replies?: Prisma.ReplyOrderByRelationAggregateInput
@@ -248,6 +284,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  bannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isVip?: Prisma.BoolFilter<"User"> | boolean
+  vipExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -268,6 +308,10 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVip?: Prisma.SortOrder
+  vipExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -285,6 +329,10 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isVip?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  vipExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  nameStyle?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -296,6 +344,10 @@ export type UserCreateInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -316,6 +368,10 @@ export type UserUncheckedCreateInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -336,6 +392,10 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -356,6 +416,10 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -376,6 +440,10 @@ export type UserCreateManyInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
 }
 
@@ -387,6 +455,10 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -398,6 +470,10 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -409,6 +485,10 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  isVip?: Prisma.SortOrder
+  vipExpiresAt?: Prisma.SortOrder
+  nameStyle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -420,6 +500,10 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  isVip?: Prisma.SortOrder
+  vipExpiresAt?: Prisma.SortOrder
+  nameStyle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -431,6 +515,10 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  isVip?: Prisma.SortOrder
+  vipExpiresAt?: Prisma.SortOrder
+  nameStyle?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -454,6 +542,14 @@ export type EnumRoleFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -596,6 +692,10 @@ export type UserCreateWithoutPostsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -615,6 +715,10 @@ export type UserUncheckedCreateWithoutPostsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -650,6 +754,10 @@ export type UserUpdateWithoutPostsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -669,6 +777,10 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -688,6 +800,10 @@ export type UserCreateWithoutRepliesInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -707,6 +823,10 @@ export type UserUncheckedCreateWithoutRepliesInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -742,6 +862,10 @@ export type UserUpdateWithoutRepliesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -761,6 +885,10 @@ export type UserUncheckedUpdateWithoutRepliesInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -780,6 +908,10 @@ export type UserCreateWithoutReactionsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -799,6 +931,10 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -834,6 +970,10 @@ export type UserUpdateWithoutReactionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -853,6 +993,10 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -872,6 +1016,10 @@ export type UserCreateWithoutReportsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -891,6 +1039,10 @@ export type UserUncheckedCreateWithoutReportsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -915,6 +1067,10 @@ export type UserCreateWithoutReportsReceivedInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -934,6 +1090,10 @@ export type UserUncheckedCreateWithoutReportsReceivedInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -969,6 +1129,10 @@ export type UserUpdateWithoutReportsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -988,6 +1152,10 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1018,6 +1186,10 @@ export type UserUpdateWithoutReportsReceivedInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1037,6 +1209,10 @@ export type UserUncheckedUpdateWithoutReportsReceivedInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1056,6 +1232,10 @@ export type UserCreateWithoutWrittenProfileCommentsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1075,6 +1255,10 @@ export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1099,6 +1283,10 @@ export type UserCreateWithoutProfileCommentsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1118,6 +1306,10 @@ export type UserUncheckedCreateWithoutProfileCommentsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1153,6 +1345,10 @@ export type UserUpdateWithoutWrittenProfileCommentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1172,6 +1368,10 @@ export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1202,6 +1402,10 @@ export type UserUpdateWithoutProfileCommentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1221,6 +1425,10 @@ export type UserUncheckedUpdateWithoutProfileCommentsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1240,6 +1448,10 @@ export type UserCreateWithoutNotificationsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1259,6 +1471,10 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1283,6 +1499,10 @@ export type UserCreateWithoutSentNotificationsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1302,6 +1522,10 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
   password: string
   role?: $Enums.Role
   avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  nameStyle?: string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1337,6 +1561,10 @@ export type UserUpdateWithoutNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1356,6 +1584,10 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1386,6 +1618,10 @@ export type UserUpdateWithoutSentNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1405,6 +1641,10 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1527,6 +1767,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   avatarUrl?: boolean
+  bannerUrl?: boolean
+  isVip?: boolean
+  vipExpiresAt?: boolean
+  nameStyle?: boolean
   createdAt?: boolean
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -1548,6 +1792,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   avatarUrl?: boolean
+  bannerUrl?: boolean
+  isVip?: boolean
+  vipExpiresAt?: boolean
+  nameStyle?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1559,6 +1807,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   avatarUrl?: boolean
+  bannerUrl?: boolean
+  isVip?: boolean
+  vipExpiresAt?: boolean
+  nameStyle?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1570,10 +1822,14 @@ export type UserSelectScalar = {
   password?: boolean
   role?: boolean
   avatarUrl?: boolean
+  bannerUrl?: boolean
+  isVip?: boolean
+  vipExpiresAt?: boolean
+  nameStyle?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "nameStyle" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -1610,6 +1866,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.Role
     avatarUrl: string | null
+    bannerUrl: string | null
+    isVip: boolean
+    vipExpiresAt: Date | null
+    nameStyle: string | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -2050,6 +2310,10 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
+  readonly bannerUrl: Prisma.FieldRef<"User", 'String'>
+  readonly isVip: Prisma.FieldRef<"User", 'Boolean'>
+  readonly vipExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly nameStyle: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

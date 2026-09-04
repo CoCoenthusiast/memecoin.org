@@ -3,7 +3,7 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { CHANNELS } from "@/lib/constants"
 import { AuthGuard } from "@/components/AuthGuard"
-import { FormatToolbar } from "@/components/FormatToolbar"
+import { MentionTextarea } from "@/components/MentionTextarea"
 
 export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [title, setTitle] = useState("")
@@ -17,7 +17,6 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [uploading, setUploading] = useState(false)
   const imageRef = useRef<HTMLInputElement>(null)
   const videoRef = useRef<HTMLInputElement>(null)
-  const bodyRef = useRef<HTMLTextAreaElement>(null)
   const router = useRouter()
 
   const activeSlug = channelSlug || selectedChannel
@@ -188,16 +187,12 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
           <label htmlFor="body" className="block text-sm font-medium text-gray-300 mb-1">
             Body
           </label>
-          <FormatToolbar value={body} onChange={setBody} textareaRef={bodyRef} />
-          <textarea
+          <MentionTextarea
             id="body"
-            ref={bodyRef}
             value={body}
-            onChange={(e) => setBody(e.target.value)}
-            maxLength={10000}
-            required
+            onChange={setBody}
             rows={10}
-            className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
+            maxLength={10000}
             placeholder="Write your post..."
           />
         </div>

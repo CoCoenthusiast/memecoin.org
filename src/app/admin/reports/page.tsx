@@ -2,6 +2,7 @@ import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { AdminReportsList } from "@/components/AdminReportsList";
+import { VipManagement } from "@/components/VipManagement";
 
 export const dynamic = "force-dynamic";
 
@@ -47,6 +48,10 @@ export default async function AdminReportsPage() {
           createdAt: report.createdAt.toISOString(),
         }))}
       />
+
+      <div className="mt-8">
+        <VipManagement />
+      </div>
     </div>
   );
 }

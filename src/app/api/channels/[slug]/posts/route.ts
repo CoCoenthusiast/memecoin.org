@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
+import { notifyMentions } from "@/lib/mentions";
 
 function isValidSupabaseUrl(urlStr: string): boolean {
   try {
@@ -63,6 +64,8 @@ export const POST = withErrorHandling(async function POST(
       channelId: channel.id,
     },
   });
+
+  notifyMentions(body.body, { id: user.id, username: user.username }, post.id, "post");
 
   return NextResponse.json(post, { status: 201 });
 });

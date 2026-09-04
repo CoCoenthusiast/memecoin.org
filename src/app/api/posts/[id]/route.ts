@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth, isAdmin } from "@/lib/auth";
+import { withinDeleteWindow } from "@/lib/deleteWindow";
 
 export const GET = withErrorHandling(async function GET(
   _request: NextRequest,
@@ -13,14 +14,15 @@ export const GET = withErrorHandling(async function GET(
     prisma.post.findUnique({
       where: { id },
       include: {
-        author: { select: { id: true, username: true, avatarUrl: true } },
+        author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
         channel: { select: { id: true, slug: true, name: true } },
       },
     }),
     prisma.reply.findMany({
       where: { postId: id },
       include: {
-        author: { select: { id: true, username: true, avatarUrl: true } },
+        author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+        parent: { select: { id: true, body: true, author: { select: { username: true } } } },
         reactions: { select: { id: true, type: true, userId: true } },
       },
     }),
@@ -46,15 +48,20 @@ export const DELETE = withErrorHandling(async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { user } = await requireAuth();
-  if (!isAdmin(user)) {
-    return apiError("Forbidden", 403);
-  }
 
   const { id } = await params;
 
   const post = await prisma.post.findUnique({ where: { id } });
   if (!post) {
     return apiError("Post not found", 404);
+  }
+
+  if (!isAdmin(user) && user.id !== post.authorId) {
+    return apiError("Forbidden", 403);
+  }
+
+  if (!isAdmin(user) && !withinDeleteWindow(post.createdAt)) {
+    return apiError("Deletion window has expired", 403);
   }
 
   await prisma.report.updateMany({

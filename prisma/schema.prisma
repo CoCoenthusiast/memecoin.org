@@ -22,6 +22,10 @@ model User {
   password  String
   role      Role     @default(USER)
   avatarUrl String?
+  bannerUrl String?
+  isVip     Boolean  @default(false)
+  vipExpiresAt DateTime?
+  nameStyle String?
   createdAt DateTime @default(now())
 
   posts     Post[]

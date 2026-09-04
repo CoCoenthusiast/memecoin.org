@@ -1,14 +1,21 @@
 "use client"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { AuthGuard } from "@/components/AuthGuard"
-import { FormatToolbar } from "@/components/FormatToolbar"
+import { MentionTextarea } from "@/components/MentionTextarea"
 
-export function NewReplyForm({ postId, onSuccess }: { postId: string; onSuccess?: () => void }) {
+type NewReplyFormProps = {
+  postId: string
+  parentReplyId?: string
+  replyingTo?: string
+  onSuccess?: () => void
+  onCancel?: () => void
+}
+
+export function NewReplyForm({ postId, parentReplyId, replyingTo, onSuccess, onCancel }: NewReplyFormProps) {
   const [body, setBody] = useState("")
   const [error, setError] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [optimistic, setOptimistic] = useState<string | null>(null)
-  const bodyRef = useRef<HTMLTextAreaElement>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -23,7 +30,10 @@ export function NewReplyForm({ postId, onSuccess }: { postId: string; onSuccess?
       const res = await fetch(`/api/posts/${postId}/replies`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body: text }),
+        body: JSON.stringify({
+          body: text,
+          parentId: parentReplyId || undefined,
+        }),
       })
 
       if (!res.ok) {
@@ -47,6 +57,22 @@ export function NewReplyForm({ postId, onSuccess }: { postId: string; onSuccess?
 
   return (
     <AuthGuard>
+      {replyingTo && (
+        <div className="mb-3 flex items-center gap-2 text-xs text-gray-400">
+          <span>
+            Replying to <span className="text-neon">@{replyingTo}</span>
+          </span>
+          {onCancel && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="text-gray-500 hover:text-white transition-colors underline"
+            >
+              cancel
+            </button>
+          )}
+        </div>
+      )}
       {optimistic && (
         <div className="mb-3 p-4 bg-gray-900/50 border border-gray-800/50 rounded-xl opacity-60">
           <p className="text-sm text-gray-200 whitespace-pre-wrap">{optimistic}</p>
@@ -54,19 +80,13 @@ export function NewReplyForm({ postId, onSuccess }: { postId: string; onSuccess?
         </div>
       )}
       <form onSubmit={handleSubmit} className="space-y-3">
-        <div>
-          <FormatToolbar value={body} onChange={setBody} textareaRef={bodyRef} />
-          <textarea
-            ref={bodyRef}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-            rows={3}
-            maxLength={10000}
-              className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
-            placeholder="Write a reply..."
-          />
-        </div>
+        <MentionTextarea
+          value={body}
+          onChange={setBody}
+          rows={3}
+          maxLength={10000}
+          placeholder={replyingTo ? `Reply to @${replyingTo}...` : "Write a reply..."}
+        />
 
         {error && (
           <div className="text-sm text-red-400 bg-red-900/20 border border-red-800 rounded-xl px-4 py-2">

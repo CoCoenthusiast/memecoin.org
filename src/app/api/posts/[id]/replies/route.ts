@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
+import { notifyMentions } from "@/lib/mentions";
 
 export const POST = withErrorHandling(async function POST(
   request: NextRequest,
@@ -10,7 +11,7 @@ export const POST = withErrorHandling(async function POST(
   const { user } = await requireAuth();
   const { id } = await params;
 
-  const body = await getBody<{ body: string }>(request);
+  const body = await getBody<{ body: string; parentId?: string }>(request);
 
   if (!body.body || body.body.length < 1) {
     return apiError("Body is required");
@@ -24,15 +25,42 @@ export const POST = withErrorHandling(async function POST(
     return apiError("Post not found", 404);
   }
 
+  let parentReply: { id: string; authorId: string } | null = null;
+  if (body.parentId) {
+    parentReply = await prisma.reply.findFirst({
+      where: { id: body.parentId, postId: id },
+      select: { id: true, authorId: true },
+    });
+    if (!parentReply) {
+      return apiError("Parent reply not found", 404);
+    }
+  }
+
   const reply = await prisma.reply.create({
     data: {
       body: body.body,
       authorId: user.id,
       postId: id,
+      parentId: body.parentId || null,
     },
   });
 
-  if (post.authorId !== user.id) {
+  if (body.parentId && parentReply) {
+    if (parentReply.authorId !== user.id) {
+      prisma.notification
+        .create({
+          data: {
+            userId: parentReply.authorId,
+            actorId: user.id,
+            postId: id,
+            message: `${user.username} replied to your comment`,
+          },
+        })
+        .catch((e) => {
+          console.error("Failed to create reply notification", e);
+        });
+    }
+  } else if (post.authorId !== user.id) {
     prisma.notification
       .create({
         data: {
@@ -46,6 +74,8 @@ export const POST = withErrorHandling(async function POST(
         console.error("Failed to create notification", e);
       });
   }
+
+  notifyMentions(body.body, { id: user.id, username: user.username }, id, "comment");
 
   prisma.post.update({ where: { id }, data: { lastActivityAt: new Date() } }).catch((e) => {
     console.error("Failed to update post lastActivityAt", e);

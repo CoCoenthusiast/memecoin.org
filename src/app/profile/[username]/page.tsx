@@ -4,6 +4,9 @@ import { useParams } from "next/navigation"
 import PostCard from "@/components/PostCard"
 import { ContentActions } from "@/components/ContentActions"
 import { useSession } from "@/hooks/useSession"
+import { isUserVip } from "@/lib/vip"
+import { StyledName, nameStyleFromJson, type NameStyle } from "@/components/StyledName"
+import { StyledUsername } from "@/components/StyledUsername"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -38,10 +41,24 @@ export default function ProfilePage() {
   const [commentError, setCommentError] = useState("")
   const [posting, setPosting] = useState(false)
   const [uploadError, setUploadError] = useState("")
+  const [bannerError, setBannerError] = useState("")
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const bannerInputRef = useRef<HTMLInputElement>(null)
   const [activeTab, setActiveTab] = useState<"posts" | "mural">("posts")
+  const [nameStyle, setNameStyle] = useState<NameStyle>({
+    colors: ["#39ff14", "#00ffff"],
+    animation: "static",
+    speed: "medium",
+    glow: false,
+  })
+  const [savingStyle, setSavingStyle] = useState(false)
+  const [styleSaved, setStyleSaved] = useState("")
+  const [styleError, setStyleError] = useState("")
+  const [showStylePanel, setShowStylePanel] = useState(false)
 
   const isOwner = !!currentUser && currentUser.username === username
+  const canGif = isOwner && !!currentUser && isUserVip(currentUser)
+  const canBanner = isOwner && !!currentUser && isUserVip(currentUser)
 
   const loadProfile = useCallback(async () => {
     try {
@@ -51,6 +68,12 @@ export default function ProfilePage() {
       ])
       setProfile(prof)
       setComments(coms || [])
+      const saved = nameStyleFromJson(prof?.nameStyle)
+      if (saved) {
+        setNameStyle({ ...saved, speed: saved.speed || "medium" })
+      } else {
+        setStyleSaved("")
+      }
     } finally {
       setLoading(false)
     }
@@ -108,23 +131,88 @@ export default function ProfilePage() {
     e.target.value = ""
   }
 
+  async function handleBannerChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadError("")
+    setBannerError("")
+    const form = new FormData()
+    form.append("banner", file)
+    try {
+      const res = await fetch(`/api/users/${username}/banner`, {
+        method: "POST",
+        body: form,
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setProfile((p: any) => ({ ...p, bannerUrl: data.bannerUrl }))
+      } else {
+        const data = await res.json()
+        setBannerError(data.error || "Upload failed")
+      }
+    } catch {
+      setBannerError("Upload failed")
+    }
+    e.target.value = ""
+  }
+
+  async function handleSaveStyle() {
+    setSavingStyle(true)
+    setStyleSaved("")
+    setStyleError("")
+    const payload = JSON.stringify(nameStyle)
+    try {
+      const res = await fetch(`/api/users/${username}/style`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nameStyle: payload }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setProfile((p: any) => ({ ...p, nameStyle: data.nameStyle }))
+        setStyleSaved("Name style saved")
+        setShowStylePanel(false)
+      } else {
+        const data = await res.json()
+        setStyleError(data.error || "Failed to save name style")
+      }
+    } catch {
+      setStyleError("Something went wrong")
+    }
+    setSavingStyle(false)
+  }
+
   if (loading) return <div className="text-center text-gray-500 py-12">Loading...</div>
   if (!profile) return <div className="text-center text-gray-500 py-12">User not found</div>
 
   return (
     <div>
-      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-6">
-        <div className="flex items-start gap-4">
+      <div className="relative bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden mb-6">
+        {profile.bannerUrl && (
+          <>
+            <img
+              src={profile.bannerUrl}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gray-950/25" />
+          </>
+        )}
+        <div
+          className={`relative flex items-start gap-6 min-h-[300px] ${
+            profile.bannerUrl ? "p-8 pt-6" : "p-8"
+          }`}
+        >
           <div className="flex-shrink-0">
             {profile.avatarUrl ? (
               <img
                 src={profile.avatarUrl}
                 alt={profile.username}
-                className="w-36 h-36 rounded-xl object-cover border border-gray-700"
+                className="w-44 h-44 rounded-xl object-cover border border-gray-700"
               />
             ) : (
-              <div className="w-36 h-36 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center">
-                <svg className="w-16 h-16 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+              <div className="w-44 h-44 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center">
+                <svg className="w-20 h-20 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                 </svg>
               </div>
@@ -133,49 +221,187 @@ export default function ProfilePage() {
 
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-2xl font-bold text-gray-100">{profile.username}</h1>
+              <h1 className="text-2xl font-bold">
+                <StyledUsername
+                  username={profile.username}
+                  nameStyle={profile.nameStyle}
+                  isVip={isUserVip(profile)}
+                />
+              </h1>
               <ContentActions targetId={profile.id} targetType="user" onSuccess={loadProfile} />
             </div>
-            <p className="text-gray-400 text-sm mt-1">Member since {formatDate(profile.createdAt)}</p>
+            <p className="text-gray-300 text-sm mt-1">Member since {formatDate(profile.createdAt)}</p>
 
             <div className="flex gap-6 mt-4">
               <div>
                 <div className="text-xl font-bold text-gray-100">{profile.postCount}</div>
-                <div className="text-xs text-gray-500">Posts</div>
+                <div className="text-xs text-gray-300">Posts</div>
               </div>
               <div>
                 <div className="text-xl font-bold text-gray-100">{profile.replyCount}</div>
-                <div className="text-xs text-gray-500">Replies</div>
+                <div className="text-xs text-gray-300">Replies</div>
               </div>
               <div>
                 <div className="text-xl font-bold text-neon">{profile.totalReactions}</div>
-                <div className="text-xs text-gray-500">Reactions received</div>
+                <div className="text-xs text-gray-300">Reactions received</div>
               </div>
             </div>
 
             {isOwner && (
               <div className="mt-4">
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
-                >
-                  Change photo
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
+                  >
+                    Change photo
+                  </button>
+                  {canBanner && (
+                    <button
+                      onClick={() => bannerInputRef.current?.click()}
+                      className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
+                    >
+                      Change banner
+                    </button>
+                  )}
+                  {canBanner && (
+                    <button
+                      onClick={() => setShowStylePanel((v) => !v)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                        showStylePanel
+                          ? "bg-neon-glow/15 border border-neon-glow text-neon"
+                          : "bg-transparent border border-neon-glow text-neon-glow hover:bg-neon-glow/10"
+                      }`}
+                    >
+                      Customize name
+                    </button>
+                  )}
+                </div>
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/jpeg,image/png,image/webp"
+                  accept={
+                    canGif
+                      ? "image/jpeg,image/png,image/webp,image/gif"
+                      : "image/jpeg,image/png,image/webp"
+                  }
                   onChange={handleAvatarChange}
                   className="hidden"
                 />
+                <input
+                  ref={bannerInputRef}
+                  type="file"
+                  accept={
+                    canGif
+                      ? "image/jpeg,image/png,image/webp,image/gif"
+                      : "image/jpeg,image/png,image/webp"
+                  }
+                  onChange={handleBannerChange}
+                  className="hidden"
+                />
+                {canGif && (
+                  <p className="mt-2 text-xs text-neon">GIF supported</p>
+                )}
                 {uploadError && (
                   <p className="mt-2 text-sm text-red-400">{uploadError}</p>
+                )}
+                {bannerError && (
+                  <p className="mt-2 text-sm text-red-400">{bannerError}</p>
                 )}
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {canBanner && showStylePanel && (
+        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-6">
+          <h2 className="text-lg font-semibold text-gray-100 mb-4">Customize your name</h2>
+
+          <div className="border border-gray-800 rounded-xl bg-gray-950/60 p-4 mb-5 flex items-center justify-center">
+            <StyledName text={profile.username} style={nameStyle} className="text-3xl font-bold" />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">Colors (gradient)</label>
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm text-gray-300">
+                  <input
+                    type="color"
+                    value={nameStyle.colors[0]}
+                    onChange={(e) =>
+                      setNameStyle((s) => ({ ...s, colors: [e.target.value, s.colors[1]] }))
+                    }
+                    className="w-10 h-10 rounded cursor-pointer border border-gray-700 bg-gray-900"
+                  />
+                  C1
+                </label>
+                <label className="flex items-center gap-2 text-sm text-gray-300">
+                  <input
+                    type="color"
+                    value={nameStyle.colors[1]}
+                    onChange={(e) =>
+                      setNameStyle((s) => ({ ...s, colors: [s.colors[0], e.target.value] }))
+                    }
+                    className="w-10 h-10 rounded cursor-pointer border border-gray-700 bg-gray-900"
+                  />
+                  C2
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">Animation</label>
+              <div className="flex flex-wrap gap-2">
+                {(
+                  [
+                    ["static", "Static"],
+                    ["shift", "Shift"],
+                    ["pulse", "Pulse"],
+                  ] as const
+                ).map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setNameStyle((s) => ({ ...s, animation: value }))}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+                      nameStyle.animation === value
+                        ? "bg-neon-glow/15 border-neon-glow text-neon"
+                        : "border-gray-700 text-gray-300 hover:border-gray-500"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 flex items-center justify-between gap-4">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={nameStyle.glow}
+                onChange={(e) => setNameStyle((s) => ({ ...s, glow: e.target.checked }))}
+                className="w-4 h-4 accent-neon"
+              />
+              <span className="text-sm text-gray-300">Glow (neon shadow)</span>
+            </label>
+            <div className="flex items-center gap-3">
+              {styleSaved && <span className="text-sm text-neon">{styleSaved}</span>}
+              {styleError && <span className="text-sm text-red-400">{styleError}</span>}
+              <button
+                onClick={handleSaveStyle}
+                disabled={savingStyle}
+                className="px-4 py-2 rounded-lg bg-neon-glow text-gray-950 text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              >
+                {savingStyle ? "Saving..." : "Save"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="flex gap-6 border-b border-gray-800 mb-6">
         <button
@@ -246,7 +472,13 @@ export default function ProfilePage() {
                 <div key={comment.id} className="bg-gray-950 border border-gray-800 rounded-xl p-4">
                   <p className="text-sm text-gray-200 whitespace-pre-wrap">{comment.body}</p>
                   <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="text-gray-300 font-medium">{comment.author.username}</span>
+                    <span className="text-gray-300 font-medium">
+                      <StyledUsername
+                        username={comment.author.username}
+                        nameStyle={comment.author.nameStyle}
+                        isVip={isUserVip(comment.author)}
+                      />
+                    </span>
                     <span>{timeAgo(comment.createdAt)}</span>
                   </div>
                 </div>

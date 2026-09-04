@@ -13,6 +13,8 @@ export type AuthUser = {
   username: string;
   email: string;
   role: "USER" | "ADMIN";
+  isVip: boolean;
+  vipExpiresAt: Date | null;
 };
 
 export function isAdmin(user: { role: string }): boolean {
@@ -71,7 +73,7 @@ export async function getSession(): Promise<{
   const { prisma } = await import("@/lib/db");
   const user = await prisma.user.findUnique({
     where: { id: payload.userId },
-    select: { id: true, username: true, email: true, role: true },
+    select: { id: true, username: true, email: true, role: true, isVip: true, vipExpiresAt: true },
   });
   if (!user) return null;
 

@@ -3,6 +3,8 @@ import { useState } from "react"
 import Link from "next/link"
 import { ContentActions } from "@/components/ContentActions"
 import { useSession } from "@/hooks/useSession"
+import { StyledUsername } from "@/components/StyledUsername"
+import { isUserVip } from "@/lib/vip"
 
 type PostCardProps = {
   post: {
@@ -12,7 +14,14 @@ type PostCardProps = {
     createdAt: string
     viewCount?: number
     pinned?: boolean
-    author: { id: string; username: string; avatarUrl?: string | null }
+    author: {
+      id: string
+      username: string
+      avatarUrl?: string | null
+      nameStyle?: string | null
+      isVip?: boolean
+      vipExpiresAt?: string | null
+    }
     channel?: { slug: string; name: string }
     _count: { replies: number; reactions: number }
   }
@@ -104,7 +113,11 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
               href={`/profile/${post.author.username}`}
               className="relative z-10 text-gray-300 hover:text-white transition-colors"
             >
-              {post.author.username}
+              <StyledUsername
+                username={post.author.username}
+                nameStyle={post.author.nameStyle}
+                isVip={isUserVip(post.author)}
+              />
             </Link>
           </span>
           <span>{timeAgo(post.createdAt)}</span>
@@ -121,7 +134,7 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
             </button>
           )}
           <div className="relative z-10 ml-auto">
-            <ContentActions targetId={post.id} targetType="post" onSuccess={onContentAction} />
+            <ContentActions targetId={post.id} targetType="post" authorId={post.author.id} createdAt={post.createdAt} onSuccess={onContentAction} />
           </div>
         </div>
       </div>

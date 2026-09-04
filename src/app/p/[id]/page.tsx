@@ -40,11 +40,12 @@ export default async function PostPage({ params }: Props) {
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
-      author: { select: { id: true, username: true, avatarUrl: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
       channel: { select: { id: true, slug: true, name: true } },
       replies: {
         include: {
-          author: { select: { id: true, username: true, avatarUrl: true } },
+          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+          parent: { select: { id: true, body: true, author: { select: { username: true } } } },
           reactions: { select: { id: true, type: true, userId: true } },
         },
       },

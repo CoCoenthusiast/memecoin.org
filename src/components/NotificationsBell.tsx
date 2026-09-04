@@ -1,7 +1,9 @@
 "use client"
 import { useState, useEffect, useCallback, useRef } from "react"
+import { createPortal } from "react-dom"
 import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
+import { StyledUsername } from "@/components/StyledUsername"
 
 type NotificationItem = {
   id: string
@@ -9,6 +11,7 @@ type NotificationItem = {
   read: boolean
   postId: string
   createdAt: string
+  actor?: { username: string; nameStyle?: string | null; isVip?: boolean } | null
 }
 
 function timeAgo(dateStr: string) {
@@ -25,12 +28,16 @@ function timeAgo(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" })
 }
 
+const MENU_WIDTH = 320
+
 export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
   const { user, loading: sessionLoading } = useSession()
   const [items, setItems] = useState<NotificationItem[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [open, setOpen] = useState(false)
   const [fetching, setFetching] = useState(false)
+  const [coords, setCoords] = useState<{ top: number; left: number } | null>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
 
   const load = useCallback(async (markRead: boolean) => {
@@ -50,6 +57,17 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
     }
   }, [])
 
+  const positionMenu = useCallback(() => {
+    const btn = buttonRef.current
+    if (!btn) return
+    const rect = btn.getBoundingClientRect()
+    const vw = window.innerWidth
+    const width = Math.min(MENU_WIDTH, vw - 16)
+    let left = rect.left
+    if (left + width > vw) left = Math.max(8, vw - width - 8)
+    setCoords({ top: rect.bottom + 8, left })
+  }, [])
+
   useEffect(() => {
     if (sessionLoading || !user) return
     load(false)
@@ -60,21 +78,33 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
   useEffect(() => {
     if (!open) return
     function onDocClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      const menu = menuRef.current
+      const btn = buttonRef.current
+      const target = e.target as Node
+      if (!menu?.contains(target) && !btn?.contains(target)) {
         setOpen(false)
       }
     }
+    function onMove() {
+      positionMenu()
+    }
     document.addEventListener("mousedown", onDocClick)
-    return () => document.removeEventListener("mousedown", onDocClick)
-  }, [open])
+    window.addEventListener("scroll", onMove, true)
+    window.addEventListener("resize", onMove)
+    return () => {
+      document.removeEventListener("mousedown", onDocClick)
+      window.removeEventListener("scroll", onMove, true)
+      window.removeEventListener("resize", onMove)
+    }
+  }, [open, positionMenu, load])
 
   function toggle() {
     const next = !open
-    setOpen(next)
     if (next) {
-      // Opening the dropdown marks all notifications as read.
+      positionMenu()
       load(true)
     }
+    setOpen(next)
   }
 
   if (sessionLoading || !user) {
@@ -82,11 +112,13 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
   }
 
   return (
-    <div className="relative" ref={menuRef}>
+    <>
       <button
+        ref={buttonRef}
         onClick={toggle}
         aria-label="Notifications"
         title="Notifications"
+        aria-expanded={open}
         className="relative p-2 rounded-lg text-gray-400 hover:text-neon hover:bg-gray-800 transition-colors"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,34 +136,55 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
         )}
       </button>
 
-      {open && (
-        <div className="absolute left-0 top-full mt-2 w-80 max-w-[90vw] bg-gray-900 border border-gray-700 rounded-xl shadow-xl z-[100]">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
-            <span className="text-sm font-semibold text-gray-100 whitespace-nowrap">Notifications</span>
-            {fetching && <span className="text-xs text-gray-500">...</span>}
-          </div>
-          <div className="max-h-80 overflow-y-auto">
-            {items.length === 0 ? (
-              <p className="text-sm text-gray-500 px-4 py-6 text-center">No notifications yet.</p>
-            ) : (
-              items.map((n) => (
-                <Link
-                  key={n.id}
-                  href={`/p/${n.postId}`}
-                  onClick={() => {
-                    setOpen(false)
-                    onNavigate?.()
-                  }}
-                  className="block px-4 py-3 hover:bg-gray-800/60 transition-colors border-b border-gray-800/60 last:border-b-0"
-                >
-                  <p className="text-sm text-gray-200 leading-snug">{n.message}</p>
-                  <span className="text-xs text-gray-500 mt-0.5 inline-block">{timeAgo(n.createdAt)}</span>
-                </Link>
-              ))
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+      {open &&
+        coords &&
+        createPortal(
+          <div
+            ref={menuRef}
+            className="fixed bg-gray-900 border border-gray-700 rounded-xl shadow-2xl shadow-black/50 z-[100]"
+            style={{ top: coords.top, left: coords.left, width: Math.min(MENU_WIDTH, window.innerWidth - 16) }}
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+              <span className="text-sm font-semibold text-gray-100 whitespace-nowrap">Notifications</span>
+              {fetching && <span className="text-xs text-gray-500">...</span>}
+            </div>
+            <div className="max-h-80 overflow-y-auto">
+              {items.length === 0 ? (
+                <p className="text-sm text-gray-500 px-4 py-6 text-center">No notifications yet.</p>
+              ) : (
+                items.map((n) => (
+                  <Link
+                    key={n.id}
+                    href={`/p/${n.postId}`}
+                    onClick={() => {
+                      setOpen(false)
+                      onNavigate?.()
+                    }}
+                    className="block px-4 py-3 hover:bg-gray-800/60 transition-colors border-b border-gray-800/60 last:border-b-0"
+                  >
+                    <p className="text-sm text-gray-200 leading-snug">
+                      {n.actor && n.message.startsWith(`${n.actor.username} `) ? (
+                        <>
+                          <StyledUsername
+                            username={`@${n.actor.username}`}
+                            nameStyle={n.actor.nameStyle}
+                            isVip={n.actor.isVip}
+                            className="text-neon font-semibold"
+                          />
+                          {n.message.slice(n.actor.username.length)}
+                        </>
+                      ) : (
+                        n.message
+                      )}
+                    </p>
+                    <span className="text-xs text-gray-500 mt-0.5 inline-block">{timeAgo(n.createdAt)}</span>
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
+    </>
   )
 }

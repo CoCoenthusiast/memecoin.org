@@ -1,21 +1,31 @@
 "use client"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { useSession } from "@/hooks/useSession"
+import { withinDeleteWindow } from "@/lib/deleteWindow"
 
 const REASONS = ["Spam", "Scam", "Offensive content", "Other"]
 
 type ContentActionsProps = {
   targetId: string
   targetType: "post" | "reply" | "user"
+  authorId?: string
+  createdAt?: string
   onSuccess?: () => void
 }
 
-export function ContentActions({ targetId, targetType, onSuccess }: ContentActionsProps) {
+export function ContentActions({ targetId, targetType, authorId, createdAt, onSuccess }: ContentActionsProps) {
   const { user } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
   const [reported, setReported] = useState(false)
   const [error, setError] = useState("")
   const menuRef = useRef<HTMLDivElement>(null)
+
+  const canDelete = useMemo(() => {
+    if (!user) return false
+    if (targetType === "user") return false
+    if (user.role === "ADMIN") return true
+    return user.id === authorId && createdAt != null && withinDeleteWindow(createdAt)
+  }, [user, targetType, authorId, createdAt])
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
@@ -90,7 +100,7 @@ export function ContentActions({ targetId, targetType, onSuccess }: ContentActio
         </button>
       )}
 
-      {targetType !== "user" && user.role === "ADMIN" && (
+      {canDelete && (
         <button
           onClick={(e) => {
             e.preventDefault()
