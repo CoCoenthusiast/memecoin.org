@@ -11,8 +11,7 @@ const CHANNELS = [
   { slug: "general", name: "General Chat", description: "Open discussion about memecoins and trading" },
   { slug: "pnl-flex", name: "PnL Flex", description: "Post your profit/loss screenshots and results" },
   { slug: "questions", name: "Questions", description: "Q&A / help channel" },
-  { slug: "wallet-tracker", name: "Wallet Tracker List", description: "Share and discuss wallet addresses worth following" },
-  { slug: "twitter-tracker", name: "Twitter Tracker List", description: "Share and discuss Twitter/X accounts worth following" },
+  { slug: "trackers", name: "Trackers", description: "Share wallet addresses and Twitter/X accounts worth following" },
   { slug: "best-setup", name: "Best Setup", description: "Share your trading setups, tools, and workflows" },
   { slug: "solana", name: "Solana", description: "Solana-chain memecoins discussion" },
   { slug: "robinhood", name: "Robinhood", description: "Robinhood-related token discussion" },
@@ -91,13 +90,11 @@ async function main() {
     { channel: "questions", authorId: charlie.id, title: "What is slippage and what should I set it to?", body: "I see slippage settings in my DEX but I don't fully understand what it does. What's a safe slippage percentage for memecoin trades?" },
     { channel: "questions", authorId: diana.id, title: "Best resources for learning about tokenomics?", body: "I want to understand tokenomics better so I can evaluate projects more critically. Any recommended guides or courses?" },
 
-    // Wallet Tracker
-    { channel: "wallet-tracker", authorId: bob.id, title: "Follow this wallet for early entries", body: "This address has been consistently early on new launches. They seem to have good alpha. Worth keeping an eye on their moves." },
-    { channel: "wallet-tracker", authorId: alice.id, title: "Whale wallet accumulating $PEPE", body: "Noticed a large wallet stacking Pepe over the past week. Could be signaling something." },
-
-    // Twitter Tracker
-    { channel: "twitter-tracker", authorId: charlie.id, title: "This account calls pumps consistently", body: "Been following this account for a month and they've called 3 decent pumps. Not financial advice but interesting to watch." },
-    { channel: "twitter-tracker", authorId: diana.id, title: "Follow these alpha accounts", body: "Here's my curated list of Twitter accounts that share good memecoin analysis and timely calls." },
+    // Trackers
+    { channel: "trackers", authorId: bob.id, title: "Follow this wallet for early entries", body: "This address has been consistently early on new launches. They seem to have good alpha. Worth keeping an eye on their moves." },
+    { channel: "trackers", authorId: alice.id, title: "Whale wallet accumulating $PEPE", body: "Noticed a large wallet stacking Pepe over the past week. Could be signaling something." },
+    { channel: "trackers", authorId: charlie.id, title: "This account calls pumps consistently", body: "Been following this account for a month and they've called 3 decent pumps. Not financial advice but interesting to watch." },
+    { channel: "trackers", authorId: diana.id, title: "Follow these alpha accounts", body: "Here's my curated list of Twitter accounts that share good memecoin analysis and timely calls." },
 
     // Best Setup
     { channel: "best-setup", authorId: alice.id, title: "My trading setup: dual monitors + bots", body: "Running a 27-inch main display for charts and a secondary vertical monitor for Twitter and Discord. Using a custom bot for sniping new launches." },

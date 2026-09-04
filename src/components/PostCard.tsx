@@ -49,11 +49,7 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
   const [pinning, setPinning] = useState(false)
   const isUserAdmin = user?.role === "ADMIN"
   const preview = post.body.length > 150 ? post.body.slice(0, 150) + "..." : post.body
-  const isHot =
-    Date.now() - new Date(post.createdAt).getTime() <= 10 * 60 * 1000 ||
-    post._count.replies >= 3 ||
-    post._count.reactions >= 5 ||
-    (post.viewCount ?? 0) >= 20
+  const isHot = Date.now() - new Date(post.createdAt).getTime() <= 5 * 60 * 1000
 
   async function handleTogglePin() {
     setPinning(true)
