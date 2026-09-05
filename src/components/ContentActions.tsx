@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect, useRef, useMemo } from "react"
+import { createPortal } from "react-dom"
 import { useSession } from "@/hooks/useSession"
 import { withinDeleteWindow } from "@/lib/deleteWindow"
 import { parseApiError } from "@/lib/api"
@@ -17,9 +18,10 @@ type ContentActionsProps = {
 export function ContentActions({ targetId, targetType, authorId, createdAt, onSuccess }: ContentActionsProps) {
   const { user } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(null)
   const [reported, setReported] = useState(false)
   const [error, setError] = useState("")
-  const menuRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   const canDelete = useMemo(() => {
     if (!user) return false
@@ -29,14 +31,31 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
   }, [user, targetType, authorId, createdAt])
 
   useEffect(() => {
+    if (!menuOpen) return
     function onClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false)
-      }
+      const target = e.target as Node
+      if (triggerRef.current?.contains(target)) return
+      if ((e.target as HTMLElement).closest("[data-report-menu]")) return
+      setMenuOpen(false)
     }
     document.addEventListener("mousedown", onClickOutside)
     return () => document.removeEventListener("mousedown", onClickOutside)
-  }, [])
+  }, [menuOpen])
+
+  function toggleMenu() {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect()
+      const menuHeight = REASONS.length * 36 + 8
+      const spaceBelow = window.innerHeight - rect.bottom
+      const openUp = spaceBelow < menuHeight + 8
+      const top = openUp
+        ? rect.top - menuHeight - 4
+        : rect.bottom + 4
+      const left = Math.min(rect.right, window.innerWidth - 176)
+      setMenuPos({ top, left })
+    }
+    setMenuOpen((v) => !v)
+  }
 
   if (!user) return null
   if (targetType === "user" && user.id === targetId) return null
@@ -77,17 +96,18 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
   }
 
   return (
-    <div className="relative flex items-center gap-1" ref={menuRef}>
+    <div className="relative flex items-center gap-1">
       {error && <span className="text-xs text-red-400">{error}</span>}
 
       {reported ? (
         <span className="text-xs font-medium text-neon">Reported ✓</span>
       ) : (
         <button
+          ref={triggerRef}
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
-            setMenuOpen((v) => !v)
+            toggleMenu()
           }}
           aria-label="Report"
           className="p-1.5 rounded-lg text-gray-500 hover:text-yellow-400 hover:bg-gray-800 transition-colors"
@@ -116,8 +136,14 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
         </button>
       )}
 
-      {menuOpen && (
-        <div className="absolute right-0 top-full z-50 mt-1 w-44 bg-gray-900 border border-gray-700 rounded-xl shadow-xl overflow-hidden">
+      {menuOpen && menuPos && createPortal(
+        <div
+          data-report-menu
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+          className="fixed z-[9999] w-44 bg-gray-900 border border-gray-700 rounded-xl shadow-xl overflow-hidden"
+          style={{ top: menuPos.top, left: menuPos.left }}
+        >
           {REASONS.map((reason) => (
             <button
               key={reason}
@@ -131,7 +157,8 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
               {reason}
             </button>
           ))}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

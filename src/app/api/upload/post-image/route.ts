@@ -44,6 +44,7 @@ export const POST = withErrorHandling(async function POST(
     .upload(fileName, buffer, { contentType: file.type });
 
   if (uploadError) {
+    console.error("Supabase upload error:", JSON.stringify(uploadError, Object.getOwnPropertyNames(uploadError), 2));
     return apiError("Failed to upload image");
   }
 
