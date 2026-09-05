@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { CHANNELS } from "@/lib/constants"
 import { AuthGuard } from "@/components/AuthGuard"
 import { MentionTextarea } from "@/components/MentionTextarea"
+import { parseApiError } from "@/lib/api"
 
 export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [title, setTitle] = useState("")
@@ -35,8 +36,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
 
       const res = await fetch("/api/upload/post-image", { method: "POST", body: form })
       if (!res.ok) {
-        const data = await res.json()
-        setError(data.error || "Failed to upload image")
+        setError(await parseApiError(res))
         return
       }
 
@@ -64,8 +64,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
 
       const res = await fetch("/api/upload/post-video", { method: "POST", body: form })
       if (!res.ok) {
-        const data = await res.json()
-        setError(data.error || "Failed to upload video")
+        setError(await parseApiError(res))
         return
       }
 
@@ -121,8 +120,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        setError(data.error || "Failed to create post")
+        setError(await parseApiError(res))
         setSubmitting(false)
         setSending(false)
         return

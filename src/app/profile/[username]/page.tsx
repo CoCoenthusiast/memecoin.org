@@ -7,6 +7,7 @@ import { useSession } from "@/hooks/useSession"
 import { isUserVip } from "@/lib/vip"
 import { StyledName, nameStyleFromJson, type NameStyle } from "@/components/StyledName"
 import { StyledUsername } from "@/components/StyledUsername"
+import { parseApiError } from "@/lib/api"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -98,8 +99,7 @@ export default function ProfilePage() {
         const data = await fetch(`/api/users/${username}/comments`).then((r) => r.json())
         setComments(data)
       } else {
-        const data = await res.json()
-        setCommentError(data.error || "Failed to post comment")
+        setCommentError(await parseApiError(res))
       }
     } catch {
       setCommentError("Something went wrong")
@@ -122,8 +122,7 @@ export default function ProfilePage() {
         const data = await res.json()
         setProfile((p: any) => ({ ...p, avatarUrl: data.avatarUrl }))
       } else {
-        const data = await res.json()
-        setUploadError(data.error || "Upload failed")
+        setUploadError(await parseApiError(res))
       }
     } catch {
       setUploadError("Upload failed")
@@ -147,8 +146,7 @@ export default function ProfilePage() {
         const data = await res.json()
         setProfile((p: any) => ({ ...p, bannerUrl: data.bannerUrl }))
       } else {
-        const data = await res.json()
-        setBannerError(data.error || "Upload failed")
+        setBannerError(await parseApiError(res))
       }
     } catch {
       setBannerError("Upload failed")
@@ -173,8 +171,7 @@ export default function ProfilePage() {
         setStyleSaved("Name style saved")
         setShowStylePanel(false)
       } else {
-        const data = await res.json()
-        setStyleError(data.error || "Failed to save name style")
+        setStyleError(await parseApiError(res))
       }
     } catch {
       setStyleError("Something went wrong")

@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useMemo } from "react"
 import { useSession } from "@/hooks/useSession"
 import { withinDeleteWindow } from "@/lib/deleteWindow"
+import { parseApiError } from "@/lib/api"
 
 const REASONS = ["Spam", "Scam", "Offensive content", "Other"]
 
@@ -60,8 +61,7 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
       setReported(true)
       onSuccess?.()
     } else {
-      const data = await res.json()
-      setError(data.error || "Failed to report")
+      setError(await parseApiError(res))
     }
   }
 
@@ -72,8 +72,7 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
     if (res.ok) {
       onSuccess?.()
     } else {
-      const data = await res.json()
-      setError(data.error || "Failed to delete")
+      setError(await parseApiError(res))
     }
   }
 

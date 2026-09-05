@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { parseApiError } from "@/lib/api"
 
 type VipUser = {
   id: string
@@ -28,6 +29,7 @@ export function VipManagement() {
   const [notFound, setNotFound] = useState(false)
   const [error, setError] = useState("")
   const [busy, setBusy] = useState<string | null>(null)
+  const [forceLogoutMsg, setForceLogoutMsg] = useState("")
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -45,8 +47,7 @@ export function VipManagement() {
       setSearched(username.trim())
       setNotFound(true)
     } else {
-      const data = await res.json().catch(() => ({}))
-      setError(data.error || "Failed to search")
+      setError(await parseApiError(res))
     }
   }
 
@@ -66,8 +67,30 @@ export function VipManagement() {
         setSearched(data.user.username)
         router.refresh()
       } else {
-        const data = await res.json().catch(() => ({}))
-        setError(data.error || "Failed to update VIP")
+        setError(await parseApiError(res))
+      }
+    } catch {
+      setError("Something went wrong")
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function forceLogout() {
+    if (!user) return
+    setBusy("force-logout")
+    setForceLogoutMsg("")
+    setError("")
+    try {
+      const res = await fetch("/api/admin/force-logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id }),
+      })
+      if (res.ok) {
+        setForceLogoutMsg("User will be logged out on next request.")
+      } else {
+        setError(await parseApiError(res))
       }
     } catch {
       setError("Something went wrong")
@@ -145,7 +168,17 @@ export function VipManagement() {
             >
               {busy === "revoke" ? "Revoking..." : "Revoke VIP"}
             </button>
+            <button
+              onClick={forceLogout}
+              disabled={busy !== null}
+              className="px-3 py-2 rounded-lg bg-transparent border border-orange-500 text-orange-400 text-sm font-medium hover:bg-orange-500/10 transition-colors disabled:opacity-50"
+            >
+              {busy === "force-logout" ? "Logging out..." : "Force Logout"}
+            </button>
           </div>
+          {forceLogoutMsg && (
+            <p className="mt-3 text-sm text-orange-400">{forceLogoutMsg}</p>
+          )}
         </div>
       )}
     </div>

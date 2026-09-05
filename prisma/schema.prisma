@@ -26,6 +26,7 @@ model User {
   isVip     Boolean  @default(false)
   vipExpiresAt DateTime?
   nameStyle String?
+  tokenVersion Int    @default(0)
   createdAt DateTime @default(now())
 
   posts     Post[]
@@ -71,6 +72,9 @@ model Post {
   reactions Reaction[]
   reports   Report[]
   notifications Notification[]
+
+  @@index([lastActivityAt])
+  @@index([channelId, lastActivityAt])
 }
 
 model Reply {
@@ -91,6 +95,9 @@ model Reply {
 
   reactions Reaction[]
   reports   Report[]
+
+  @@index([postId, createdAt])
+  @@index([authorId])
 }
 
 model Reaction {
@@ -130,6 +137,7 @@ model Report {
   @@unique([reporterId, postId])
   @@unique([reporterId, replyId])
   @@unique([reporterId, reportedUserId])
+  @@index([status])
 }
 
 model ProfileComment {
@@ -159,4 +167,5 @@ model Notification {
 
   @@index([userId])
   @@index([read])
+  @@index([userId, read])
 }

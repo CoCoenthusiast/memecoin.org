@@ -30,7 +30,14 @@ export function useMentionData(usernames: string[]): MentionDataMap {
           return next;
         });
       })
-      .catch(() => {});
+      .catch((err) => {
+        console.error("[useMentionData] Failed to fetch mention data:", err);
+        setData((prev) => {
+          const next: MentionDataMap = {};
+          cache = next;
+          return next;
+        });
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 

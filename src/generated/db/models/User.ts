@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  tokenVersion: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  tokenVersion: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -36,6 +46,7 @@ export type UserMinAggregateOutputType = {
   isVip: boolean | null
   vipExpiresAt: Date | null
   nameStyle: string | null
+  tokenVersion: number | null
   createdAt: Date | null
 }
 
@@ -51,6 +62,7 @@ export type UserMaxAggregateOutputType = {
   isVip: boolean | null
   vipExpiresAt: Date | null
   nameStyle: string | null
+  tokenVersion: number | null
   createdAt: Date | null
 }
 
@@ -66,10 +78,19 @@ export type UserCountAggregateOutputType = {
   isVip: number
   vipExpiresAt: number
   nameStyle: number
+  tokenVersion: number
   createdAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  tokenVersion?: true
+}
+
+export type UserSumAggregateInputType = {
+  tokenVersion?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -83,6 +104,7 @@ export type UserMinAggregateInputType = {
   isVip?: true
   vipExpiresAt?: true
   nameStyle?: true
+  tokenVersion?: true
   createdAt?: true
 }
 
@@ -98,6 +120,7 @@ export type UserMaxAggregateInputType = {
   isVip?: true
   vipExpiresAt?: true
   nameStyle?: true
+  tokenVersion?: true
   createdAt?: true
 }
 
@@ -113,6 +136,7 @@ export type UserCountAggregateInputType = {
   isVip?: true
   vipExpiresAt?: true
   nameStyle?: true
+  tokenVersion?: true
   createdAt?: true
   _all?: true
 }
@@ -155,6 +179,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -185,6 +221,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -201,8 +239,11 @@ export type UserGroupByOutputType = {
   isVip: boolean
   vipExpiresAt: Date | null
   nameStyle: string | null
+  tokenVersion: number
   createdAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -237,6 +278,7 @@ export type UserWhereInput = {
   isVip?: Prisma.BoolFilter<"User"> | boolean
   vipExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
+  tokenVersion?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -261,6 +303,7 @@ export type UserOrderByWithRelationInput = {
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
+  tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   posts?: Prisma.PostOrderByRelationAggregateInput
   replies?: Prisma.ReplyOrderByRelationAggregateInput
@@ -288,6 +331,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isVip?: Prisma.BoolFilter<"User"> | boolean
   vipExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
+  tokenVersion?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -312,10 +356,13 @@ export type UserOrderByWithAggregationInput = {
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
+  tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -333,6 +380,7 @@ export type UserScalarWhereWithAggregatesInput = {
   isVip?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   vipExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   nameStyle?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  tokenVersion?: Prisma.IntWithAggregatesFilter<"User"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -348,6 +396,7 @@ export type UserCreateInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -372,6 +421,7 @@ export type UserUncheckedCreateInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -396,6 +446,7 @@ export type UserUpdateInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -420,6 +471,7 @@ export type UserUncheckedUpdateInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -444,6 +496,7 @@ export type UserCreateManyInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
 }
 
@@ -459,6 +512,7 @@ export type UserUpdateManyMutationInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -474,6 +528,7 @@ export type UserUncheckedUpdateManyInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -489,7 +544,12 @@ export type UserCountOrderByAggregateInput = {
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
+  tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  tokenVersion?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -504,6 +564,7 @@ export type UserMaxOrderByAggregateInput = {
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
+  tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -519,7 +580,12 @@ export type UserMinOrderByAggregateInput = {
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
+  tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  tokenVersion?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -550,6 +616,14 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -696,6 +770,7 @@ export type UserCreateWithoutPostsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -719,6 +794,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -758,6 +834,7 @@ export type UserUpdateWithoutPostsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -781,6 +858,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -804,6 +882,7 @@ export type UserCreateWithoutRepliesInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -827,6 +906,7 @@ export type UserUncheckedCreateWithoutRepliesInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -866,6 +946,7 @@ export type UserUpdateWithoutRepliesInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -889,6 +970,7 @@ export type UserUncheckedUpdateWithoutRepliesInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -912,6 +994,7 @@ export type UserCreateWithoutReactionsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -935,6 +1018,7 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -974,6 +1058,7 @@ export type UserUpdateWithoutReactionsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -997,6 +1082,7 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1020,6 +1106,7 @@ export type UserCreateWithoutReportsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1043,6 +1130,7 @@ export type UserUncheckedCreateWithoutReportsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1071,6 +1159,7 @@ export type UserCreateWithoutReportsReceivedInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1094,6 +1183,7 @@ export type UserUncheckedCreateWithoutReportsReceivedInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1133,6 +1223,7 @@ export type UserUpdateWithoutReportsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1156,6 +1247,7 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1190,6 +1282,7 @@ export type UserUpdateWithoutReportsReceivedInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1213,6 +1306,7 @@ export type UserUncheckedUpdateWithoutReportsReceivedInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1236,6 +1330,7 @@ export type UserCreateWithoutWrittenProfileCommentsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1259,6 +1354,7 @@ export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1287,6 +1383,7 @@ export type UserCreateWithoutProfileCommentsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1310,6 +1407,7 @@ export type UserUncheckedCreateWithoutProfileCommentsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1349,6 +1447,7 @@ export type UserUpdateWithoutWrittenProfileCommentsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1372,6 +1471,7 @@ export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1406,6 +1506,7 @@ export type UserUpdateWithoutProfileCommentsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1429,6 +1530,7 @@ export type UserUncheckedUpdateWithoutProfileCommentsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1452,6 +1554,7 @@ export type UserCreateWithoutNotificationsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1475,6 +1578,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1503,6 +1607,7 @@ export type UserCreateWithoutSentNotificationsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1526,6 +1631,7 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
   isVip?: boolean
   vipExpiresAt?: Date | string | null
   nameStyle?: string | null
+  tokenVersion?: number
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1565,6 +1671,7 @@ export type UserUpdateWithoutNotificationsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1588,6 +1695,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1622,6 +1730,7 @@ export type UserUpdateWithoutSentNotificationsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1645,6 +1754,7 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1771,6 +1881,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isVip?: boolean
   vipExpiresAt?: boolean
   nameStyle?: boolean
+  tokenVersion?: boolean
   createdAt?: boolean
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -1796,6 +1907,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isVip?: boolean
   vipExpiresAt?: boolean
   nameStyle?: boolean
+  tokenVersion?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1811,6 +1923,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isVip?: boolean
   vipExpiresAt?: boolean
   nameStyle?: boolean
+  tokenVersion?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1826,10 +1939,11 @@ export type UserSelectScalar = {
   isVip?: boolean
   vipExpiresAt?: boolean
   nameStyle?: boolean
+  tokenVersion?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "nameStyle" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "nameStyle" | "tokenVersion" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -1870,6 +1984,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isVip: boolean
     vipExpiresAt: Date | null
     nameStyle: string | null
+    tokenVersion: number
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -2314,6 +2429,7 @@ export interface UserFieldRefs {
   readonly isVip: Prisma.FieldRef<"User", 'Boolean'>
   readonly vipExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly nameStyle: Prisma.FieldRef<"User", 'String'>
+  readonly tokenVersion: Prisma.FieldRef<"User", 'Int'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

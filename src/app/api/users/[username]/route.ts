@@ -20,25 +20,24 @@ export const GET = withErrorHandling(async function GET(
       isVip: true,
       vipExpiresAt: true,
       createdAt: true,
+      _count: {
+        select: {
+          posts: true,
+          replies: true,
+          reactions: true,
+        },
+      },
       posts: {
         orderBy: { createdAt: "desc" },
+        take: 10,
         select: {
           id: true,
           title: true,
-          body: true,
           createdAt: true,
           pinned: true,
-          author: { select: { id: true, username: true, avatarUrl: true } },
-          channel: { select: { slug: true, name: true } },
-          _count: { select: { replies: true, reactions: true } },
-        },
-      },
-      replies: {
-        select: {
           _count: { select: { reactions: true } },
         },
       },
-      _count: { select: { posts: true, replies: true } },
     },
   });
 
@@ -48,9 +47,7 @@ export const GET = withErrorHandling(async function GET(
 
   const postCount = user._count.posts;
   const replyCount = user._count.replies;
-  const postReactions = user.posts.reduce((sum, p) => sum + p._count.reactions, 0);
-  const replyReactions = user.replies.reduce((sum, r) => sum + r._count.reactions, 0);
-  const totalReactions = postReactions + replyReactions;
+  const totalReactions = user._count.reactions;
 
   return NextResponse.json({
     id: user.id,

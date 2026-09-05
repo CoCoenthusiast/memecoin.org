@@ -47,6 +47,8 @@ export const POST = withErrorHandling(async function POST(
 
   if (body.parentId && parentReply) {
     if (parentReply.authorId !== user.id) {
+      // Intentional: fire-and-forget. Notificação ao autor do comentário pai é
+      // secundária — se falhar, o reply foi criado e retornado ao cliente normalmente.
       prisma.notification
         .create({
           data: {
@@ -61,6 +63,8 @@ export const POST = withErrorHandling(async function POST(
         });
     }
   } else if (post.authorId !== user.id) {
+    // Intentional: fire-and-forget. Notificação ao autor do post é secundária —
+    // o reply já está criado e o cliente recebe a resposta imediatamente.
     prisma.notification
       .create({
         data: {
@@ -77,6 +81,9 @@ export const POST = withErrorHandling(async function POST(
 
   notifyMentions(body.body, { id: user.id, username: user.username }, id, "comment");
 
+  // Intentional: fire-and-forget. lastActivityAt é metadata de ordenação —
+  // se falhar, o post ainda existe com o novo reply; apenas a posição na
+  // lista ficará ligeiramente dessincronizada até a próxima atividade.
   prisma.post.update({ where: { id }, data: { lastActivityAt: new Date() } }).catch((e) => {
     console.error("Failed to update post lastActivityAt", e);
   });

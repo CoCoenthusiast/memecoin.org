@@ -1060,6 +1060,7 @@ export const UserScalarFieldEnum = {
   isVip: 'isVip',
   vipExpiresAt: 'vipExpiresAt',
   nameStyle: 'nameStyle',
+  tokenVersion: 'tokenVersion',
   createdAt: 'createdAt'
 } as const
 

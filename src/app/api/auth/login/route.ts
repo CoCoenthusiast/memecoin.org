@@ -35,7 +35,7 @@ export const POST = withErrorHandling(async function POST(
 
   const user = await prisma.user.findUnique({
     where: { email: body.email },
-    select: { id: true, username: true, email: true, role: true, password: true },
+    select: { id: true, username: true, email: true, role: true, password: true, tokenVersion: true },
   });
 
   if (!user) {
@@ -51,7 +51,7 @@ export const POST = withErrorHandling(async function POST(
 
   clearLoginAttempts(body.email, ip);
 
-  const token = signToken({ userId: user.id, role: user.role });
+  const token = signToken({ userId: user.id, role: user.role, tokenVersion: user.tokenVersion });
 
   const cookieStore = await cookies();
   cookieStore.set(

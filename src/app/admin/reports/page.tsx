@@ -1,8 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
-import { AdminReportsList } from "@/components/AdminReportsList";
-import { VipManagement } from "@/components/VipManagement";
+import { AdminPageTabs } from "@/components/AdminPageTabs";
 
 export const dynamic = "force-dynamic";
 
@@ -39,19 +38,15 @@ export default async function AdminReportsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1">Reported content</h1>
-        <p className="text-gray-400">Pending reports awaiting moderation</p>
+        <h1 className="text-2xl font-bold mb-1">Admin Panel</h1>
+        <p className="text-gray-400">Moderation and user management</p>
       </div>
-      <AdminReportsList
+      <AdminPageTabs
         reports={reports.map((report) => ({
           ...report,
           createdAt: report.createdAt.toISOString(),
         }))}
       />
-
-      <div className="mt-8">
-        <VipManagement />
-      </div>
     </div>
   );
 }

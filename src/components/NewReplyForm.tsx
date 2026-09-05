@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { AuthGuard } from "@/components/AuthGuard"
 import { MentionTextarea } from "@/components/MentionTextarea"
+import { parseApiError } from "@/lib/api"
 
 type NewReplyFormProps = {
   postId: string
@@ -37,8 +38,7 @@ export function NewReplyForm({ postId, parentReplyId, replyingTo, onSuccess, onC
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        setError(data.error || "Failed to post reply")
+        setError(await parseApiError(res))
         setBody(text)
         setOptimistic(null)
         return

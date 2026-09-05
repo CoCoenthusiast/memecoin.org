@@ -3,6 +3,7 @@ import { useState, FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
+import { parseApiError } from "@/lib/api"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -23,10 +24,8 @@ export default function LoginPage() {
       body: JSON.stringify({ email, password }),
     })
 
-    const data = await res.json()
-
     if (!res.ok) {
-      setError(data.error || "Login failed")
+      setError(await parseApiError(res))
       setLoading(false)
       return
     }

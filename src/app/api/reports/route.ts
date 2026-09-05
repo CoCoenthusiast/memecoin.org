@@ -17,6 +17,9 @@ function notifyAdmins(message: string, postId: string, actorId: string) {
         )
       );
     })
+    // Intentional: fire-and-forget. Notificação aos admins é secundária —
+    // o report foi criado e retornado ao cliente normalmente,
+    // independentemente de a notificação falhar.
     .catch((e) => console.error("Failed to notify admins of report", e));
 }
 

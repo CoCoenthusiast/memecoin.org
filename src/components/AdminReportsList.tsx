@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { parseApiError } from "@/lib/api"
 
 type AdminReportsListProps = {
   reports: Array<{
@@ -30,8 +31,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
     try {
       const res = await fetch(`/api/${targetType}s/${targetId}`, { method: "DELETE" })
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        setError(data.error || "Failed to delete content")
+        setError(await parseApiError(res))
       } else {
         router.refresh()
       }
@@ -48,8 +48,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
     try {
       const res = await fetch(`/api/reports/${reportId}`, { method: "PATCH" })
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        setError(data.error || "Failed to dismiss report")
+        setError(await parseApiError(res))
       } else {
         router.refresh()
       }

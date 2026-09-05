@@ -3,6 +3,7 @@ import { useState, FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
+import { parseApiError } from "@/lib/api"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -24,10 +25,8 @@ export default function RegisterPage() {
       body: JSON.stringify({ username, email, password }),
     })
 
-    const data = await res.json()
-
     if (!res.ok) {
-      setError(data.error || "Registration failed")
+      setError(await parseApiError(res))
       setLoading(false)
       return
     }
@@ -81,6 +80,7 @@ export default function RegisterPage() {
               placeholder="••••••••"
               required
               minLength={8}
+              title="At least 8 characters, with at least one uppercase letter and one number"
             />
           </div>
 

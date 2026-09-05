@@ -39,5 +39,8 @@ export function notifyMentions(
           )
       );
     })
+    // Intentional: fire-and-forget. Menções são secundárias —
+    // o post/reply com menção foi criado e retornado ao cliente normalmente,
+    // independentemente de a notificação falhar.
     .catch((e) => console.error("Failed to create mention notifications", e));
 }
