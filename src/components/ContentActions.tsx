@@ -117,7 +117,7 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
       )}
 
       {menuOpen && (
-        <div className="absolute right-0 top-full z-10 mt-1 w-44 bg-gray-900 border border-gray-700 rounded-xl shadow-xl overflow-hidden">
+        <div className="absolute right-0 top-full z-50 mt-1 w-44 bg-gray-900 border border-gray-700 rounded-xl shadow-xl overflow-hidden">
           {REASONS.map((reason) => (
             <button
               key={reason}

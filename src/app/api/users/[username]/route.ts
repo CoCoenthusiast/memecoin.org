@@ -24,7 +24,6 @@ export const GET = withErrorHandling(async function GET(
         select: {
           posts: true,
           replies: true,
-          reactions: true,
         },
       },
       posts: {
@@ -33,8 +32,15 @@ export const GET = withErrorHandling(async function GET(
         select: {
           id: true,
           title: true,
+          body: true,
           createdAt: true,
           pinned: true,
+          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+          _count: { select: { reactions: true, replies: true } },
+        },
+      },
+      replies: {
+        select: {
           _count: { select: { reactions: true } },
         },
       },
@@ -47,7 +53,9 @@ export const GET = withErrorHandling(async function GET(
 
   const postCount = user._count.posts;
   const replyCount = user._count.replies;
-  const totalReactions = user._count.reactions;
+  const postReactions = user.posts.reduce((sum, p) => sum + p._count.reactions, 0);
+  const replyReactions = user.replies.reduce((sum, r) => sum + r._count.reactions, 0);
+  const totalReactions = postReactions + replyReactions;
 
   return NextResponse.json({
     id: user.id,
