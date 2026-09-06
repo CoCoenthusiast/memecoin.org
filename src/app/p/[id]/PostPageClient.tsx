@@ -1,16 +1,18 @@
 "use client"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { ReactionBar } from "@/components/ReactionBar"
 import { ReplyList } from "@/components/ReplyList"
 import { NewReplyForm } from "@/components/NewReplyForm"
 import { ContentActions } from "@/components/ContentActions"
+import { FormatToolbar } from "@/components/FormatToolbar"
 import { FormattedText } from "@/components/FormattedText"
 import { useSession } from "@/hooks/useSession"
 import { StyledUsername } from "@/components/StyledUsername"
 import { isUserVip } from "@/lib/vip"
 import { useMentionData, extractMentions } from "@/hooks/useMentionData"
+import { parseApiError } from "@/lib/api"
 function timeAgo(dateStr: string) {
   const now = Date.now()
   const then = new Date(dateStr).getTime()
@@ -35,6 +37,11 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
   const router = useRouter()
   const [post, setPost] = useState(initialPost)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [editBody, setEditBody] = useState(initialPost.body)
+  const [saving, setSaving] = useState(false)
+  const [editError, setEditError] = useState("")
+  const editTextareaRef = useRef<HTMLTextAreaElement>(null)
   const mentionData = useMentionData(post ? extractMentions(post.body) : [])
 
   const closeLightbox = useCallback(() => setLightboxOpen(false), [])
@@ -65,6 +72,34 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
       router.push(`/c/${post.channel.slug}`)
     }
   }, [post.channel?.slug, router])
+
+  async function handleSaveEdit() {
+    setSaving(true)
+    setEditError("")
+    try {
+      const res = await fetch(`/api/posts/${post.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ body: editBody }),
+      })
+      if (res.ok) {
+        setEditing(false)
+        loadPost()
+      } else {
+        setEditError(await parseApiError(res))
+      }
+    } catch {
+      setEditError("Something went wrong")
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  function handleCancelEdit() {
+    setEditing(false)
+    setEditBody(post.body)
+    setEditError("")
+  }
 
   if (!post) return <div className="text-center text-gray-500 py-12">Post not found</div>
 
@@ -101,12 +136,46 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
               />
             </Link>
           </span>
-          <span>{timeAgo(post.createdAt)}</span>
+          <span>{timeAgo(post.createdAt)}{post.editedAt && <span className="text-gray-600"> (edited)</span>}</span>
           <span>{post._count?.replies ?? 0} replies</span>
         </div>
-        <p className="text-gray-200 whitespace-pre-wrap leading-relaxed mb-4">
-          <FormattedText text={post.body} mentionData={mentionData} />
-        </p>
+        {editing ? (
+          <div className="mb-4">
+            <FormatToolbar value={editBody} onChange={setEditBody} textareaRef={editTextareaRef} />
+            <textarea
+              ref={editTextareaRef}
+              value={editBody}
+              onChange={(e) => setEditBody(e.target.value)}
+              rows={8}
+              maxLength={10000}
+              className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
+              placeholder="Write your post..."
+            />
+            {editError && (
+              <p className="mt-2 text-sm text-red-400">{editError}</p>
+            )}
+            <div className="mt-2 flex items-center gap-2">
+              <button
+                onClick={handleSaveEdit}
+                disabled={saving || !editBody.trim()}
+                className="px-3 py-1.5 rounded-lg bg-neon-glow text-gray-950 text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              >
+                {saving ? "Saving..." : "Save"}
+              </button>
+              <button
+                onClick={handleCancelEdit}
+                disabled={saving}
+                className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 text-sm font-medium hover:text-white hover:border-gray-500 transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-200 whitespace-pre-wrap leading-relaxed mb-4">
+            <FormattedText text={post.body} mentionData={mentionData} />
+          </p>
+        )}
         {post.imageUrl && (
           <div className="mb-4">
             <p className="text-[11px] text-gray-500 mb-1">Attachment</p>
@@ -136,7 +205,17 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
             currentUserId={user?.id}
             onSuccess={loadPost}
           />
-          <ContentActions targetId={post.id} targetType="post" authorId={post.author.id} createdAt={post.createdAt} onSuccess={handlePostDeleted} />
+          <ContentActions
+            targetId={post.id}
+            targetType="post"
+            authorId={post.author.id}
+            createdAt={post.createdAt}
+            onSuccess={handlePostDeleted}
+            onEdit={() => {
+              setEditBody(post.body)
+              setEditing(true)
+            }}
+          />
         </div>
       </article>
 

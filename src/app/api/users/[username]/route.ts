@@ -34,6 +34,7 @@ export const GET = withErrorHandling(async function GET(
           title: true,
           body: true,
           createdAt: true,
+          editedAt: true,
           pinned: true,
           author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
           _count: { select: { reactions: true, replies: true } },

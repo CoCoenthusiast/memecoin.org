@@ -28,6 +28,7 @@ export type ProfileCommentMinAggregateOutputType = {
   id: string | null
   body: string | null
   createdAt: Date | null
+  editedAt: Date | null
   authorId: string | null
   profileUserId: string | null
 }
@@ -36,6 +37,7 @@ export type ProfileCommentMaxAggregateOutputType = {
   id: string | null
   body: string | null
   createdAt: Date | null
+  editedAt: Date | null
   authorId: string | null
   profileUserId: string | null
 }
@@ -44,6 +46,7 @@ export type ProfileCommentCountAggregateOutputType = {
   id: number
   body: number
   createdAt: number
+  editedAt: number
   authorId: number
   profileUserId: number
   _all: number
@@ -54,6 +57,7 @@ export type ProfileCommentMinAggregateInputType = {
   id?: true
   body?: true
   createdAt?: true
+  editedAt?: true
   authorId?: true
   profileUserId?: true
 }
@@ -62,6 +66,7 @@ export type ProfileCommentMaxAggregateInputType = {
   id?: true
   body?: true
   createdAt?: true
+  editedAt?: true
   authorId?: true
   profileUserId?: true
 }
@@ -70,6 +75,7 @@ export type ProfileCommentCountAggregateInputType = {
   id?: true
   body?: true
   createdAt?: true
+  editedAt?: true
   authorId?: true
   profileUserId?: true
   _all?: true
@@ -151,6 +157,7 @@ export type ProfileCommentGroupByOutputType = {
   id: string
   body: string
   createdAt: Date
+  editedAt: Date | null
   authorId: string
   profileUserId: string
   _count: ProfileCommentCountAggregateOutputType | null
@@ -180,6 +187,7 @@ export type ProfileCommentWhereInput = {
   id?: Prisma.StringFilter<"ProfileComment"> | string
   body?: Prisma.StringFilter<"ProfileComment"> | string
   createdAt?: Prisma.DateTimeFilter<"ProfileComment"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"ProfileComment"> | Date | string | null
   authorId?: Prisma.StringFilter<"ProfileComment"> | string
   profileUserId?: Prisma.StringFilter<"ProfileComment"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -190,6 +198,7 @@ export type ProfileCommentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   authorId?: Prisma.SortOrder
   profileUserId?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
@@ -203,6 +212,7 @@ export type ProfileCommentWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProfileCommentWhereInput | Prisma.ProfileCommentWhereInput[]
   body?: Prisma.StringFilter<"ProfileComment"> | string
   createdAt?: Prisma.DateTimeFilter<"ProfileComment"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"ProfileComment"> | Date | string | null
   authorId?: Prisma.StringFilter<"ProfileComment"> | string
   profileUserId?: Prisma.StringFilter<"ProfileComment"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -213,6 +223,7 @@ export type ProfileCommentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   authorId?: Prisma.SortOrder
   profileUserId?: Prisma.SortOrder
   _count?: Prisma.ProfileCommentCountOrderByAggregateInput
@@ -227,6 +238,7 @@ export type ProfileCommentScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ProfileComment"> | string
   body?: Prisma.StringWithAggregatesFilter<"ProfileComment"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProfileComment"> | Date | string
+  editedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProfileComment"> | Date | string | null
   authorId?: Prisma.StringWithAggregatesFilter<"ProfileComment"> | string
   profileUserId?: Prisma.StringWithAggregatesFilter<"ProfileComment"> | string
 }
@@ -235,6 +247,7 @@ export type ProfileCommentCreateInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutWrittenProfileCommentsInput
   profileUser: Prisma.UserCreateNestedOneWithoutProfileCommentsInput
 }
@@ -243,6 +256,7 @@ export type ProfileCommentUncheckedCreateInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   profileUserId: string
 }
@@ -251,6 +265,7 @@ export type ProfileCommentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutWrittenProfileCommentsNestedInput
   profileUser?: Prisma.UserUpdateOneRequiredWithoutProfileCommentsNestedInput
 }
@@ -259,6 +274,7 @@ export type ProfileCommentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -267,6 +283,7 @@ export type ProfileCommentCreateManyInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   profileUserId: string
 }
@@ -275,12 +292,14 @@ export type ProfileCommentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProfileCommentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -299,6 +318,7 @@ export type ProfileCommentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   profileUserId?: Prisma.SortOrder
 }
@@ -307,6 +327,7 @@ export type ProfileCommentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   profileUserId?: Prisma.SortOrder
 }
@@ -315,6 +336,7 @@ export type ProfileCommentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   profileUserId?: Prisma.SortOrder
 }
@@ -407,6 +429,7 @@ export type ProfileCommentCreateWithoutAuthorInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   profileUser: Prisma.UserCreateNestedOneWithoutProfileCommentsInput
 }
 
@@ -414,6 +437,7 @@ export type ProfileCommentUncheckedCreateWithoutAuthorInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   profileUserId: string
 }
 
@@ -431,6 +455,7 @@ export type ProfileCommentCreateWithoutProfileUserInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutWrittenProfileCommentsInput
 }
 
@@ -438,6 +463,7 @@ export type ProfileCommentUncheckedCreateWithoutProfileUserInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
 }
 
@@ -474,6 +500,7 @@ export type ProfileCommentScalarWhereInput = {
   id?: Prisma.StringFilter<"ProfileComment"> | string
   body?: Prisma.StringFilter<"ProfileComment"> | string
   createdAt?: Prisma.DateTimeFilter<"ProfileComment"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"ProfileComment"> | Date | string | null
   authorId?: Prisma.StringFilter<"ProfileComment"> | string
   profileUserId?: Prisma.StringFilter<"ProfileComment"> | string
 }
@@ -498,6 +525,7 @@ export type ProfileCommentCreateManyAuthorInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   profileUserId: string
 }
 
@@ -505,6 +533,7 @@ export type ProfileCommentCreateManyProfileUserInput = {
   id?: string
   body: string
   createdAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
 }
 
@@ -512,6 +541,7 @@ export type ProfileCommentUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profileUser?: Prisma.UserUpdateOneRequiredWithoutProfileCommentsNestedInput
 }
 
@@ -519,6 +549,7 @@ export type ProfileCommentUncheckedUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -526,6 +557,7 @@ export type ProfileCommentUncheckedUpdateManyWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -533,6 +565,7 @@ export type ProfileCommentUpdateWithoutProfileUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutWrittenProfileCommentsNestedInput
 }
 
@@ -540,6 +573,7 @@ export type ProfileCommentUncheckedUpdateWithoutProfileUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -547,6 +581,7 @@ export type ProfileCommentUncheckedUpdateManyWithoutProfileUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -556,6 +591,7 @@ export type ProfileCommentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   body?: boolean
   createdAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   profileUserId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -566,6 +602,7 @@ export type ProfileCommentSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   body?: boolean
   createdAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   profileUserId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -576,6 +613,7 @@ export type ProfileCommentSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   body?: boolean
   createdAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   profileUserId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -586,11 +624,12 @@ export type ProfileCommentSelectScalar = {
   id?: boolean
   body?: boolean
   createdAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   profileUserId?: boolean
 }
 
-export type ProfileCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "body" | "createdAt" | "authorId" | "profileUserId", ExtArgs["result"]["profileComment"]>
+export type ProfileCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "body" | "createdAt" | "editedAt" | "authorId" | "profileUserId", ExtArgs["result"]["profileComment"]>
 export type ProfileCommentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   profileUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -614,6 +653,7 @@ export type $ProfileCommentPayload<ExtArgs extends runtime.Types.Extensions.Inte
     id: string
     body: string
     createdAt: Date
+    editedAt: Date | null
     authorId: string
     profileUserId: string
   }, ExtArgs["result"]["profileComment"]>
@@ -1044,6 +1084,7 @@ export interface ProfileCommentFieldRefs {
   readonly id: Prisma.FieldRef<"ProfileComment", 'String'>
   readonly body: Prisma.FieldRef<"ProfileComment", 'String'>
   readonly createdAt: Prisma.FieldRef<"ProfileComment", 'DateTime'>
+  readonly editedAt: Prisma.FieldRef<"ProfileComment", 'DateTime'>
   readonly authorId: Prisma.FieldRef<"ProfileComment", 'String'>
   readonly profileUserId: Prisma.FieldRef<"ProfileComment", 'String'>
 }

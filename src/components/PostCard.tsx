@@ -12,6 +12,7 @@ type PostCardProps = {
     title: string
     body: string
     createdAt: string
+    editedAt?: string | null
     viewCount?: number
     pinned?: boolean
     author: {
@@ -130,7 +131,13 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
             </button>
           )}
           <div className="relative z-10 ml-auto">
-            <ContentActions targetId={post.id} targetType="post" authorId={post.author.id} createdAt={post.createdAt} onSuccess={onContentAction} />
+            <ContentActions
+              targetId={post.id}
+              targetType="post"
+              authorId={post.author.id}
+              createdAt={post.createdAt}
+              onSuccess={onContentAction}
+            />
           </div>
         </div>
       </div>

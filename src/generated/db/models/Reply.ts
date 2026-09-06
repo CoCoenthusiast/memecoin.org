@@ -29,6 +29,7 @@ export type ReplyMinAggregateOutputType = {
   body: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  editedAt: Date | null
   authorId: string | null
   postId: string | null
   parentId: string | null
@@ -39,6 +40,7 @@ export type ReplyMaxAggregateOutputType = {
   body: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  editedAt: Date | null
   authorId: string | null
   postId: string | null
   parentId: string | null
@@ -49,6 +51,7 @@ export type ReplyCountAggregateOutputType = {
   body: number
   createdAt: number
   updatedAt: number
+  editedAt: number
   authorId: number
   postId: number
   parentId: number
@@ -61,6 +64,7 @@ export type ReplyMinAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  editedAt?: true
   authorId?: true
   postId?: true
   parentId?: true
@@ -71,6 +75,7 @@ export type ReplyMaxAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  editedAt?: true
   authorId?: true
   postId?: true
   parentId?: true
@@ -81,6 +86,7 @@ export type ReplyCountAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  editedAt?: true
   authorId?: true
   postId?: true
   parentId?: true
@@ -164,6 +170,7 @@ export type ReplyGroupByOutputType = {
   body: string
   createdAt: Date
   updatedAt: Date
+  editedAt: Date | null
   authorId: string
   postId: string
   parentId: string | null
@@ -195,6 +202,7 @@ export type ReplyWhereInput = {
   body?: Prisma.StringFilter<"Reply"> | string
   createdAt?: Prisma.DateTimeFilter<"Reply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reply"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"Reply"> | Date | string | null
   authorId?: Prisma.StringFilter<"Reply"> | string
   postId?: Prisma.StringFilter<"Reply"> | string
   parentId?: Prisma.StringNullableFilter<"Reply"> | string | null
@@ -211,6 +219,7 @@ export type ReplyOrderByWithRelationInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   authorId?: Prisma.SortOrder
   postId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -230,6 +239,7 @@ export type ReplyWhereUniqueInput = Prisma.AtLeast<{
   body?: Prisma.StringFilter<"Reply"> | string
   createdAt?: Prisma.DateTimeFilter<"Reply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reply"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"Reply"> | Date | string | null
   authorId?: Prisma.StringFilter<"Reply"> | string
   postId?: Prisma.StringFilter<"Reply"> | string
   parentId?: Prisma.StringNullableFilter<"Reply"> | string | null
@@ -246,6 +256,7 @@ export type ReplyOrderByWithAggregationInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   authorId?: Prisma.SortOrder
   postId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -262,6 +273,7 @@ export type ReplyScalarWhereWithAggregatesInput = {
   body?: Prisma.StringWithAggregatesFilter<"Reply"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Reply"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Reply"> | Date | string
+  editedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Reply"> | Date | string | null
   authorId?: Prisma.StringWithAggregatesFilter<"Reply"> | string
   postId?: Prisma.StringWithAggregatesFilter<"Reply"> | string
   parentId?: Prisma.StringNullableWithAggregatesFilter<"Reply"> | string | null
@@ -272,6 +284,7 @@ export type ReplyCreateInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutRepliesInput
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
@@ -285,6 +298,7 @@ export type ReplyUncheckedCreateInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
   parentId?: string | null
@@ -298,6 +312,7 @@ export type ReplyUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
@@ -311,6 +326,7 @@ export type ReplyUncheckedUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -324,6 +340,7 @@ export type ReplyCreateManyInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
   parentId?: string | null
@@ -334,6 +351,7 @@ export type ReplyUpdateManyMutationInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ReplyUncheckedUpdateManyInput = {
@@ -341,6 +359,7 @@ export type ReplyUncheckedUpdateManyInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -366,6 +385,7 @@ export type ReplyCountOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   postId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
@@ -376,6 +396,7 @@ export type ReplyMaxOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   postId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
@@ -386,6 +407,7 @@ export type ReplyMinOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   postId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
@@ -570,6 +592,7 @@ export type ReplyCreateWithoutAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
@@ -582,6 +605,7 @@ export type ReplyUncheckedCreateWithoutAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   postId: string
   parentId?: string | null
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
@@ -623,6 +647,7 @@ export type ReplyScalarWhereInput = {
   body?: Prisma.StringFilter<"Reply"> | string
   createdAt?: Prisma.DateTimeFilter<"Reply"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Reply"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"Reply"> | Date | string | null
   authorId?: Prisma.StringFilter<"Reply"> | string
   postId?: Prisma.StringFilter<"Reply"> | string
   parentId?: Prisma.StringNullableFilter<"Reply"> | string | null
@@ -633,6 +658,7 @@ export type ReplyCreateWithoutPostInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
@@ -645,6 +671,7 @@ export type ReplyUncheckedCreateWithoutPostInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   parentId?: string | null
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
@@ -683,6 +710,7 @@ export type ReplyCreateWithoutRepliesInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutRepliesInput
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
@@ -695,6 +723,7 @@ export type ReplyUncheckedCreateWithoutRepliesInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
   parentId?: string | null
@@ -712,6 +741,7 @@ export type ReplyCreateWithoutParentInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutRepliesInput
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   replies?: Prisma.ReplyCreateNestedManyWithoutParentInput
@@ -724,6 +754,7 @@ export type ReplyUncheckedCreateWithoutParentInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutParentInput
@@ -757,6 +788,7 @@ export type ReplyUpdateWithoutRepliesInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
@@ -769,6 +801,7 @@ export type ReplyUncheckedUpdateWithoutRepliesInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -797,6 +830,7 @@ export type ReplyCreateWithoutReactionsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutRepliesInput
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
@@ -809,6 +843,7 @@ export type ReplyUncheckedCreateWithoutReactionsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
   parentId?: string | null
@@ -837,6 +872,7 @@ export type ReplyUpdateWithoutReactionsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
@@ -849,6 +885,7 @@ export type ReplyUncheckedUpdateWithoutReactionsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -861,6 +898,7 @@ export type ReplyCreateWithoutReportsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutRepliesInput
   post: Prisma.PostCreateNestedOneWithoutRepliesInput
   parent?: Prisma.ReplyCreateNestedOneWithoutRepliesInput
@@ -873,6 +911,7 @@ export type ReplyUncheckedCreateWithoutReportsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
   parentId?: string | null
@@ -901,6 +940,7 @@ export type ReplyUpdateWithoutReportsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
@@ -913,6 +953,7 @@ export type ReplyUncheckedUpdateWithoutReportsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -925,6 +966,7 @@ export type ReplyCreateManyAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   postId: string
   parentId?: string | null
 }
@@ -934,6 +976,7 @@ export type ReplyUpdateWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
@@ -946,6 +989,7 @@ export type ReplyUncheckedUpdateWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
@@ -958,6 +1002,7 @@ export type ReplyUncheckedUpdateManyWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -967,6 +1012,7 @@ export type ReplyCreateManyPostInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   parentId?: string | null
 }
@@ -976,6 +1022,7 @@ export type ReplyUpdateWithoutPostInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
   parent?: Prisma.ReplyUpdateOneWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
@@ -988,6 +1035,7 @@ export type ReplyUncheckedUpdateWithoutPostInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
@@ -1000,6 +1048,7 @@ export type ReplyUncheckedUpdateManyWithoutPostInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1009,6 +1058,7 @@ export type ReplyCreateManyParentInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   authorId: string
   postId: string
 }
@@ -1018,6 +1068,7 @@ export type ReplyUpdateWithoutParentInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
   post?: Prisma.PostUpdateOneRequiredWithoutRepliesNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutParentNestedInput
@@ -1030,6 +1081,7 @@ export type ReplyUncheckedUpdateWithoutParentInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutParentNestedInput
@@ -1042,6 +1094,7 @@ export type ReplyUncheckedUpdateManyWithoutParentInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   postId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -1100,6 +1153,7 @@ export type ReplySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   postId?: boolean
   parentId?: boolean
@@ -1117,6 +1171,7 @@ export type ReplySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   postId?: boolean
   parentId?: boolean
@@ -1130,6 +1185,7 @@ export type ReplySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   postId?: boolean
   parentId?: boolean
@@ -1143,12 +1199,13 @@ export type ReplySelectScalar = {
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   authorId?: boolean
   postId?: boolean
   parentId?: boolean
 }
 
-export type ReplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "body" | "createdAt" | "updatedAt" | "authorId" | "postId" | "parentId", ExtArgs["result"]["reply"]>
+export type ReplyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "body" | "createdAt" | "updatedAt" | "editedAt" | "authorId" | "postId" | "parentId", ExtArgs["result"]["reply"]>
 export type ReplyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
@@ -1184,6 +1241,7 @@ export type $ReplyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     body: string
     createdAt: Date
     updatedAt: Date
+    editedAt: Date | null
     authorId: string
     postId: string
     parentId: string | null
@@ -1620,6 +1678,7 @@ export interface ReplyFieldRefs {
   readonly body: Prisma.FieldRef<"Reply", 'String'>
   readonly createdAt: Prisma.FieldRef<"Reply", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Reply", 'DateTime'>
+  readonly editedAt: Prisma.FieldRef<"Reply", 'DateTime'>
   readonly authorId: Prisma.FieldRef<"Reply", 'String'>
   readonly postId: Prisma.FieldRef<"Reply", 'String'>
   readonly parentId: Prisma.FieldRef<"Reply", 'String'>

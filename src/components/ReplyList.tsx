@@ -4,15 +4,18 @@ import Link from "next/link"
 import { ReactionBar } from "@/components/ReactionBar"
 import { ContentActions } from "@/components/ContentActions"
 import { FormattedText } from "@/components/FormattedText"
+import { FormatToolbar } from "@/components/FormatToolbar"
 import { NewReplyForm } from "@/components/NewReplyForm"
 import { StyledUsername } from "@/components/StyledUsername"
 import { isUserVip } from "@/lib/vip"
 import { useMentionData, extractMentions } from "@/hooks/useMentionData"
+import { parseApiError } from "@/lib/api"
 
 type ReplyItem = {
   id: string
   body: string
   createdAt: string
+  editedAt?: string | null
   postId: string
   parentId?: string | null
   author: {
@@ -61,6 +64,11 @@ function timeAgo(dateStr: string) {
 export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps) {
   const [replyingToId, setReplyingToId] = useState<string | null>(null)
   const [highlightId, setHighlightId] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editBody, setEditBody] = useState("")
+  const [saving, setSaving] = useState(false)
+  const [editError, setEditError] = useState("")
+  const editTextareaRef = useRef<HTMLTextAreaElement>(null)
   const timerRef = useRef<number | null>(null)
 
   const allMentions = replies.flatMap((r) => extractMentions(r.body))
@@ -75,6 +83,40 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
     timerRef.current = window.setTimeout(() => setHighlightId(null), 1500)
   }, [])
 
+  function startEditing(reply: ReplyItem) {
+    setEditingId(reply.id)
+    setEditBody(reply.body)
+    setEditError("")
+  }
+
+  function cancelEditing() {
+    setEditingId(null)
+    setEditBody("")
+    setEditError("")
+  }
+
+  async function saveEdit(replyId: string) {
+    setSaving(true)
+    setEditError("")
+    try {
+      const res = await fetch(`/api/replies/${replyId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ body: editBody }),
+      })
+      if (res.ok) {
+        cancelEditing()
+        onSuccess?.()
+      } else {
+        setEditError(await parseApiError(res))
+      }
+    } catch {
+      setEditError("Something went wrong")
+    } finally {
+      setSaving(false)
+    }
+  }
+
   if (replies.length === 0) {
     return <p className="text-sm text-gray-500 py-4">No replies yet.</p>
   }
@@ -84,6 +126,7 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
       {replies.map((reply) => {
         const parentUsername = reply.parent?.author?.username
         const parentExcerpt = excerpt(reply.parent?.body)
+        const isEditing = editingId === reply.id
 
         return (
           <div
@@ -122,9 +165,45 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
                 </span>
               </button>
             )}
-            <p className="text-sm text-gray-200 whitespace-pre-wrap">
-              <FormattedText text={reply.body} mentionData={mentionData} />
-            </p>
+
+            {isEditing ? (
+              <div>
+                <FormatToolbar value={editBody} onChange={setEditBody} textareaRef={editTextareaRef} />
+                <textarea
+                  ref={editTextareaRef}
+                  value={editBody}
+                  onChange={(e) => setEditBody(e.target.value)}
+                  rows={4}
+                  maxLength={10000}
+                  className="w-full px-4 py-2.5 bg-gray-950 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
+                  placeholder="Write a reply..."
+                />
+                {editError && (
+                  <p className="mt-2 text-sm text-red-400">{editError}</p>
+                )}
+                <div className="mt-2 flex items-center gap-2">
+                  <button
+                    onClick={() => saveEdit(reply.id)}
+                    disabled={saving || !editBody.trim()}
+                    className="px-3 py-1.5 rounded-lg bg-neon-glow text-gray-950 text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                  >
+                    {saving ? "Saving..." : "Save"}
+                  </button>
+                  <button
+                    onClick={cancelEditing}
+                    disabled={saving}
+                    className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 text-sm font-medium hover:text-white hover:border-gray-500 transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-200 whitespace-pre-wrap">
+                <FormattedText text={reply.body} mentionData={mentionData} />
+              </p>
+            )}
+
             <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
               <span className="flex items-center gap-1.5">
                 {reply.author.avatarUrl && (
@@ -145,7 +224,7 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
                   />
                 </Link>
               </span>
-              <span>{timeAgo(reply.createdAt)}</span>
+              <span>{timeAgo(reply.createdAt)}{reply.editedAt && <span className="text-gray-600"> (edited)</span>}</span>
               <button
                 type="button"
                 onClick={() => setReplyingToId(replyingToId === reply.id ? null : reply.id)}
@@ -168,6 +247,7 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
                 authorId={reply.author.id}
                 createdAt={reply.createdAt}
                 onSuccess={onSuccess}
+                onEdit={() => startEditing(reply)}
               />
             </div>
 

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { useParams } from "next/navigation"
 import PostCard from "@/components/PostCard"
 import { ContentActions } from "@/components/ContentActions"
+import { FormatToolbar } from "@/components/FormatToolbar"
 import { useSession } from "@/hooks/useSession"
 import { isUserVip } from "@/lib/vip"
 import { StyledName, nameStyleFromJson, type NameStyle } from "@/components/StyledName"
@@ -56,6 +57,11 @@ export default function ProfilePage() {
   const [styleSaved, setStyleSaved] = useState("")
   const [styleError, setStyleError] = useState("")
   const [showStylePanel, setShowStylePanel] = useState(false)
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null)
+  const [editCommentBody, setEditCommentBody] = useState("")
+  const [savingComment, setSavingComment] = useState(false)
+  const [editCommentError, setEditCommentError] = useState("")
+  const editCommentTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   const isOwner = !!currentUser && currentUser.username === username
   const canGif = isOwner && !!currentUser && isUserVip(currentUser)
@@ -465,30 +471,98 @@ export default function ProfilePage() {
             <p className="text-gray-500 text-sm py-4">No comments yet.</p>
           ) : (
             <div className="space-y-3">
-              {comments.map((comment) => (
-                <div key={comment.id} className="bg-gray-950 border border-gray-800 rounded-xl p-4">
-                  <p className="text-sm text-gray-200 whitespace-pre-wrap">{comment.body}</p>
-                  <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
-                    <span className="text-gray-300 font-medium">
-                      <StyledUsername
-                        username={comment.author.username}
-                        nameStyle={comment.author.nameStyle}
-                        isVip={isUserVip(comment.author)}
-                      />
-                    </span>
-                    <span>{timeAgo(comment.createdAt)}</span>
-                    <div className="ml-auto">
-                      <ContentActions
-                        targetId={comment.id}
-                        targetType="comment"
-                        authorId={comment.author.id}
-                        createdAt={comment.createdAt}
-                        onSuccess={() => setComments((prev) => prev.filter((c) => c.id !== comment.id))}
-                      />
+              {comments.map((comment) => {
+                const isEditing = editingCommentId === comment.id
+                return (
+                  <div key={comment.id} className="bg-gray-950 border border-gray-800 rounded-xl p-4">
+                    {isEditing ? (
+                      <div>
+                        <FormatToolbar value={editCommentBody} onChange={setEditCommentBody} textareaRef={editCommentTextareaRef} />
+                        <textarea
+                          ref={editCommentTextareaRef}
+                          value={editCommentBody}
+                          onChange={(e) => setEditCommentBody(e.target.value)}
+                          rows={3}
+                          maxLength={1000}
+                          className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent resize-y"
+                          placeholder="Write a comment..."
+                        />
+                        {editCommentError && (
+                          <p className="mt-2 text-sm text-red-400">{editCommentError}</p>
+                        )}
+                        <div className="mt-2 flex items-center gap-2">
+                          <button
+                            onClick={async () => {
+                              setSavingComment(true)
+                              setEditCommentError("")
+                              try {
+                                const res = await fetch(`/api/profile-comments/${comment.id}`, {
+                                  method: "PATCH",
+                                  headers: { "Content-Type": "application/json" },
+                                  body: JSON.stringify({ body: editCommentBody }),
+                                })
+                                if (res.ok) {
+                                  setEditingCommentId(null)
+                                  setComments((prev) => prev.map((c) =>
+                                    c.id === comment.id ? { ...c, body: editCommentBody, editedAt: new Date().toISOString() } : c
+                                  ))
+                                } else {
+                                  setEditCommentError(await parseApiError(res))
+                                }
+                              } catch {
+                                setEditCommentError("Something went wrong")
+                              } finally {
+                                setSavingComment(false)
+                              }
+                            }}
+                            disabled={savingComment || !editCommentBody.trim()}
+                            className="px-3 py-1.5 rounded-lg bg-neon-glow text-gray-950 text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                          >
+                            {savingComment ? "Saving..." : "Save"}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingCommentId(null)
+                              setEditCommentBody("")
+                              setEditCommentError("")
+                            }}
+                            disabled={savingComment}
+                            className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400 text-sm font-medium hover:text-white hover:border-gray-500 transition-colors disabled:opacity-50"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-200 whitespace-pre-wrap">{comment.body}</p>
+                    )}
+                    <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
+                      <span className="text-gray-300 font-medium">
+                        <StyledUsername
+                          username={comment.author.username}
+                          nameStyle={comment.author.nameStyle}
+                          isVip={isUserVip(comment.author)}
+                        />
+                      </span>
+                      <span>{timeAgo(comment.createdAt)}{comment.editedAt && <span className="text-gray-600"> (edited)</span>}</span>
+                      <div className="ml-auto">
+                        <ContentActions
+                          targetId={comment.id}
+                          targetType="comment"
+                          authorId={comment.author.id}
+                          createdAt={comment.createdAt}
+                          onSuccess={() => setComments((prev) => prev.filter((c) => c.id !== comment.id))}
+                          onEdit={() => {
+                            setEditingCommentId(comment.id)
+                            setEditCommentBody(comment.body)
+                            setEditCommentError("")
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>

@@ -40,6 +40,7 @@ export type PostMinAggregateOutputType = {
   body: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  editedAt: Date | null
   imageUrl: string | null
   videoUrl: string | null
   viewCount: number | null
@@ -55,6 +56,7 @@ export type PostMaxAggregateOutputType = {
   body: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  editedAt: Date | null
   imageUrl: string | null
   videoUrl: string | null
   viewCount: number | null
@@ -70,6 +72,7 @@ export type PostCountAggregateOutputType = {
   body: number
   createdAt: number
   updatedAt: number
+  editedAt: number
   imageUrl: number
   videoUrl: number
   viewCount: number
@@ -95,6 +98,7 @@ export type PostMinAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  editedAt?: true
   imageUrl?: true
   videoUrl?: true
   viewCount?: true
@@ -110,6 +114,7 @@ export type PostMaxAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  editedAt?: true
   imageUrl?: true
   videoUrl?: true
   viewCount?: true
@@ -125,6 +130,7 @@ export type PostCountAggregateInputType = {
   body?: true
   createdAt?: true
   updatedAt?: true
+  editedAt?: true
   imageUrl?: true
   videoUrl?: true
   viewCount?: true
@@ -227,6 +233,7 @@ export type PostGroupByOutputType = {
   body: string
   createdAt: Date
   updatedAt: Date
+  editedAt: Date | null
   imageUrl: string | null
   videoUrl: string | null
   viewCount: number
@@ -265,6 +272,7 @@ export type PostWhereInput = {
   body?: Prisma.StringFilter<"Post"> | string
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"Post"> | Date | string | null
   imageUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   viewCount?: Prisma.IntFilter<"Post"> | number
@@ -286,6 +294,7 @@ export type PostOrderByWithRelationInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   viewCount?: Prisma.SortOrder
@@ -310,6 +319,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   body?: Prisma.StringFilter<"Post"> | string
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"Post"> | Date | string | null
   imageUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   viewCount?: Prisma.IntFilter<"Post"> | number
@@ -331,6 +341,7 @@ export type PostOrderByWithAggregationInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   viewCount?: Prisma.SortOrder
@@ -354,6 +365,7 @@ export type PostScalarWhereWithAggregatesInput = {
   body?: Prisma.StringWithAggregatesFilter<"Post"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Post"> | Date | string
+  editedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   viewCount?: Prisma.IntWithAggregatesFilter<"Post"> | number
@@ -369,6 +381,7 @@ export type PostCreateInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -388,6 +401,7 @@ export type PostUncheckedCreateInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -407,6 +421,7 @@ export type PostUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -426,6 +441,7 @@ export type PostUncheckedUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -445,6 +461,7 @@ export type PostCreateManyInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -460,6 +477,7 @@ export type PostUpdateManyMutationInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -473,6 +491,7 @@ export type PostUncheckedUpdateManyInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -498,6 +517,7 @@ export type PostCountOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
@@ -517,6 +537,7 @@ export type PostMaxOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
@@ -532,6 +553,7 @@ export type PostMinOrderByAggregateInput = {
   body?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  editedAt?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
@@ -705,6 +727,7 @@ export type PostCreateWithoutAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -723,6 +746,7 @@ export type PostUncheckedCreateWithoutAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -770,6 +794,7 @@ export type PostScalarWhereInput = {
   body?: Prisma.StringFilter<"Post"> | string
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
+  editedAt?: Prisma.DateTimeNullableFilter<"Post"> | Date | string | null
   imageUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Post"> | string | null
   viewCount?: Prisma.IntFilter<"Post"> | number
@@ -785,6 +810,7 @@ export type PostCreateWithoutChannelInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -803,6 +829,7 @@ export type PostUncheckedCreateWithoutChannelInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -847,6 +874,7 @@ export type PostCreateWithoutRepliesInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -865,6 +893,7 @@ export type PostUncheckedCreateWithoutRepliesInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -899,6 +928,7 @@ export type PostUpdateWithoutRepliesInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -917,6 +947,7 @@ export type PostUncheckedUpdateWithoutRepliesInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -935,6 +966,7 @@ export type PostCreateWithoutReactionsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -953,6 +985,7 @@ export type PostUncheckedCreateWithoutReactionsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -987,6 +1020,7 @@ export type PostUpdateWithoutReactionsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1005,6 +1039,7 @@ export type PostUncheckedUpdateWithoutReactionsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1023,6 +1058,7 @@ export type PostCreateWithoutReportsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -1041,6 +1077,7 @@ export type PostUncheckedCreateWithoutReportsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -1075,6 +1112,7 @@ export type PostUpdateWithoutReportsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1093,6 +1131,7 @@ export type PostUncheckedUpdateWithoutReportsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1111,6 +1150,7 @@ export type PostCreateWithoutNotificationsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -1129,6 +1169,7 @@ export type PostUncheckedCreateWithoutNotificationsInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -1163,6 +1204,7 @@ export type PostUpdateWithoutNotificationsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1181,6 +1223,7 @@ export type PostUncheckedUpdateWithoutNotificationsInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1199,6 +1242,7 @@ export type PostCreateManyAuthorInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -1213,6 +1257,7 @@ export type PostUpdateWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1231,6 +1276,7 @@ export type PostUncheckedUpdateWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1249,6 +1295,7 @@ export type PostUncheckedUpdateManyWithoutAuthorInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1263,6 +1310,7 @@ export type PostCreateManyChannelInput = {
   body: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  editedAt?: Date | string | null
   imageUrl?: string | null
   videoUrl?: string | null
   viewCount?: number
@@ -1277,6 +1325,7 @@ export type PostUpdateWithoutChannelInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1295,6 +1344,7 @@ export type PostUncheckedUpdateWithoutChannelInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1313,6 +1363,7 @@ export type PostUncheckedUpdateManyWithoutChannelInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1385,6 +1436,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   imageUrl?: boolean
   videoUrl?: boolean
   viewCount?: boolean
@@ -1407,6 +1459,7 @@ export type PostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   imageUrl?: boolean
   videoUrl?: boolean
   viewCount?: boolean
@@ -1424,6 +1477,7 @@ export type PostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   imageUrl?: boolean
   videoUrl?: boolean
   viewCount?: boolean
@@ -1441,6 +1495,7 @@ export type PostSelectScalar = {
   body?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  editedAt?: boolean
   imageUrl?: boolean
   videoUrl?: boolean
   viewCount?: boolean
@@ -1450,7 +1505,7 @@ export type PostSelectScalar = {
   channelId?: boolean
 }
 
-export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "createdAt" | "updatedAt" | "imageUrl" | "videoUrl" | "viewCount" | "lastActivityAt" | "pinned" | "authorId" | "channelId", ExtArgs["result"]["post"]>
+export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "createdAt" | "updatedAt" | "editedAt" | "imageUrl" | "videoUrl" | "viewCount" | "lastActivityAt" | "pinned" | "authorId" | "channelId", ExtArgs["result"]["post"]>
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
@@ -1485,6 +1540,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     body: string
     createdAt: Date
     updatedAt: Date
+    editedAt: Date | null
     imageUrl: string | null
     videoUrl: string | null
     viewCount: number
@@ -1926,6 +1982,7 @@ export interface PostFieldRefs {
   readonly body: Prisma.FieldRef<"Post", 'String'>
   readonly createdAt: Prisma.FieldRef<"Post", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Post", 'DateTime'>
+  readonly editedAt: Prisma.FieldRef<"Post", 'DateTime'>
   readonly imageUrl: Prisma.FieldRef<"Post", 'String'>
   readonly videoUrl: Prisma.FieldRef<"Post", 'String'>
   readonly viewCount: Prisma.FieldRef<"Post", 'Int'>

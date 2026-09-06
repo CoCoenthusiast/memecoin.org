@@ -21,6 +21,7 @@ export const GET = withErrorHandling(async function GET(
           imageUrl: true,
           videoUrl: true,
           createdAt: true,
+          editedAt: true,
           viewCount: true,
           pinned: true,
           author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },

@@ -110,6 +110,7 @@ export const PostScalarFieldEnum = {
   body: 'body',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  editedAt: 'editedAt',
   imageUrl: 'imageUrl',
   videoUrl: 'videoUrl',
   viewCount: 'viewCount',
@@ -127,6 +128,7 @@ export const ReplyScalarFieldEnum = {
   body: 'body',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  editedAt: 'editedAt',
   authorId: 'authorId',
   postId: 'postId',
   parentId: 'parentId'
@@ -165,6 +167,7 @@ export const ProfileCommentScalarFieldEnum = {
   id: 'id',
   body: 'body',
   createdAt: 'createdAt',
+  editedAt: 'editedAt',
   authorId: 'authorId',
   profileUserId: 'profileUserId'
 } as const
