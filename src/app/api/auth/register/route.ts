@@ -57,6 +57,17 @@ export const POST = withErrorHandling(async function POST(
     },
   });
 
+  // SECURITY NOTE: The 409 status code combined with the generic message "Username or email
+  // already in use" allows limited information disclosure - an attacker could theoretically
+  // determine if a specific username OR email exists by observing the 409 vs 201 response.
+  // However, we accept this residual risk because:
+  // 1. The message is generic and doesn't reveal WHICH field is the duplicate
+  // 2. Usernames are already public on the forum (visible on posts, replies, profiles)
+  // 3. The 409 status is standard HTTP for "conflict" and doesn't reveal which field conflicts
+  // 4. IP-based rate limiting (5/hour) already prevents brute-force enumeration
+  // 5. Mitigations like "always return 200" or "always return 409" would break legitimate UX
+  //    (users need to know if their username/email is taken to correct it)
+  // 6. This is a public forum, not a sensitive system like banking or healthcare
   if (existingUser) {
     return apiError("Username or email already in use", 409);
   }

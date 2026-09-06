@@ -37,7 +37,7 @@ export function signToken(payload: {
   role: string;
   tokenVersion: number;
 }): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: "2d" });
 }
 
 export function sessionCookieOptions(maxAge: number) {
