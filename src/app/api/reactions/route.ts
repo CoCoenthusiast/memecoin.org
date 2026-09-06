@@ -61,5 +61,67 @@ export const POST = withErrorHandling(async function POST(
     },
   });
 
+  // Intentional: fire-and-forget. Notificação de reação é secundária —
+  // a reação já foi criada e retornada ao cliente normalmente.
+  if (hasPost) {
+    const post = await prisma.post.findUnique({
+      where: { id: body.postId! },
+      select: { authorId: true, id: true },
+    });
+    if (post && post.authorId !== user.id) {
+      const alreadyNotified = await prisma.notification.findFirst({
+        where: {
+          actorId: user.id,
+          postId: post.id,
+          message: { contains: "reacted to your post" },
+        },
+        select: { id: true },
+      });
+      if (!alreadyNotified) {
+        prisma.notification
+          .create({
+            data: {
+              userId: post.authorId,
+              actorId: user.id,
+              postId: post.id,
+              message: `${user.username} reacted to your post`,
+            },
+          })
+          .catch((e) => {
+            console.error("Failed to create reaction notification", e);
+          });
+      }
+    }
+  } else {
+    const reply = await prisma.reply.findUnique({
+      where: { id: body.replyId! },
+      select: { authorId: true, postId: true },
+    });
+    if (reply && reply.authorId !== user.id) {
+      const alreadyNotified = await prisma.notification.findFirst({
+        where: {
+          actorId: user.id,
+          postId: reply.postId,
+          message: { contains: "reacted to your comment" },
+        },
+        select: { id: true },
+      });
+      if (!alreadyNotified) {
+        prisma.notification
+          .create({
+            data: {
+              userId: reply.authorId,
+              actorId: user.id,
+              postId: reply.postId,
+              message: `${user.username} reacted to your comment`,
+            },
+          })
+          .catch((e) => {
+            console.error("Failed to create reaction notification", e);
+          });
+      }
+    }
+  }
+
   return NextResponse.json(reaction, { status: 201 });
 });
