@@ -48,7 +48,7 @@ export default function PrivacyPage() {
       <section className="mb-6">
         <h2 className="text-lg font-semibold text-gray-100 mb-2">6. Contact</h2>
         <p className="text-gray-200">
-          <a href="mailto:contato@degenscult.com" className="text-gray-400 hover:text-white transition-colors">contato@degenscult.com</a>
+          <a href="mailto:degenscult.support@gmail.com" className="text-gray-400 hover:text-white transition-colors">degenscult.support@gmail.com</a>
         </p>
       </section>
     </div>

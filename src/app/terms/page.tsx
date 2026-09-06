@@ -53,7 +53,7 @@ export default function TermsPage() {
       </section>
 
       <p className="text-gray-200">
-        Questions: <a href="mailto:contato@degenscult.com" className="text-gray-400 hover:text-white transition-colors">contato@degenscult.com</a>
+        Questions: <a href="mailto:degenscult.support@gmail.com" className="text-gray-400 hover:text-white transition-colors">degenscult.support@gmail.com</a>
       </p>
     </div>
   )

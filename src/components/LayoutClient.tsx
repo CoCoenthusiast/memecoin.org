@@ -32,6 +32,8 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
           <Link href="/disclaimer" className="hover:text-gray-400 transition-colors">Disclaimer</Link>
           {" · "}
           <Link href="/about" className="hover:text-gray-400 transition-colors">About</Link>
+          {" · "}
+          <a href="mailto:degenscult.support@gmail.com" className="hover:text-gray-400 transition-colors">Contact</a>
           {" · © 2026 degenscult"}
         </footer>
       </div>
