@@ -2,8 +2,16 @@
 import { useState, useEffect, useRef, useMemo } from "react"
 import { createPortal } from "react-dom"
 import { useSession } from "@/hooks/useSession"
-import { withinDeleteWindow, withinEditWindow } from "@/lib/deleteWindow"
-import { parseApiError } from "@/lib/api"
+import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
+
+function withinDeleteWindow(createdAt: string | Date): boolean {
+  return isWithinWindow(createdAt, DELETE_WINDOW_MS);
+}
+
+function withinEditWindow(createdAt: string | Date): boolean {
+  return isWithinWindow(createdAt, EDIT_WINDOW_MS);
+}
+import { parseApiError } from "@/lib/api";
 
 const REASONS = ["Spam", "Scam", "Offensive content", "Other"]
 

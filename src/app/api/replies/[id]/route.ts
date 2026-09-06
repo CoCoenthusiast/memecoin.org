@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth, isAdmin } from "@/lib/auth";
-import { withinDeleteWindow, withinEditWindow } from "@/lib/deleteWindow";
+import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
 
 export const DELETE = withErrorHandling(async function DELETE(
   _request: NextRequest,
@@ -21,7 +21,7 @@ export const DELETE = withErrorHandling(async function DELETE(
     return apiError("Forbidden", 403);
   }
 
-  if (!isAdmin(user) && !withinDeleteWindow(reply.createdAt)) {
+  if (!isAdmin(user) && !isWithinWindow(reply.createdAt, DELETE_WINDOW_MS)) {
     return apiError("Deletion window has expired", 403);
   }
 
@@ -50,7 +50,7 @@ export const PATCH = withErrorHandling(async function PATCH(
     return apiError("Forbidden", 403);
   }
 
-  if (!isAdmin(user) && !withinEditWindow(reply.createdAt)) {
+  if (!isAdmin(user) && !isWithinWindow(reply.createdAt, EDIT_WINDOW_MS)) {
     return apiError("Edit window has expired (5 minutes)", 403);
   }
 

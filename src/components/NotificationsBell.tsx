@@ -3,7 +3,8 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import { createPortal } from "react-dom"
 import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
-import { StyledUsername } from "@/components/StyledUsername"
+import { StyledUsername } from "@/components/StyledUsername";
+import { timeAgo } from "@/lib/timeAgo"
 
 type NotificationItem = {
   id: string
@@ -12,20 +13,6 @@ type NotificationItem = {
   postId: string
   createdAt: string
   actor?: { username: string; nameStyle?: string | null; isVip?: boolean } | null
-}
-
-function timeAgo(dateStr: string) {
-  const now = Date.now()
-  const then = new Date(dateStr).getTime()
-  const s = Math.floor((now - then) / 1000)
-  if (s < 60) return `${s}s ago`
-  const m = Math.floor(s / 60)
-  if (m < 60) return `${m}m ago`
-  const h = Math.floor(m / 60)
-  if (h < 24) return `${h}h ago`
-  const d = Math.floor(h / 24)
-  if (d < 30) return `${d}d ago`
-  return new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" })
 }
 
 const MENU_WIDTH = 320

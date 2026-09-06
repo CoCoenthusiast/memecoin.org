@@ -4,7 +4,8 @@ import Link from "next/link"
 import { ContentActions } from "@/components/ContentActions"
 import { useSession } from "@/hooks/useSession"
 import { StyledUsername } from "@/components/StyledUsername"
-import { isUserVip } from "@/lib/vip"
+import { isUserVip } from "@/lib/vip";
+import { timeAgo } from "@/lib/timeAgo"
 
 type PostCardProps = {
   post: {
@@ -27,22 +28,6 @@ type PostCardProps = {
     _count: { replies: number; reactions: number }
   }
   onContentAction?: () => void
-}
-
-function timeAgo(dateStr: string) {
-  const now = Date.now()
-  const then = new Date(dateStr).getTime()
-  const seconds = Math.floor((now - then) / 1000)
-
-  if (seconds < 60) return `${seconds}s ago`
-  const minutes = Math.floor(seconds / 60)
-  if (minutes < 60) return `${minutes}m ago`
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours}h ago`
-  const days = Math.floor(hours / 24)
-  if (days < 30) return `${days}d ago`
-  const months = Math.floor(days / 30)
-  return `${months}mo ago`
 }
 
 export default function PostCard({ post, onContentAction }: PostCardProps) {
