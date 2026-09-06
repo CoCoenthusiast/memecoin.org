@@ -477,6 +477,15 @@ export default function ProfilePage() {
                       />
                     </span>
                     <span>{timeAgo(comment.createdAt)}</span>
+                    <div className="ml-auto">
+                      <ContentActions
+                        targetId={comment.id}
+                        targetType="comment"
+                        authorId={comment.author.id}
+                        createdAt={comment.createdAt}
+                        onSuccess={() => setComments((prev) => prev.filter((c) => c.id !== comment.id))}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}

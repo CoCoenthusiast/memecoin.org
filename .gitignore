@@ -46,3 +46,5 @@ node_modules
 .next
 memecoins-forum-backup
 memecoins-forum-backup.zip
+backup_*.sql
+backup_*

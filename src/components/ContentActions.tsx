@@ -9,7 +9,7 @@ const REASONS = ["Spam", "Scam", "Offensive content", "Other"]
 
 type ContentActionsProps = {
   targetId: string
-  targetType: "post" | "reply" | "user"
+  targetType: "post" | "reply" | "user" | "comment"
   authorId?: string
   createdAt?: string
   onSuccess?: () => void
@@ -86,8 +86,13 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
 
   async function handleDelete() {
     setError("")
-    const plural = { post: "posts", reply: "replies", user: "users" }[targetType]
-    const res = await fetch(`/api/${plural}/${targetId}`, { method: "DELETE" })
+    const urlMap: Record<string, string> = {
+      post: `/api/posts/${targetId}`,
+      reply: `/api/replies/${targetId}`,
+      user: `/api/users/${targetId}`,
+      comment: `/api/profile-comments/${targetId}`,
+    }
+    const res = await fetch(urlMap[targetType], { method: "DELETE" })
     if (res.ok) {
       onSuccess?.()
     } else {
