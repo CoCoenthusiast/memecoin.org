@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 
-const WALLET_ADDRESS = "HeBzuaH1Ehng5XmMyCrSx7FZGN5x7HYx5YKY8fV9KFBm";
+const WALLET_ADDRESS = "8xJHR7CZMQnEwkoovjUQ16TVgRdQuhFGEcKVvWjvvgGd";
 
 export default function AboutPage() {
   const [copied, setCopied] = useState(false)

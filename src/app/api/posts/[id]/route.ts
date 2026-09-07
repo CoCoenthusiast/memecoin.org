@@ -14,6 +14,7 @@ export const GET = withErrorHandling(async function GET(
     prisma.post.findUnique({
       where: { id },
       select: {
+        id: true,
         channelId: true,
         title: true,
         body: true,
