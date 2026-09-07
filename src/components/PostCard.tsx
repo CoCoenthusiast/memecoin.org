@@ -2,6 +2,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { ContentActions } from "@/components/ContentActions"
+import { BookmarkButton } from "@/components/BookmarkButton"
 import { useSession } from "@/hooks/useSession"
 import { StyledUsername } from "@/components/StyledUsername"
 import { isUserVip } from "@/lib/vip";
@@ -10,12 +11,14 @@ import { timeAgo } from "@/lib/timeAgo"
 type PostCardProps = {
   post: {
     id: string
+    channelId?: string
     title: string
     body: string
     createdAt: string
     editedAt?: string | null
     viewCount?: number
     pinned?: boolean
+    bookmarked?: boolean
     author: {
       id: string
       username: string
@@ -23,6 +26,7 @@ type PostCardProps = {
       nameStyle?: string | null
       isVip?: boolean
       vipExpiresAt?: string | null
+      isOwner?: boolean
     }
     channel?: { slug: string; name: string }
     _count: { replies: number; reactions: number }
@@ -99,6 +103,7 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
                 username={post.author.username}
                 nameStyle={post.author.nameStyle}
                 isVip={isUserVip(post.author)}
+                isOwner={post.author.isOwner}
               />
             </Link>
           </span>
@@ -115,12 +120,16 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
               {post.pinned ? "Unpin" : "Pin"}
             </button>
           )}
+          <div className="relative z-10">
+            <BookmarkButton postId={post.id} initialBookmarked={post.bookmarked} />
+          </div>
           <div className="relative z-10 ml-auto">
             <ContentActions
               targetId={post.id}
               targetType="post"
               authorId={post.author.id}
               createdAt={post.createdAt}
+              currentChannelId={post.channelId}
               onSuccess={onContentAction}
             />
           </div>

@@ -1,15 +1,32 @@
 "use client"
-import { useState, useCallback } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import PostCard from "@/components/PostCard"
+import { useSession } from "@/hooks/useSession"
 
 export default function ChannelPageClient({ channel: initialChannel }: { channel: any }) {
+  const { user } = useSession()
   const [channel, setChannel] = useState(initialChannel)
+  const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set())
 
   const loadChannel = useCallback(async () => {
     const data = await fetch(`/api/channels/${channel.slug}`).then(r => r.ok ? r.json() : null)
     if (data) setChannel(data)
   }, [channel?.slug])
+
+  useEffect(() => {
+    if (!user) {
+      setBookmarkedIds(new Set())
+      return
+    }
+    fetch("/api/bookmarks")
+      .then((r) => r.ok ? r.json() : { bookmarks: [] })
+      .then((data) => {
+        const ids = (data.bookmarks ?? []).map((b: any) => b.post?.id).filter(Boolean)
+        setBookmarkedIds(new Set(ids))
+      })
+      .catch(() => setBookmarkedIds(new Set()))
+  }, [user, channel])
 
   if (!channel) return <div className="text-center text-gray-500 py-12">Channel not found</div>
 
@@ -30,7 +47,11 @@ export default function ChannelPageClient({ channel: initialChannel }: { channel
           <p className="text-gray-500 text-center py-8">No posts yet. Be the first!</p>
         )}
         {channel.posts?.map((post: any) => (
-          <PostCard key={post.id} post={post} onContentAction={loadChannel} />
+          <PostCard
+            key={post.id}
+            post={{ ...post, bookmarked: bookmarkedIds.has(post.id) }}
+            onContentAction={loadChannel}
+          />
         ))}
       </div>
     </div>

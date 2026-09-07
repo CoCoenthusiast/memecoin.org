@@ -4,8 +4,9 @@ import { useParams } from "next/navigation"
 import PostCard from "@/components/PostCard"
 import { ContentActions } from "@/components/ContentActions"
 import { FormatToolbar } from "@/components/FormatToolbar"
+import { ReactionBar } from "@/components/ReactionBar"
 import { useSession } from "@/hooks/useSession"
-import { isUserVip } from "@/lib/vip"
+import { isUserVip, isUserOwner } from "@/lib/vip"
 import { StyledName, nameStyleFromJson, type NameStyle } from "@/components/StyledName"
 import { StyledUsername } from "@/components/StyledUsername"
 import { parseApiError } from "@/lib/api"
@@ -32,7 +33,8 @@ export default function ProfilePage() {
   const [bannerError, setBannerError] = useState("")
   const fileInputRef = useRef<HTMLInputElement>(null)
   const bannerInputRef = useRef<HTMLInputElement>(null)
-  const [activeTab, setActiveTab] = useState<"posts" | "mural">("posts")
+  const [activeTab, setActiveTab] = useState<"posts" | "bookmarks" | "mural">("posts")
+  const [bookmarks, setBookmarks] = useState<any[]>([])
   const [nameStyle, setNameStyle] = useState<NameStyle>({
     colors: ["#39ff14", "#00ffff"],
     animation: "static",
@@ -75,6 +77,29 @@ export default function ProfilePage() {
   useEffect(() => {
     loadProfile()
   }, [loadProfile])
+
+  const isOwnProfile = !!currentUser && currentUser.username === username
+  const loadBookmarks = useCallback(async () => {
+    if (!isOwnProfile) {
+      setBookmarks([])
+      return
+    }
+    try {
+      const res = await fetch("/api/bookmarks")
+      if (res.ok) {
+        const data = await res.json()
+        setBookmarks(data.bookmarks ?? [])
+      } else {
+        setBookmarks([])
+      }
+    } catch {
+      setBookmarks([])
+    }
+  }, [isOwnProfile])
+
+  useEffect(() => {
+    if (isOwnProfile) loadBookmarks()
+  }, [isOwnProfile, loadBookmarks, activeTab])
 
   async function handleAddComment(e: React.FormEvent) {
     e.preventDefault()
@@ -215,6 +240,7 @@ export default function ProfilePage() {
                   username={profile.username}
                   nameStyle={profile.nameStyle}
                   isVip={isUserVip(profile)}
+                  isOwner={isUserOwner(profile)}
                 />
               </h1>
               <ContentActions targetId={profile.id} targetType="user" onSuccess={loadProfile} />
@@ -403,6 +429,18 @@ export default function ProfilePage() {
         >
           Posts ({profile.postCount})
         </button>
+        {isOwnProfile && (
+          <button
+            onClick={() => setActiveTab("bookmarks")}
+            className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
+              activeTab === "bookmarks"
+                ? "text-neon border-neon"
+                : "text-gray-500 border-transparent hover:text-gray-300"
+            }`}
+          >
+            Bookmarks ({bookmarks.length})
+          </button>
+        )}
         <button
           onClick={() => setActiveTab("mural")}
           className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
@@ -421,6 +459,20 @@ export default function ProfilePage() {
             <p className="text-gray-500 text-center py-8">No posts yet</p>
           ) : (
             profile.posts.map((post: any) => <PostCard key={post.id} post={post} onContentAction={loadProfile} />)
+          )}
+        </div>
+      ) : activeTab === "bookmarks" && isOwnProfile ? (
+        <div className="space-y-4">
+          {bookmarks.length === 0 ? (
+            <p className="text-gray-500 text-center py-8">No bookmarks yet. Save posts to see them here.</p>
+          ) : (
+            bookmarks.map((b: any) => b.post && (
+              <PostCard
+                key={b.id}
+                post={{ ...b.post, bookmarked: true }}
+                onContentAction={loadBookmarks}
+              />
+            ))
           )}
         </div>
       ) : (
@@ -522,12 +574,22 @@ export default function ProfilePage() {
                     ) : (
                       <p className="text-sm text-gray-200 whitespace-pre-wrap">{comment.body}</p>
                     )}
+                    <div className="mt-2">
+                      <ReactionBar
+                        targetId={comment.id}
+                        type="profile-comment"
+                        reactions={comment.reactions ?? []}
+                        currentUserId={currentUser?.id}
+                        onSuccess={loadProfile}
+                      />
+                    </div>
                     <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
                       <span className="text-gray-300 font-medium">
                         <StyledUsername
                           username={comment.author.username}
                           nameStyle={comment.author.nameStyle}
                           isVip={isUserVip(comment.author)}
+                          isOwner={!!comment.author.isOwner}
                         />
                       </span>
                       <span>{timeAgo(comment.createdAt)}{comment.editedAt && <span className="text-gray-600"> (edited)</span>}</span>

@@ -3,6 +3,7 @@ import { useState } from "react"
 import { AdminReportsList } from "@/components/AdminReportsList"
 import { VipManagement } from "@/components/VipManagement"
 import { AdminAnalytics } from "@/components/AdminAnalytics"
+import { useSession } from "@/hooks/useSession"
 
 type Report = {
   id: string
@@ -24,6 +25,8 @@ type AdminPageTabsProps = {
 }
 
 export function AdminPageTabs({ reports }: AdminPageTabsProps) {
+  const { user } = useSession()
+  const isOwner = !!user?.isOwner
   const [activeTab, setActiveTab] = useState<"reports" | "vip" | "analytics">("reports")
 
   return (
@@ -49,16 +52,18 @@ export function AdminPageTabs({ reports }: AdminPageTabsProps) {
         >
           VIP Management
         </button>
-        <button
-          onClick={() => setActiveTab("analytics")}
-          className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
-            activeTab === "analytics"
-              ? "text-neon border-neon"
-              : "text-gray-500 border-transparent hover:text-gray-300"
-          }`}
-        >
-          Analytics
-        </button>
+        {isOwner && (
+          <button
+            onClick={() => setActiveTab("analytics")}
+            className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
+              activeTab === "analytics"
+                ? "text-neon border-neon"
+                : "text-gray-500 border-transparent hover:text-gray-300"
+            }`}
+          >
+            Analytics
+          </button>
+        )}
       </div>
 
       {activeTab === "reports" && (
@@ -70,7 +75,7 @@ export function AdminPageTabs({ reports }: AdminPageTabsProps) {
       )}
 
       {activeTab === "vip" && <VipManagement />}
-      {activeTab === "analytics" && <AdminAnalytics />}
+      {activeTab === "analytics" && isOwner && <AdminAnalytics />}
     </div>
   )
 }

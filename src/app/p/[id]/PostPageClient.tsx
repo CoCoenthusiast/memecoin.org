@@ -6,6 +6,7 @@ import { ReactionBar } from "@/components/ReactionBar"
 import { ReplyList } from "@/components/ReplyList"
 import { NewReplyForm } from "@/components/NewReplyForm"
 import { ContentActions } from "@/components/ContentActions"
+import { BookmarkButton } from "@/components/BookmarkButton"
 import { FormatToolbar } from "@/components/FormatToolbar"
 import { FormattedText } from "@/components/FormattedText"
 import { useSession } from "@/hooks/useSession"
@@ -28,6 +29,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
   const [editBody, setEditBody] = useState(initialPost.body)
   const [saving, setSaving] = useState(false)
   const [editError, setEditError] = useState("")
+  const [bookmarked, setBookmarked] = useState(false)
   const editTextareaRef = useRef<HTMLTextAreaElement>(null)
   const mentionData = useMentionData(post ? extractMentions(post.body) : [])
 
@@ -48,6 +50,17 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
   }, [post.id])
 
   useEffect(() => { loadPost() }, [loadPost])
+
+  useEffect(() => {
+    if (!user) return
+    fetch("/api/bookmarks")
+      .then((r) => r.ok ? r.json() : { bookmarks: [] })
+      .then((data) => {
+        const ids = (data.bookmarks ?? []).map((b: any) => b.post?.id)
+        setBookmarked(ids.includes(post.id))
+      })
+      .catch(() => {})
+  }, [user, post.id])
 
   useEffect(() => {
     const interval = setInterval(() => loadPost(), 30000)
@@ -120,6 +133,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
                 username={post.author.username}
                 nameStyle={post.author.nameStyle}
                 isVip={isUserVip(post.author)}
+                isOwner={post.author.isOwner}
               />
             </Link>
           </span>
@@ -192,11 +206,17 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
             currentUserId={user?.id}
             onSuccess={loadPost}
           />
+          <BookmarkButton
+            postId={post.id}
+            initialBookmarked={bookmarked}
+            onChange={setBookmarked}
+          />
           <ContentActions
             targetId={post.id}
             targetType="post"
             authorId={post.author.id}
             createdAt={post.createdAt}
+            currentChannelId={post.channelId}
             onSuccess={handlePostDeleted}
             onEdit={() => {
               setEditBody(post.body)

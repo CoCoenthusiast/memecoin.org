@@ -26,6 +26,7 @@ type ReplyItem = {
     nameStyle?: string | null
     isVip?: boolean
     vipExpiresAt?: string | null
+    isOwner?: boolean
   }
   parent?: { id: string; body?: string; author?: { username: string } } | null
   reactions: Array<{ id: string; type: string; userId: string }>
@@ -206,6 +207,7 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
                     username={reply.author.username}
                     nameStyle={reply.author.nameStyle}
                     isVip={isUserVip(reply.author)}
+                    isOwner={reply.author.isOwner}
                   />
                 </Link>
               </span>

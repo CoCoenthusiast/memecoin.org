@@ -5,7 +5,7 @@ import { useSession } from "@/hooks/useSession"
 
 type ReactionBarProps = {
   targetId: string
-  type: "post" | "reply"
+  type: "post" | "reply" | "profile-comment"
   reactions: Array<{ id: string; type: string; userId: string }>
   currentUserId?: string
   onSuccess?: () => void
@@ -55,7 +55,8 @@ export function ReactionBar({ targetId, type, reactions, currentUserId, onSucces
 
     const body: Record<string, string> = { type: reactionType }
     if (type === "post") body.postId = targetId
-    else body.replyId = targetId
+    else if (type === "reply") body.replyId = targetId
+    else body.profileCommentId = targetId
 
     try {
       const res = await fetch("/api/reactions", {

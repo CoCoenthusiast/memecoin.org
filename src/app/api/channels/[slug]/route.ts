@@ -17,6 +17,7 @@ export const GET = withErrorHandling(async function GET(
         select: {
           id: true,
           title: true,
+          channelId: true,
           body: true,
           imageUrl: true,
           videoUrl: true,
@@ -24,7 +25,7 @@ export const GET = withErrorHandling(async function GET(
           editedAt: true,
           viewCount: true,
           pinned: true,
-          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
           _count: { select: { replies: true, reactions: true } },
         },
       },

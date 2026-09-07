@@ -192,6 +192,8 @@ export type ProfileCommentWhereInput = {
   profileUserId?: Prisma.StringFilter<"ProfileComment"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   profileUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  reactions?: Prisma.ReactionListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type ProfileCommentOrderByWithRelationInput = {
@@ -203,6 +205,8 @@ export type ProfileCommentOrderByWithRelationInput = {
   profileUserId?: Prisma.SortOrder
   author?: Prisma.UserOrderByWithRelationInput
   profileUser?: Prisma.UserOrderByWithRelationInput
+  reactions?: Prisma.ReactionOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type ProfileCommentWhereUniqueInput = Prisma.AtLeast<{
@@ -217,6 +221,8 @@ export type ProfileCommentWhereUniqueInput = Prisma.AtLeast<{
   profileUserId?: Prisma.StringFilter<"ProfileComment"> | string
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   profileUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  reactions?: Prisma.ReactionListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type ProfileCommentOrderByWithAggregationInput = {
@@ -250,6 +256,8 @@ export type ProfileCommentCreateInput = {
   editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutWrittenProfileCommentsInput
   profileUser: Prisma.UserCreateNestedOneWithoutProfileCommentsInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutProfileCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutProfileCommentInput
 }
 
 export type ProfileCommentUncheckedCreateInput = {
@@ -259,6 +267,8 @@ export type ProfileCommentUncheckedCreateInput = {
   editedAt?: Date | string | null
   authorId: string
   profileUserId: string
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProfileCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutProfileCommentInput
 }
 
 export type ProfileCommentUpdateInput = {
@@ -268,6 +278,8 @@ export type ProfileCommentUpdateInput = {
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutWrittenProfileCommentsNestedInput
   profileUser?: Prisma.UserUpdateOneRequiredWithoutProfileCommentsNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutProfileCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutProfileCommentNestedInput
 }
 
 export type ProfileCommentUncheckedUpdateInput = {
@@ -277,6 +289,8 @@ export type ProfileCommentUncheckedUpdateInput = {
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProfileCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutProfileCommentNestedInput
 }
 
 export type ProfileCommentCreateManyInput = {
@@ -312,6 +326,11 @@ export type ProfileCommentListRelationFilter = {
 
 export type ProfileCommentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ProfileCommentNullableScalarRelationFilter = {
+  is?: Prisma.ProfileCommentWhereInput | null
+  isNot?: Prisma.ProfileCommentWhereInput | null
 }
 
 export type ProfileCommentCountOrderByAggregateInput = {
@@ -425,12 +444,46 @@ export type ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput = {
   deleteMany?: Prisma.ProfileCommentScalarWhereInput | Prisma.ProfileCommentScalarWhereInput[]
 }
 
+export type ProfileCommentCreateNestedOneWithoutReactionsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCommentCreateWithoutReactionsInput, Prisma.ProfileCommentUncheckedCreateWithoutReactionsInput>
+  connectOrCreate?: Prisma.ProfileCommentCreateOrConnectWithoutReactionsInput
+  connect?: Prisma.ProfileCommentWhereUniqueInput
+}
+
+export type ProfileCommentUpdateOneWithoutReactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCommentCreateWithoutReactionsInput, Prisma.ProfileCommentUncheckedCreateWithoutReactionsInput>
+  connectOrCreate?: Prisma.ProfileCommentCreateOrConnectWithoutReactionsInput
+  upsert?: Prisma.ProfileCommentUpsertWithoutReactionsInput
+  disconnect?: Prisma.ProfileCommentWhereInput | boolean
+  delete?: Prisma.ProfileCommentWhereInput | boolean
+  connect?: Prisma.ProfileCommentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileCommentUpdateToOneWithWhereWithoutReactionsInput, Prisma.ProfileCommentUpdateWithoutReactionsInput>, Prisma.ProfileCommentUncheckedUpdateWithoutReactionsInput>
+}
+
+export type ProfileCommentCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCommentCreateWithoutNotificationsInput, Prisma.ProfileCommentUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.ProfileCommentCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.ProfileCommentWhereUniqueInput
+}
+
+export type ProfileCommentUpdateOneWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCommentCreateWithoutNotificationsInput, Prisma.ProfileCommentUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.ProfileCommentCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.ProfileCommentUpsertWithoutNotificationsInput
+  disconnect?: Prisma.ProfileCommentWhereInput | boolean
+  delete?: Prisma.ProfileCommentWhereInput | boolean
+  connect?: Prisma.ProfileCommentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileCommentUpdateToOneWithWhereWithoutNotificationsInput, Prisma.ProfileCommentUpdateWithoutNotificationsInput>, Prisma.ProfileCommentUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type ProfileCommentCreateWithoutAuthorInput = {
   id?: string
   body: string
   createdAt?: Date | string
   editedAt?: Date | string | null
   profileUser: Prisma.UserCreateNestedOneWithoutProfileCommentsInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutProfileCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutProfileCommentInput
 }
 
 export type ProfileCommentUncheckedCreateWithoutAuthorInput = {
@@ -439,6 +492,8 @@ export type ProfileCommentUncheckedCreateWithoutAuthorInput = {
   createdAt?: Date | string
   editedAt?: Date | string | null
   profileUserId: string
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProfileCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutProfileCommentInput
 }
 
 export type ProfileCommentCreateOrConnectWithoutAuthorInput = {
@@ -457,6 +512,8 @@ export type ProfileCommentCreateWithoutProfileUserInput = {
   createdAt?: Date | string
   editedAt?: Date | string | null
   author: Prisma.UserCreateNestedOneWithoutWrittenProfileCommentsInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutProfileCommentInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutProfileCommentInput
 }
 
 export type ProfileCommentUncheckedCreateWithoutProfileUserInput = {
@@ -465,6 +522,8 @@ export type ProfileCommentUncheckedCreateWithoutProfileUserInput = {
   createdAt?: Date | string
   editedAt?: Date | string | null
   authorId: string
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProfileCommentInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutProfileCommentInput
 }
 
 export type ProfileCommentCreateOrConnectWithoutProfileUserInput = {
@@ -521,6 +580,118 @@ export type ProfileCommentUpdateManyWithWhereWithoutProfileUserInput = {
   data: Prisma.XOR<Prisma.ProfileCommentUpdateManyMutationInput, Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserInput>
 }
 
+export type ProfileCommentCreateWithoutReactionsInput = {
+  id?: string
+  body: string
+  createdAt?: Date | string
+  editedAt?: Date | string | null
+  author: Prisma.UserCreateNestedOneWithoutWrittenProfileCommentsInput
+  profileUser: Prisma.UserCreateNestedOneWithoutProfileCommentsInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutProfileCommentInput
+}
+
+export type ProfileCommentUncheckedCreateWithoutReactionsInput = {
+  id?: string
+  body: string
+  createdAt?: Date | string
+  editedAt?: Date | string | null
+  authorId: string
+  profileUserId: string
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutProfileCommentInput
+}
+
+export type ProfileCommentCreateOrConnectWithoutReactionsInput = {
+  where: Prisma.ProfileCommentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCommentCreateWithoutReactionsInput, Prisma.ProfileCommentUncheckedCreateWithoutReactionsInput>
+}
+
+export type ProfileCommentUpsertWithoutReactionsInput = {
+  update: Prisma.XOR<Prisma.ProfileCommentUpdateWithoutReactionsInput, Prisma.ProfileCommentUncheckedUpdateWithoutReactionsInput>
+  create: Prisma.XOR<Prisma.ProfileCommentCreateWithoutReactionsInput, Prisma.ProfileCommentUncheckedCreateWithoutReactionsInput>
+  where?: Prisma.ProfileCommentWhereInput
+}
+
+export type ProfileCommentUpdateToOneWithWhereWithoutReactionsInput = {
+  where?: Prisma.ProfileCommentWhereInput
+  data: Prisma.XOR<Prisma.ProfileCommentUpdateWithoutReactionsInput, Prisma.ProfileCommentUncheckedUpdateWithoutReactionsInput>
+}
+
+export type ProfileCommentUpdateWithoutReactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  author?: Prisma.UserUpdateOneRequiredWithoutWrittenProfileCommentsNestedInput
+  profileUser?: Prisma.UserUpdateOneRequiredWithoutProfileCommentsNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutProfileCommentNestedInput
+}
+
+export type ProfileCommentUncheckedUpdateWithoutReactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutProfileCommentNestedInput
+}
+
+export type ProfileCommentCreateWithoutNotificationsInput = {
+  id?: string
+  body: string
+  createdAt?: Date | string
+  editedAt?: Date | string | null
+  author: Prisma.UserCreateNestedOneWithoutWrittenProfileCommentsInput
+  profileUser: Prisma.UserCreateNestedOneWithoutProfileCommentsInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutProfileCommentInput
+}
+
+export type ProfileCommentUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  body: string
+  createdAt?: Date | string
+  editedAt?: Date | string | null
+  authorId: string
+  profileUserId: string
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutProfileCommentInput
+}
+
+export type ProfileCommentCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.ProfileCommentWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCommentCreateWithoutNotificationsInput, Prisma.ProfileCommentUncheckedCreateWithoutNotificationsInput>
+}
+
+export type ProfileCommentUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.ProfileCommentUpdateWithoutNotificationsInput, Prisma.ProfileCommentUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.ProfileCommentCreateWithoutNotificationsInput, Prisma.ProfileCommentUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.ProfileCommentWhereInput
+}
+
+export type ProfileCommentUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.ProfileCommentWhereInput
+  data: Prisma.XOR<Prisma.ProfileCommentUpdateWithoutNotificationsInput, Prisma.ProfileCommentUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type ProfileCommentUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  author?: Prisma.UserUpdateOneRequiredWithoutWrittenProfileCommentsNestedInput
+  profileUser?: Prisma.UserUpdateOneRequiredWithoutProfileCommentsNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutProfileCommentNestedInput
+}
+
+export type ProfileCommentUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProfileCommentNestedInput
+}
+
 export type ProfileCommentCreateManyAuthorInput = {
   id?: string
   body: string
@@ -543,6 +714,8 @@ export type ProfileCommentUpdateWithoutAuthorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profileUser?: Prisma.UserUpdateOneRequiredWithoutProfileCommentsNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutProfileCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutProfileCommentNestedInput
 }
 
 export type ProfileCommentUncheckedUpdateWithoutAuthorInput = {
@@ -551,6 +724,8 @@ export type ProfileCommentUncheckedUpdateWithoutAuthorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profileUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProfileCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutProfileCommentNestedInput
 }
 
 export type ProfileCommentUncheckedUpdateManyWithoutAuthorInput = {
@@ -567,6 +742,8 @@ export type ProfileCommentUpdateWithoutProfileUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   author?: Prisma.UserUpdateOneRequiredWithoutWrittenProfileCommentsNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutProfileCommentNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutProfileCommentNestedInput
 }
 
 export type ProfileCommentUncheckedUpdateWithoutProfileUserInput = {
@@ -575,6 +752,8 @@ export type ProfileCommentUncheckedUpdateWithoutProfileUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutProfileCommentNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutProfileCommentNestedInput
 }
 
 export type ProfileCommentUncheckedUpdateManyWithoutProfileUserInput = {
@@ -586,6 +765,44 @@ export type ProfileCommentUncheckedUpdateManyWithoutProfileUserInput = {
 }
 
 
+/**
+ * Count Type ProfileCommentCountOutputType
+ */
+
+export type ProfileCommentCountOutputType = {
+  reactions: number
+  notifications: number
+}
+
+export type ProfileCommentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reactions?: boolean | ProfileCommentCountOutputTypeCountReactionsArgs
+  notifications?: boolean | ProfileCommentCountOutputTypeCountNotificationsArgs
+}
+
+/**
+ * ProfileCommentCountOutputType without action
+ */
+export type ProfileCommentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileCommentCountOutputType
+   */
+  select?: Prisma.ProfileCommentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProfileCommentCountOutputType without action
+ */
+export type ProfileCommentCountOutputTypeCountReactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReactionWhereInput
+}
+
+/**
+ * ProfileCommentCountOutputType without action
+ */
+export type ProfileCommentCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type ProfileCommentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -596,6 +813,9 @@ export type ProfileCommentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   profileUserId?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   profileUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reactions?: boolean | Prisma.ProfileComment$reactionsArgs<ExtArgs>
+  notifications?: boolean | Prisma.ProfileComment$notificationsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCommentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profileComment"]>
 
 export type ProfileCommentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -633,6 +853,9 @@ export type ProfileCommentOmit<ExtArgs extends runtime.Types.Extensions.Internal
 export type ProfileCommentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   profileUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  reactions?: boolean | Prisma.ProfileComment$reactionsArgs<ExtArgs>
+  notifications?: boolean | Prisma.ProfileComment$notificationsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCommentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProfileCommentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -648,6 +871,8 @@ export type $ProfileCommentPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     author: Prisma.$UserPayload<ExtArgs>
     profileUser: Prisma.$UserPayload<ExtArgs>
+    reactions: Prisma.$ReactionPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1052,6 +1277,8 @@ export interface Prisma__ProfileCommentClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   profileUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reactions<T extends Prisma.ProfileComment$reactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfileComment$reactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.ProfileComment$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfileComment$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1480,6 +1707,54 @@ export type ProfileCommentDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many ProfileComments to delete.
    */
   limit?: number
+}
+
+/**
+ * ProfileComment.reactions
+ */
+export type ProfileComment$reactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reaction
+   */
+  select?: Prisma.ReactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reaction
+   */
+  omit?: Prisma.ReactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReactionInclude<ExtArgs> | null
+  where?: Prisma.ReactionWhereInput
+  orderBy?: Prisma.ReactionOrderByWithRelationInput | Prisma.ReactionOrderByWithRelationInput[]
+  cursor?: Prisma.ReactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReactionScalarFieldEnum | Prisma.ReactionScalarFieldEnum[]
+}
+
+/**
+ * ProfileComment.notifications
+ */
+export type ProfileComment$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

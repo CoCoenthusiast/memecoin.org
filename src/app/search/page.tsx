@@ -96,6 +96,7 @@ export default function SearchPage() {
                     username={memberProfile.username}
                     nameStyle={memberProfile.nameStyle}
                     isVip={isUserVip(memberProfile)}
+                    isOwner={!!memberProfile.isOwner}
                   />
                 </div>
                 <div className="text-sm text-gray-400">Member since {formatDate(memberProfile.createdAt)}</div>

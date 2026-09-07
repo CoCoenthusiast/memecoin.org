@@ -6,7 +6,7 @@ import { StyledUsername } from "@/components/StyledUsername";
 const TOKEN_REGEX =
   /(`[^`]+`)|(\*\*[^*]+\*\*)|(https?:\/\/[^\s]+)|(@[A-Za-z0-9_]+)/g;
 
-export type MentionData = { nameStyle?: string | null; isVip?: boolean };
+export type MentionData = { nameStyle?: string | null; isVip?: boolean; isOwner?: boolean };
 export type MentionDataMap = Record<string, MentionData>;
 
 function stripTrailingPunct(url: string): string {
@@ -72,6 +72,7 @@ function renderInline(text: string, mentionData: MentionDataMap): React.ReactNod
             username={mention}
             nameStyle={md?.nameStyle}
             isVip={md?.isVip}
+            isOwner={md?.isOwner}
             className={
               hasStyle
                 ? "font-semibold text-neon underline decoration-neon/30 underline-offset-2"

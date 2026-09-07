@@ -56,7 +56,9 @@ export const ModelName = {
   Reaction: 'Reaction',
   Report: 'Report',
   ProfileComment: 'ProfileComment',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  LoginLog: 'LoginLog',
+  Bookmark: 'Bookmark'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -86,6 +88,7 @@ export const UserScalarFieldEnum = {
   bannerUrl: 'bannerUrl',
   isVip: 'isVip',
   vipExpiresAt: 'vipExpiresAt',
+  isOwner: 'isOwner',
   nameStyle: 'nameStyle',
   tokenVersion: 'tokenVersion',
   createdAt: 'createdAt'
@@ -143,7 +146,8 @@ export const ReactionScalarFieldEnum = {
   createdAt: 'createdAt',
   userId: 'userId',
   postId: 'postId',
-  replyId: 'replyId'
+  replyId: 'replyId',
+  profileCommentId: 'profileCommentId'
 } as const
 
 export type ReactionScalarFieldEnum = (typeof ReactionScalarFieldEnum)[keyof typeof ReactionScalarFieldEnum]
@@ -180,12 +184,33 @@ export const NotificationScalarFieldEnum = {
   userId: 'userId',
   actorId: 'actorId',
   postId: 'postId',
+  profileCommentId: 'profileCommentId',
   message: 'message',
   read: 'read',
   createdAt: 'createdAt'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const LoginLogScalarFieldEnum = {
+  id: 'id',
+  ip: 'ip',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type LoginLogScalarFieldEnum = (typeof LoginLogScalarFieldEnum)[keyof typeof LoginLogScalarFieldEnum]
+
+
+export const BookmarkScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  postId: 'postId'
+} as const
+
+export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -15,10 +15,15 @@ export type AuthUser = {
   role: "USER" | "ADMIN";
   isVip: boolean;
   vipExpiresAt: Date | null;
+  isOwner: boolean;
 };
 
 export function isAdmin(user: { role: string }): boolean {
   return user.role === "ADMIN";
+}
+
+export function isOwner(user: { isOwner: boolean }): boolean {
+  return user.isOwner;
 }
 
 export async function hashPassword(password: string): Promise<string> {
@@ -86,6 +91,7 @@ export async function getSession(): Promise<{
       role: true,
       isVip: true,
       vipExpiresAt: true,
+      isOwner: true,
       tokenVersion: true,
     },
   });

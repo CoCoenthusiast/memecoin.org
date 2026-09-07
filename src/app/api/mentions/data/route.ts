@@ -21,14 +21,16 @@ export const POST = withErrorHandling(async function POST(request: NextRequest) 
       nameStyle: true,
       isVip: true,
       vipExpiresAt: true,
+      isOwner: true,
     },
   });
 
-  const result: Record<string, { nameStyle: string | null; isVip: boolean }> = {};
+  const result: Record<string, { nameStyle: string | null; isVip: boolean; isOwner: boolean }> = {};
   for (const u of users) {
     result[u.usernameLower] = {
       nameStyle: u.nameStyle,
       isVip: isUserVip(u),
+      isOwner: !!u.isOwner,
     };
   }
 

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export type MentionUserData = { nameStyle?: string | null; isVip?: boolean };
+export type MentionUserData = { nameStyle?: string | null; isVip?: boolean; isOwner?: boolean };
 export type MentionDataMap = Record<string, MentionUserData>;
 
 let cache: MentionDataMap | null = null;

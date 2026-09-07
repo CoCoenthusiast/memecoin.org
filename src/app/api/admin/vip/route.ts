@@ -8,7 +8,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const VIP_DAYS = 30;
 const ADD_MS = VIP_DAYS * DAY_MS;
 
-type VipAction = "grant" | "renew" | "revoke";
+type VipAction = "grant" | "grantLifetime" | "renew" | "revoke";
 
 async function requireAdmin() {
   const session = await getSession();
@@ -52,7 +52,7 @@ export const POST = withErrorHandling(async function POST(request: NextRequest) 
   if (denied) return denied;
 
   const body = await getBody<{ action: VipAction; userId: string }>(request);
-  if (!["grant", "renew", "revoke"].includes(body.action)) {
+  if (!["grant", "grantLifetime", "renew", "revoke"].includes(body.action)) {
     return apiError("Invalid action", 400);
   }
   if (!body.userId) return apiError("userId is required", 400);
@@ -65,7 +65,12 @@ export const POST = withErrorHandling(async function POST(request: NextRequest) 
 
   const now = Date.now();
 
-  if (body.action === "grant") {
+  if (body.action === "grantLifetime") {
+    await prisma.user.update({
+      where: { id: body.userId },
+      data: { isVip: true, vipExpiresAt: null },
+    });
+  } else if (body.action === "grant") {
     await prisma.user.update({
       where: { id: body.userId },
       data: { isVip: true, vipExpiresAt: new Date(now + ADD_MS) },

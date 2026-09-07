@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { parseApiError } from "@/lib/api"
 
@@ -8,6 +8,15 @@ type VipUser = {
   username: string
   vipExpiresAt: string | null
   vip: boolean
+}
+
+type VipListItem = {
+  id: string
+  username: string
+  isVip: boolean
+  vipExpiresAt: string | null
+  lifetime: boolean
+  createdAt: string
 }
 
 function formatDate(iso: string | null): string {
@@ -21,6 +30,18 @@ function formatDate(iso: string | null): string {
   })
 }
 
+function timeRemaining(iso: string | null): string {
+  if (!iso) return "Lifetime"
+  const ms = new Date(iso).getTime() - Date.now()
+  if (ms <= 0) return "Expired"
+  const days = Math.floor(ms / (24 * 60 * 60 * 1000))
+  const hours = Math.floor((ms % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000))
+  if (days > 0) return `${days}d ${hours}h`
+  const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000))
+  if (hours > 0) return `${hours}h ${minutes}m`
+  return `${minutes}m`
+}
+
 export function VipManagement() {
   const router = useRouter()
   const [username, setUsername] = useState("")
@@ -30,6 +51,35 @@ export function VipManagement() {
   const [error, setError] = useState("")
   const [busy, setBusy] = useState<string | null>(null)
   const [forceLogoutMsg, setForceLogoutMsg] = useState("")
+
+  const [vipList, setVipList] = useState<VipListItem[]>([])
+  const [listLoading, setListLoading] = useState(true)
+  const [listError, setListError] = useState("")
+  const [listBusy, setListBusy] = useState<string | null>(null)
+
+  const loadVipList = useCallback(async () => {
+    setListLoading(true)
+    setListError("")
+    try {
+      const res = await fetch("/api/admin/vip/list")
+      if (!res.ok) {
+        setListError(await parseApiError(res))
+        setVipList([])
+      } else {
+        const data = await res.json()
+        setVipList(data.users ?? [])
+      }
+    } catch {
+      setListError("Failed to load VIP list")
+      setVipList([])
+    } finally {
+      setListLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    loadVipList()
+  }, [loadVipList])
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -51,7 +101,7 @@ export function VipManagement() {
     }
   }
 
-  async function runAction(action: "grant" | "renew" | "revoke") {
+  async function runAction(action: "grant" | "grantLifetime" | "renew" | "revoke") {
     if (!user) return
     setBusy(action)
     setError("")
@@ -66,6 +116,7 @@ export function VipManagement() {
         setUser(data.user)
         setSearched(data.user.username)
         router.refresh()
+        loadVipList()
       } else {
         setError(await parseApiError(res))
       }
@@ -73,6 +124,28 @@ export function VipManagement() {
       setError("Something went wrong")
     } finally {
       setBusy(null)
+    }
+  }
+
+  async function runListAction(userId: string, action: "renew" | "revoke") {
+    setListBusy(`${userId}-${action}`)
+    setListError("")
+    try {
+      const res = await fetch("/api/admin/vip", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, userId }),
+      })
+      if (res.ok) {
+        router.refresh()
+        await loadVipList()
+      } else {
+        setListError(await parseApiError(res))
+      }
+    } catch {
+      setListError("Something went wrong")
+    } finally {
+      setListBusy(null)
     }
   }
 
@@ -155,6 +228,13 @@ export function VipManagement() {
               {busy === "grant" ? "Granting..." : "Grant VIP (30 days)"}
             </button>
             <button
+              onClick={() => runAction("grantLifetime")}
+              disabled={busy !== null}
+              className="px-3 py-2 rounded-lg bg-transparent border border-amber-500 text-amber-400 text-sm font-medium hover:bg-amber-500/10 transition-colors disabled:opacity-50"
+            >
+              {busy === "grantLifetime" ? "Granting..." : "Grant Lifetime VIP"}
+            </button>
+            <button
               onClick={() => runAction("renew")}
               disabled={busy !== null}
               className="px-3 py-2 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors disabled:opacity-50"
@@ -181,6 +261,75 @@ export function VipManagement() {
           )}
         </div>
       )}
+
+      <div className="mt-6">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-semibold text-gray-300">Active VIPs</h3>
+          <button
+            onClick={loadVipList}
+            disabled={listLoading}
+            className="text-xs text-gray-500 hover:text-neon transition-colors disabled:opacity-50"
+          >
+            {listLoading ? "Refreshing..." : "Refresh"}
+          </button>
+        </div>
+
+        {listError && (
+          <p className="text-sm text-red-400 mb-2">{listError}</p>
+        )}
+
+        {listLoading && vipList.length === 0 ? (
+          <p className="text-sm text-gray-500">Loading...</p>
+        ) : vipList.length === 0 ? (
+          <p className="text-sm text-gray-500">No active VIPs.</p>
+        ) : (
+          <div className="space-y-2">
+            {vipList.map((v) => {
+              const remaining = timeRemaining(v.vipExpiresAt)
+              const isExpired = v.vipExpiresAt != null && new Date(v.vipExpiresAt).getTime() <= Date.now()
+              const remainingLabel = isExpired ? "Expired" : remaining
+              const renewBusy = listBusy === `${v.id}-renew`
+              const revokeBusy = listBusy === `${v.id}-revoke`
+              return (
+                <div
+                  key={v.id}
+                  className="flex items-center justify-between gap-3 p-3 bg-gray-950 border border-gray-800 rounded-xl flex-wrap"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-gray-100">@{v.username}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      {v.lifetime ? (
+                        <span className="text-amber-400 font-medium">Lifetime</span>
+                      ) : (
+                        <>
+                          {remainingLabel} remaining
+                          <span className="text-gray-600"> · expires {formatDate(v.vipExpiresAt)}</span>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => runListAction(v.id, "renew")}
+                      disabled={listBusy !== null}
+                      className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-xs font-medium hover:bg-neon-glow/10 transition-colors disabled:opacity-50"
+                    >
+                      {renewBusy ? "Renewing..." : "Renew (+30d)"}
+                    </button>
+                    <button
+                      onClick={() => runListAction(v.id, "revoke")}
+                      disabled={listBusy !== null}
+                      className="px-3 py-1.5 rounded-lg bg-transparent border border-red-500 text-red-400 text-xs font-medium hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                    >
+                      {revokeBusy ? "Revoking..." : "Revoke"}
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

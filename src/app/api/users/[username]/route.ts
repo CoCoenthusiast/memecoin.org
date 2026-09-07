@@ -19,6 +19,7 @@ export const GET = withErrorHandling(async function GET(
       nameStyle: true,
       isVip: true,
       vipExpiresAt: true,
+      isOwner: true,
       createdAt: true,
       _count: {
         select: {
@@ -31,12 +32,13 @@ export const GET = withErrorHandling(async function GET(
         take: 10,
         select: {
           id: true,
+          channelId: true,
           title: true,
           body: true,
           createdAt: true,
           editedAt: true,
           pinned: true,
-          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
           _count: { select: { reactions: true, replies: true } },
         },
       },
@@ -66,6 +68,7 @@ export const GET = withErrorHandling(async function GET(
     nameStyle: user.nameStyle,
     isVip: user.isVip,
     vipExpiresAt: user.vipExpiresAt,
+    isOwner: user.isOwner,
     createdAt: user.createdAt,
     postCount,
     replyCount,

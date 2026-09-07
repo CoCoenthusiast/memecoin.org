@@ -51,6 +51,13 @@ export const POST = withErrorHandling(async function POST(
 
   clearLoginAttempts(body.email, ip);
 
+  // Intentional: fire-and-forget. Login log é secundário —
+  // o login já foi validado e a resposta será retornada normalmente,
+  // independentemente de o log falhar.
+  prisma.loginLog
+    .create({ data: { userId: user.id, ip } })
+    .catch((e) => console.error("Failed to create login log", e));
+
   const token = signToken({ userId: user.id, role: user.role, tokenVersion: user.tokenVersion });
 
   const cookieStore = await cookies();

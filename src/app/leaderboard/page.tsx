@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { StyledUsername } from "@/components/StyledUsername";
-import { isUserVip } from "@/lib/vip";
+import { isUserVip, isUserOwner } from "@/lib/vip";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +14,7 @@ export default async function LeaderboardPage() {
       avatarUrl: true,
       isVip: true,
       vipExpiresAt: true,
+      isOwner: true,
       posts: { select: { _count: { select: { reactions: true } } } },
     },
   });
@@ -29,6 +30,7 @@ export default async function LeaderboardPage() {
         nameStyle: u.nameStyle,
         avatarUrl: u.avatarUrl,
         isVip: isUserVip(u),
+        isOwner: isUserOwner(u),
         totalReactions,
         totalPosts,
         reactionsPerPost,
@@ -77,6 +79,7 @@ export default async function LeaderboardPage() {
                   username={row.username}
                   nameStyle={row.nameStyle}
                   isVip={row.isVip}
+                  isOwner={row.isOwner}
                 />
               </Link>
               <div className="flex items-center gap-6">

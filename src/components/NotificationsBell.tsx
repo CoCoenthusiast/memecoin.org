@@ -10,9 +10,11 @@ type NotificationItem = {
   id: string
   message: string
   read: boolean
-  postId: string
+  postId?: string | null
+  profileCommentId?: string | null
+  profileUsername?: string | null
   createdAt: string
-  actor?: { username: string; nameStyle?: string | null; isVip?: boolean } | null
+  actor?: { username: string; nameStyle?: string | null; isVip?: boolean; isOwner?: boolean } | null
 }
 
 const MENU_WIDTH = 320
@@ -142,7 +144,7 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
                 items.map((n) => (
                   <Link
                     key={n.id}
-                    href={`/p/${n.postId}`}
+                    href={n.postId ? `/p/${n.postId}` : n.profileUsername ? `/profile/${n.profileUsername}` : "#"}
                     onClick={() => {
                       setOpen(false)
                       onNavigate?.()
@@ -156,6 +158,7 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
                             username={`@${n.actor.username}`}
                             nameStyle={n.actor.nameStyle}
                             isVip={n.actor.isVip}
+                            isOwner={n.actor.isOwner}
                             className="text-neon font-semibold"
                           />
                           {n.message.slice(n.actor.username.length)}

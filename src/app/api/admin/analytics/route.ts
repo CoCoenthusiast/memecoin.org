@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getSession, isAdmin } from "@/lib/auth";
+import { getSession, isAdmin, isOwner } from "@/lib/auth";
 import { apiError, withErrorHandling } from "@/lib/api";
 
-async function requireAdmin() {
+async function requireOwner() {
   const session = await getSession();
   if (!session) return apiError("Unauthorized", 401);
-  if (!isAdmin(session.user)) return apiError("Forbidden", 403);
+  if (!isAdmin(session.user) || !isOwner(session.user)) return apiError("Forbidden", 403);
   return null;
 }
 
 export const GET = withErrorHandling(async function GET(request: NextRequest) {
-  const denied = await requireAdmin();
+  const denied = await requireOwner();
   if (denied) return denied;
 
   const now = new Date();

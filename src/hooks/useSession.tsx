@@ -9,6 +9,7 @@ type Session = {
     role: "USER" | "ADMIN"
     isVip: boolean
     vipExpiresAt: string | null
+    isOwner: boolean
   } | null
   loading: boolean
 }

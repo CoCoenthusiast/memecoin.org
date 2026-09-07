@@ -15,22 +15,30 @@ import { parseApiError } from "@/lib/api";
 
 const REASONS = ["Spam", "Scam", "Offensive content", "Other"]
 
+type Channel = { id: string; slug: string; name: string }
+
 type ContentActionsProps = {
   targetId: string
   targetType: "post" | "reply" | "user" | "comment"
   authorId?: string
   createdAt?: string
+  currentChannelId?: string
   onSuccess?: () => void
   onEdit?: () => void
 }
 
-export function ContentActions({ targetId, targetType, authorId, createdAt, onSuccess, onEdit }: ContentActionsProps) {
+export function ContentActions({ targetId, targetType, authorId, createdAt, currentChannelId, onSuccess, onEdit }: ContentActionsProps) {
   const { user } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
   const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(null)
+  const [moveOpen, setMoveOpen] = useState(false)
+  const [movePos, setMovePos] = useState<{ top: number; left: number } | null>(null)
+  const [channels, setChannels] = useState<Channel[] | null>(null)
+  const [moving, setMoving] = useState(false)
   const [reported, setReported] = useState(false)
   const [error, setError] = useState("")
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const moveTriggerRef = useRef<HTMLButtonElement>(null)
 
   const canDelete = useMemo(() => {
     if (!user) return false
@@ -46,6 +54,8 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
     return user.id === authorId && createdAt != null && withinEditWindow(createdAt)
   }, [user, targetType, authorId, createdAt])
 
+  const canMove = !!user && user.role === "ADMIN" && targetType === "post"
+
   useEffect(() => {
     if (!menuOpen) return
     function onClickOutside(e: MouseEvent) {
@@ -57,6 +67,18 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
     document.addEventListener("mousedown", onClickOutside)
     return () => document.removeEventListener("mousedown", onClickOutside)
   }, [menuOpen])
+
+  useEffect(() => {
+    if (!moveOpen) return
+    function onClickOutside(e: MouseEvent) {
+      const target = e.target as Node
+      if (moveTriggerRef.current?.contains(target)) return
+      if ((e.target as HTMLElement).closest("[data-move-menu]")) return
+      setMoveOpen(false)
+    }
+    document.addEventListener("mousedown", onClickOutside)
+    return () => document.removeEventListener("mousedown", onClickOutside)
+  }, [moveOpen])
 
   function toggleMenu() {
     if (triggerRef.current) {
@@ -71,6 +93,27 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
       setMenuPos({ top, left })
     }
     setMenuOpen((v) => !v)
+  }
+
+  function toggleMoveMenu() {
+    if (!moveOpen && !channels) {
+      fetch("/api/channels")
+        .then((r) => r.ok ? r.json() : [])
+        .then(setChannels)
+        .catch(() => setChannels([]))
+    }
+    if (moveTriggerRef.current) {
+      const rect = moveTriggerRef.current.getBoundingClientRect()
+      const menuHeight = 200
+      const spaceBelow = window.innerHeight - rect.bottom
+      const openUp = spaceBelow < menuHeight + 8
+      const top = openUp
+        ? rect.top - menuHeight - 4
+        : rect.bottom + 4
+      const left = Math.min(rect.right, window.innerWidth - 200)
+      setMovePos({ top, left })
+    }
+    setMoveOpen((v) => !v)
   }
 
   if (!user) return null
@@ -113,6 +156,28 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
       onSuccess?.()
     } else {
       setError(await parseApiError(res))
+    }
+  }
+
+  async function handleMove(channelId: string) {
+    setMoving(true)
+    setError("")
+    try {
+      const res = await fetch(`/api/posts/${targetId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ channelId }),
+      })
+      if (res.ok) {
+        setMoveOpen(false)
+        onSuccess?.()
+      } else {
+        setError(await parseApiError(res))
+      }
+    } catch {
+      setError("Something went wrong")
+    } finally {
+      setMoving(false)
     }
   }
 
@@ -174,6 +239,24 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
         </button>
       )}
 
+      {canMove && (
+        <button
+          ref={moveTriggerRef}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            toggleMoveMenu()
+          }}
+          aria-label="Move to channel"
+          className="p-1.5 rounded-lg text-gray-500 hover:text-indigo-400 hover:bg-gray-800 transition-colors"
+          title="Move to channel"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+        </button>
+      )}
+
       {menuOpen && menuPos && createPortal(
         <div
           data-report-menu
@@ -195,6 +278,47 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, onSu
               {reason}
             </button>
           ))}
+        </div>,
+        document.body
+      )}
+
+      {moveOpen && movePos && createPortal(
+        <div
+          data-move-menu
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+          className="fixed z-[9999] w-52 bg-gray-900 border border-gray-700 rounded-xl shadow-xl overflow-hidden max-h-80 overflow-y-auto"
+          style={{ top: movePos.top, left: movePos.left }}
+        >
+          <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-500 border-b border-gray-800">
+            Move to channel
+          </div>
+          {!channels ? (
+            <div className="px-3 py-2 text-sm text-gray-500">Loading...</div>
+          ) : (
+            channels.map((channel) => {
+              const isCurrent = channel.id === currentChannelId
+              return (
+                <button
+                  key={channel.id}
+                  disabled={moving || isCurrent}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleMove(channel.id)
+                  }}
+                  className={`block w-full text-left px-3 py-2 text-sm transition-colors ${
+                    isCurrent
+                      ? "text-gray-500 cursor-not-allowed"
+                      : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                  } ${moving ? "opacity-50" : ""}`}
+                >
+                  {channel.name}
+                  {isCurrent && <span className="ml-2 text-xs text-gray-600">(current)</span>}
+                </button>
+              )
+            })
+          )}
         </div>,
         document.body
       )}

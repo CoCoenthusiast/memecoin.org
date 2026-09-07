@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
+import { timeAgo } from "@/lib/timeAgo"
 
 type AnalyticsData = {
   activeUsers7d: number
@@ -7,6 +8,13 @@ type AnalyticsData = {
   newPostsPerDay: { date: string; count: number }[]
   users: { total: number; vip: number }
   totals: { posts: number; replies: number; reactions: number }
+}
+
+type LoginLog = {
+  id: string
+  username: string
+  ip: string
+  createdAt: string
 }
 
 function StatCard({ label, value }: { label: string; value: number }) {
@@ -20,16 +28,25 @@ function StatCard({ label, value }: { label: string; value: number }) {
 
 export function AdminAnalytics() {
   const [data, setData] = useState<AnalyticsData | null>(null)
+  const [logs, setLogs] = useState<LoginLog[] | null>(null)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("/api/admin/analytics")
-      .then(async (res) => {
+    Promise.all([
+      fetch("/api/admin/analytics").then(async (res) => {
         if (!res.ok) throw new Error("Failed to load analytics")
         return res.json()
+      }),
+      fetch("/api/admin/login-logs").then(async (res) => {
+        if (!res.ok) return { logs: [] }
+        return res.json()
+      }),
+    ])
+      .then(([analytics, loginLogs]) => {
+        setData(analytics)
+        setLogs(loginLogs.logs ?? [])
       })
-      .then(setData)
       .catch(() => setError("Failed to load analytics"))
       .finally(() => setLoading(false))
   }, [])
@@ -66,6 +83,28 @@ export function AdminAnalytics() {
               <div key={day.date} className="flex items-center justify-between text-sm">
                 <span className="text-gray-400">{day.date}</span>
                 <span className="text-white font-medium">{day.count}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-gray-300 mb-4">Recent logins</h3>
+        {!logs || logs.length === 0 ? (
+          <p className="text-gray-500 text-sm">No login activity yet.</p>
+        ) : (
+          <div className="space-y-2">
+            {logs.map((log) => (
+              <div
+                key={log.id}
+                className="flex items-center justify-between gap-3 text-sm py-1.5 border-b border-gray-800/60 last:border-b-0"
+              >
+                <span className="text-neon font-semibold min-w-0 truncate">{log.username}</span>
+                <span className="text-gray-500 font-mono text-xs">{log.ip}</span>
+                <span className="text-gray-400 text-xs whitespace-nowrap" title={log.createdAt}>
+                  {timeAgo(log.createdAt)}
+                </span>
               </div>
             ))}
           </div>

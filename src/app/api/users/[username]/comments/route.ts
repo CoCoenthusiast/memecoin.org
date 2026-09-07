@@ -25,7 +25,8 @@ export const GET = withErrorHandling(async function GET(
       body: true,
       createdAt: true,
       editedAt: true,
-      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
+      reactions: { select: { id: true, type: true, userId: true } },
     },
   });
 
@@ -66,9 +67,27 @@ export const POST = withErrorHandling(async function POST(
       body: true,
       createdAt: true,
       editedAt: true,
-      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
     },
   });
+
+  // Intentional: fire-and-forget. Notificação de comment no mural é secundária —
+  // o comment já foi criado e retornado ao cliente normalmente, independentemente
+  // de a notificação falhar.
+  if (profile.id !== user.id) {
+    prisma.notification
+      .create({
+        data: {
+          userId: profile.id,
+          actorId: user.id,
+          profileCommentId: comment.id,
+          message: `${user.username} left a comment on your wall`,
+        },
+      })
+      .catch((e) => {
+        console.error("Failed to create profile comment notification", e);
+      });
+  }
 
   return NextResponse.json(comment, { status: 201 });
 });

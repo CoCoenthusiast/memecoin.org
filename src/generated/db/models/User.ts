@@ -45,6 +45,7 @@ export type UserMinAggregateOutputType = {
   bannerUrl: string | null
   isVip: boolean | null
   vipExpiresAt: Date | null
+  isOwner: boolean | null
   nameStyle: string | null
   tokenVersion: number | null
   createdAt: Date | null
@@ -61,6 +62,7 @@ export type UserMaxAggregateOutputType = {
   bannerUrl: string | null
   isVip: boolean | null
   vipExpiresAt: Date | null
+  isOwner: boolean | null
   nameStyle: string | null
   tokenVersion: number | null
   createdAt: Date | null
@@ -77,6 +79,7 @@ export type UserCountAggregateOutputType = {
   bannerUrl: number
   isVip: number
   vipExpiresAt: number
+  isOwner: number
   nameStyle: number
   tokenVersion: number
   createdAt: number
@@ -103,6 +106,7 @@ export type UserMinAggregateInputType = {
   bannerUrl?: true
   isVip?: true
   vipExpiresAt?: true
+  isOwner?: true
   nameStyle?: true
   tokenVersion?: true
   createdAt?: true
@@ -119,6 +123,7 @@ export type UserMaxAggregateInputType = {
   bannerUrl?: true
   isVip?: true
   vipExpiresAt?: true
+  isOwner?: true
   nameStyle?: true
   tokenVersion?: true
   createdAt?: true
@@ -135,6 +140,7 @@ export type UserCountAggregateInputType = {
   bannerUrl?: true
   isVip?: true
   vipExpiresAt?: true
+  isOwner?: true
   nameStyle?: true
   tokenVersion?: true
   createdAt?: true
@@ -238,6 +244,7 @@ export type UserGroupByOutputType = {
   bannerUrl: string | null
   isVip: boolean
   vipExpiresAt: Date | null
+  isOwner: boolean
   nameStyle: string | null
   tokenVersion: number
   createdAt: Date
@@ -277,6 +284,7 @@ export type UserWhereInput = {
   bannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
   isVip?: Prisma.BoolFilter<"User"> | boolean
   vipExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  isOwner?: Prisma.BoolFilter<"User"> | boolean
   nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -289,6 +297,8 @@ export type UserWhereInput = {
   profileComments?: Prisma.ProfileCommentListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   sentNotifications?: Prisma.NotificationListRelationFilter
+  loginLogs?: Prisma.LoginLogListRelationFilter
+  bookmarks?: Prisma.BookmarkListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -302,6 +312,7 @@ export type UserOrderByWithRelationInput = {
   bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -314,6 +325,8 @@ export type UserOrderByWithRelationInput = {
   profileComments?: Prisma.ProfileCommentOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   sentNotifications?: Prisma.NotificationOrderByRelationAggregateInput
+  loginLogs?: Prisma.LoginLogOrderByRelationAggregateInput
+  bookmarks?: Prisma.BookmarkOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -330,6 +343,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   bannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
   isVip?: Prisma.BoolFilter<"User"> | boolean
   vipExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  isOwner?: Prisma.BoolFilter<"User"> | boolean
   nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -342,6 +356,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   profileComments?: Prisma.ProfileCommentListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   sentNotifications?: Prisma.NotificationListRelationFilter
+  loginLogs?: Prisma.LoginLogListRelationFilter
+  bookmarks?: Prisma.BookmarkListRelationFilter
 }, "id" | "username" | "usernameLower" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -355,6 +371,7 @@ export type UserOrderByWithAggregationInput = {
   bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -379,6 +396,7 @@ export type UserScalarWhereWithAggregatesInput = {
   bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isVip?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   vipExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  isOwner?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   nameStyle?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   tokenVersion?: Prisma.IntWithAggregatesFilter<"User"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -395,6 +413,7 @@ export type UserCreateInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -407,6 +426,8 @@ export type UserCreateInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -420,6 +441,7 @@ export type UserUncheckedCreateInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -432,6 +454,8 @@ export type UserUncheckedCreateInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -445,6 +469,7 @@ export type UserUpdateInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -457,6 +482,8 @@ export type UserUpdateInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -470,6 +497,7 @@ export type UserUncheckedUpdateInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,6 +510,8 @@ export type UserUncheckedUpdateInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -495,6 +525,7 @@ export type UserCreateManyInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -511,6 +542,7 @@ export type UserUpdateManyMutationInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -527,6 +559,7 @@ export type UserUncheckedUpdateManyInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -543,6 +576,7 @@ export type UserCountOrderByAggregateInput = {
   bannerUrl?: Prisma.SortOrder
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrder
+  isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -563,6 +597,7 @@ export type UserMaxOrderByAggregateInput = {
   bannerUrl?: Prisma.SortOrder
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrder
+  isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -579,6 +614,7 @@ export type UserMinOrderByAggregateInput = {
   bannerUrl?: Prisma.SortOrder
   isVip?: Prisma.SortOrder
   vipExpiresAt?: Prisma.SortOrder
+  isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -758,6 +794,34 @@ export type UserUpdateOneRequiredWithoutSentNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentNotificationsInput, Prisma.UserUpdateWithoutSentNotificationsInput>, Prisma.UserUncheckedUpdateWithoutSentNotificationsInput>
 }
 
+export type UserCreateNestedOneWithoutLoginLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLoginLogsInput, Prisma.UserUncheckedCreateWithoutLoginLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLoginLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLoginLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLoginLogsInput, Prisma.UserUncheckedCreateWithoutLoginLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLoginLogsInput
+  upsert?: Prisma.UserUpsertWithoutLoginLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLoginLogsInput, Prisma.UserUpdateWithoutLoginLogsInput>, Prisma.UserUncheckedUpdateWithoutLoginLogsInput>
+}
+
+export type UserCreateNestedOneWithoutBookmarksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBookmarksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBookmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBookmarksInput
+  upsert?: Prisma.UserUpsertWithoutBookmarksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBookmarksInput, Prisma.UserUpdateWithoutBookmarksInput>, Prisma.UserUncheckedUpdateWithoutBookmarksInput>
+}
+
 export type UserCreateWithoutPostsInput = {
   id?: string
   username: string
@@ -769,6 +833,7 @@ export type UserCreateWithoutPostsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -780,6 +845,8 @@ export type UserCreateWithoutPostsInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
@@ -793,6 +860,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -804,6 +872,8 @@ export type UserUncheckedCreateWithoutPostsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -833,6 +903,7 @@ export type UserUpdateWithoutPostsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -844,6 +915,8 @@ export type UserUpdateWithoutPostsInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
@@ -857,6 +930,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -868,6 +942,8 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRepliesInput = {
@@ -881,6 +957,7 @@ export type UserCreateWithoutRepliesInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -892,6 +969,8 @@ export type UserCreateWithoutRepliesInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRepliesInput = {
@@ -905,6 +984,7 @@ export type UserUncheckedCreateWithoutRepliesInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -916,6 +996,8 @@ export type UserUncheckedCreateWithoutRepliesInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRepliesInput = {
@@ -945,6 +1027,7 @@ export type UserUpdateWithoutRepliesInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -956,6 +1039,8 @@ export type UserUpdateWithoutRepliesInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRepliesInput = {
@@ -969,6 +1054,7 @@ export type UserUncheckedUpdateWithoutRepliesInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -980,6 +1066,8 @@ export type UserUncheckedUpdateWithoutRepliesInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReactionsInput = {
@@ -993,6 +1081,7 @@ export type UserCreateWithoutReactionsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1004,6 +1093,8 @@ export type UserCreateWithoutReactionsInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReactionsInput = {
@@ -1017,6 +1108,7 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1028,6 +1120,8 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReactionsInput = {
@@ -1057,6 +1151,7 @@ export type UserUpdateWithoutReactionsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1068,6 +1163,8 @@ export type UserUpdateWithoutReactionsInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReactionsInput = {
@@ -1081,6 +1178,7 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1092,6 +1190,8 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReportsInput = {
@@ -1105,6 +1205,7 @@ export type UserCreateWithoutReportsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1116,6 +1217,8 @@ export type UserCreateWithoutReportsInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReportsInput = {
@@ -1129,6 +1232,7 @@ export type UserUncheckedCreateWithoutReportsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1140,6 +1244,8 @@ export type UserUncheckedCreateWithoutReportsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReportsInput = {
@@ -1158,6 +1264,7 @@ export type UserCreateWithoutReportsReceivedInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1169,6 +1276,8 @@ export type UserCreateWithoutReportsReceivedInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReportsReceivedInput = {
@@ -1182,6 +1291,7 @@ export type UserUncheckedCreateWithoutReportsReceivedInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1193,6 +1303,8 @@ export type UserUncheckedCreateWithoutReportsReceivedInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReportsReceivedInput = {
@@ -1222,6 +1334,7 @@ export type UserUpdateWithoutReportsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1233,6 +1346,8 @@ export type UserUpdateWithoutReportsInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsInput = {
@@ -1246,6 +1361,7 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1257,6 +1373,8 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReportsReceivedInput = {
@@ -1281,6 +1399,7 @@ export type UserUpdateWithoutReportsReceivedInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1292,6 +1411,8 @@ export type UserUpdateWithoutReportsReceivedInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsReceivedInput = {
@@ -1305,6 +1426,7 @@ export type UserUncheckedUpdateWithoutReportsReceivedInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1316,6 +1438,8 @@ export type UserUncheckedUpdateWithoutReportsReceivedInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWrittenProfileCommentsInput = {
@@ -1329,6 +1453,7 @@ export type UserCreateWithoutWrittenProfileCommentsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1340,6 +1465,8 @@ export type UserCreateWithoutWrittenProfileCommentsInput = {
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
@@ -1353,6 +1480,7 @@ export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1364,6 +1492,8 @@ export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWrittenProfileCommentsInput = {
@@ -1382,6 +1512,7 @@ export type UserCreateWithoutProfileCommentsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1393,6 +1524,8 @@ export type UserCreateWithoutProfileCommentsInput = {
   writtenProfileComments?: Prisma.ProfileCommentCreateNestedManyWithoutAuthorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileCommentsInput = {
@@ -1406,6 +1539,7 @@ export type UserUncheckedCreateWithoutProfileCommentsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1417,6 +1551,8 @@ export type UserUncheckedCreateWithoutProfileCommentsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutAuthorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileCommentsInput = {
@@ -1446,6 +1582,7 @@ export type UserUpdateWithoutWrittenProfileCommentsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1457,6 +1594,8 @@ export type UserUpdateWithoutWrittenProfileCommentsInput = {
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
@@ -1470,6 +1609,7 @@ export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1481,6 +1621,8 @@ export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutProfileCommentsInput = {
@@ -1505,6 +1647,7 @@ export type UserUpdateWithoutProfileCommentsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1516,6 +1659,8 @@ export type UserUpdateWithoutProfileCommentsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUpdateManyWithoutAuthorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileCommentsInput = {
@@ -1529,6 +1674,7 @@ export type UserUncheckedUpdateWithoutProfileCommentsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1540,6 +1686,8 @@ export type UserUncheckedUpdateWithoutProfileCommentsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutAuthorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1553,6 +1701,7 @@ export type UserCreateWithoutNotificationsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1564,6 +1713,8 @@ export type UserCreateWithoutNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentCreateNestedManyWithoutAuthorInput
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1577,6 +1728,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1588,6 +1740,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutAuthorInput
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1606,6 +1760,7 @@ export type UserCreateWithoutSentNotificationsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1617,6 +1772,8 @@ export type UserCreateWithoutSentNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentCreateNestedManyWithoutAuthorInput
   profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentNotificationsInput = {
@@ -1630,6 +1787,7 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
   bannerUrl?: string | null
   isVip?: boolean
   vipExpiresAt?: Date | string | null
+  isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
   createdAt?: Date | string
@@ -1641,6 +1799,8 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutAuthorInput
   profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentNotificationsInput = {
@@ -1670,6 +1830,7 @@ export type UserUpdateWithoutNotificationsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1681,6 +1842,8 @@ export type UserUpdateWithoutNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUpdateManyWithoutAuthorNestedInput
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1694,6 +1857,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1705,6 +1869,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutAuthorNestedInput
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutSentNotificationsInput = {
@@ -1729,6 +1895,7 @@ export type UserUpdateWithoutSentNotificationsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1740,6 +1907,8 @@ export type UserUpdateWithoutSentNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUpdateManyWithoutAuthorNestedInput
   profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentNotificationsInput = {
@@ -1753,6 +1922,7 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
   vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1764,6 +1934,256 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
   writtenProfileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutAuthorNestedInput
   profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutLoginLogsInput = {
+  id?: string
+  username: string
+  usernameLower: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  isOwner?: boolean
+  nameStyle?: string | null
+  tokenVersion?: number
+  createdAt?: Date | string
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsReceived?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  writtenProfileComments?: Prisma.ProfileCommentCreateNestedManyWithoutAuthorInput
+  profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  bookmarks?: Prisma.BookmarkCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutLoginLogsInput = {
+  id?: string
+  username: string
+  usernameLower: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  isOwner?: boolean
+  nameStyle?: string | null
+  tokenVersion?: number
+  createdAt?: Date | string
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsReceived?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  writtenProfileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutAuthorInput
+  profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  bookmarks?: Prisma.BookmarkUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutLoginLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLoginLogsInput, Prisma.UserUncheckedCreateWithoutLoginLogsInput>
+}
+
+export type UserUpsertWithoutLoginLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLoginLogsInput, Prisma.UserUncheckedUpdateWithoutLoginLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLoginLogsInput, Prisma.UserUncheckedCreateWithoutLoginLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLoginLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLoginLogsInput, Prisma.UserUncheckedUpdateWithoutLoginLogsInput>
+}
+
+export type UserUpdateWithoutLoginLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  usernameLower?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsReceived?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  writtenProfileComments?: Prisma.ProfileCommentUpdateManyWithoutAuthorNestedInput
+  profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  bookmarks?: Prisma.BookmarkUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLoginLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  usernameLower?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsReceived?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  writtenProfileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutAuthorNestedInput
+  profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  bookmarks?: Prisma.BookmarkUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutBookmarksInput = {
+  id?: string
+  username: string
+  usernameLower: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  isOwner?: boolean
+  nameStyle?: string | null
+  tokenVersion?: number
+  createdAt?: Date | string
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportCreateNestedManyWithoutReporterInput
+  reportsReceived?: Prisma.ReportCreateNestedManyWithoutReportedUserInput
+  writtenProfileComments?: Prisma.ProfileCommentCreateNestedManyWithoutAuthorInput
+  profileComments?: Prisma.ProfileCommentCreateNestedManyWithoutProfileUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  sentNotifications?: Prisma.NotificationCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBookmarksInput = {
+  id?: string
+  username: string
+  usernameLower: string
+  email: string
+  password: string
+  role?: $Enums.Role
+  avatarUrl?: string | null
+  bannerUrl?: string | null
+  isVip?: boolean
+  vipExpiresAt?: Date | string | null
+  isOwner?: boolean
+  nameStyle?: string | null
+  tokenVersion?: number
+  createdAt?: Date | string
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutReporterInput
+  reportsReceived?: Prisma.ReportUncheckedCreateNestedManyWithoutReportedUserInput
+  writtenProfileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutAuthorInput
+  profileComments?: Prisma.ProfileCommentUncheckedCreateNestedManyWithoutProfileUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  sentNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutActorInput
+  loginLogs?: Prisma.LoginLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBookmarksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+}
+
+export type UserUpsertWithoutBookmarksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBookmarksInput, Prisma.UserUncheckedUpdateWithoutBookmarksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBookmarksInput, Prisma.UserUncheckedCreateWithoutBookmarksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBookmarksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBookmarksInput, Prisma.UserUncheckedUpdateWithoutBookmarksInput>
+}
+
+export type UserUpdateWithoutBookmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  usernameLower?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutReporterNestedInput
+  reportsReceived?: Prisma.ReportUpdateManyWithoutReportedUserNestedInput
+  writtenProfileComments?: Prisma.ProfileCommentUpdateManyWithoutAuthorNestedInput
+  profileComments?: Prisma.ProfileCommentUpdateManyWithoutProfileUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  sentNotifications?: Prisma.NotificationUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBookmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  usernameLower?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVip?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  vipExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutReporterNestedInput
+  reportsReceived?: Prisma.ReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  writtenProfileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutAuthorNestedInput
+  profileComments?: Prisma.ProfileCommentUncheckedUpdateManyWithoutProfileUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  sentNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutActorNestedInput
+  loginLogs?: Prisma.LoginLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1781,6 +2201,8 @@ export type UserCountOutputType = {
   profileComments: number
   notifications: number
   sentNotifications: number
+  loginLogs: number
+  bookmarks: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1793,6 +2215,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   profileComments?: boolean | UserCountOutputTypeCountProfileCommentsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   sentNotifications?: boolean | UserCountOutputTypeCountSentNotificationsArgs
+  loginLogs?: boolean | UserCountOutputTypeCountLoginLogsArgs
+  bookmarks?: boolean | UserCountOutputTypeCountBookmarksArgs
 }
 
 /**
@@ -1868,6 +2292,20 @@ export type UserCountOutputTypeCountSentNotificationsArgs<ExtArgs extends runtim
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLoginLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LoginLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BookmarkWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1880,6 +2318,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   bannerUrl?: boolean
   isVip?: boolean
   vipExpiresAt?: boolean
+  isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
   createdAt?: boolean
@@ -1892,6 +2331,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   profileComments?: boolean | Prisma.User$profileCommentsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   sentNotifications?: boolean | Prisma.User$sentNotificationsArgs<ExtArgs>
+  loginLogs?: boolean | Prisma.User$loginLogsArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.User$bookmarksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1906,6 +2347,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   bannerUrl?: boolean
   isVip?: boolean
   vipExpiresAt?: boolean
+  isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
   createdAt?: boolean
@@ -1922,6 +2364,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   bannerUrl?: boolean
   isVip?: boolean
   vipExpiresAt?: boolean
+  isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
   createdAt?: boolean
@@ -1938,12 +2381,13 @@ export type UserSelectScalar = {
   bannerUrl?: boolean
   isVip?: boolean
   vipExpiresAt?: boolean
+  isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "nameStyle" | "tokenVersion" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "isOwner" | "nameStyle" | "tokenVersion" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -1954,6 +2398,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   profileComments?: boolean | Prisma.User$profileCommentsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   sentNotifications?: boolean | Prisma.User$sentNotificationsArgs<ExtArgs>
+  loginLogs?: boolean | Prisma.User$loginLogsArgs<ExtArgs>
+  bookmarks?: boolean | Prisma.User$bookmarksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1971,6 +2417,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     profileComments: Prisma.$ProfileCommentPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     sentNotifications: Prisma.$NotificationPayload<ExtArgs>[]
+    loginLogs: Prisma.$LoginLogPayload<ExtArgs>[]
+    bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1983,6 +2431,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     bannerUrl: string | null
     isVip: boolean
     vipExpiresAt: Date | null
+    isOwner: boolean
     nameStyle: string | null
     tokenVersion: number
     createdAt: Date
@@ -2389,6 +2838,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   profileComments<T extends Prisma.User$profileCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profileCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProfileCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentNotifications<T extends Prisma.User$sentNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  loginLogs<T extends Prisma.User$loginLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$loginLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LoginLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bookmarks<T extends Prisma.User$bookmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2428,6 +2879,7 @@ export interface UserFieldRefs {
   readonly bannerUrl: Prisma.FieldRef<"User", 'String'>
   readonly isVip: Prisma.FieldRef<"User", 'Boolean'>
   readonly vipExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly isOwner: Prisma.FieldRef<"User", 'Boolean'>
   readonly nameStyle: Prisma.FieldRef<"User", 'String'>
   readonly tokenVersion: Prisma.FieldRef<"User", 'Int'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -3032,6 +3484,54 @@ export type User$sentNotificationsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.loginLogs
+ */
+export type User$loginLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LoginLog
+   */
+  select?: Prisma.LoginLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LoginLog
+   */
+  omit?: Prisma.LoginLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LoginLogInclude<ExtArgs> | null
+  where?: Prisma.LoginLogWhereInput
+  orderBy?: Prisma.LoginLogOrderByWithRelationInput | Prisma.LoginLogOrderByWithRelationInput[]
+  cursor?: Prisma.LoginLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LoginLogScalarFieldEnum | Prisma.LoginLogScalarFieldEnum[]
+}
+
+/**
+ * User.bookmarks
+ */
+export type User$bookmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Bookmark
+   */
+  select?: Prisma.BookmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Bookmark
+   */
+  omit?: Prisma.BookmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookmarkInclude<ExtArgs> | null
+  where?: Prisma.BookmarkWhereInput
+  orderBy?: Prisma.BookmarkOrderByWithRelationInput | Prisma.BookmarkOrderByWithRelationInput[]
+  cursor?: Prisma.BookmarkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BookmarkScalarFieldEnum | Prisma.BookmarkScalarFieldEnum[]
 }
 
 /**

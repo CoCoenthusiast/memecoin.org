@@ -13,15 +13,24 @@ export const GET = withErrorHandling(async function GET(
   const [post, replies, postReactions] = await Promise.all([
     prisma.post.findUnique({
       where: { id },
-      include: {
-        author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+      select: {
+        channelId: true,
+        title: true,
+        body: true,
+        imageUrl: true,
+        videoUrl: true,
+        createdAt: true,
+        editedAt: true,
+        viewCount: true,
+        pinned: true,
+        author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
         channel: { select: { id: true, slug: true, name: true } },
       },
     }),
     prisma.reply.findMany({
       where: { postId: id },
       include: {
-        author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+        author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
         parent: { select: { id: true, body: true, author: { select: { username: true } } } },
         reactions: { select: { id: true, type: true, userId: true } },
       },
@@ -86,26 +95,58 @@ export const PATCH = withErrorHandling(async function PATCH(
     return apiError("Post not found", 404);
   }
 
-  if (!isAdmin(user) && user.id !== post.authorId) {
-    return apiError("Forbidden", 403);
-  }
-
-  if (!isAdmin(user) && !isWithinWindow(post.createdAt, EDIT_WINDOW_MS)) {
-    return apiError("Edit window has expired (5 minutes)", 403);
-  }
-
   const body = await request.json().catch(() => null);
-  if (!body || typeof body.body !== "string") {
-    return apiError("Body is required");
+  if (!body) {
+    return apiError("Invalid request body");
   }
 
-  if (body.body.trim().length < 10 || body.body.length > 10000) {
-    return apiError("Body must be between 10 and 10000 characters");
+  const hasChannelId = typeof body.channelId === "string" && body.channelId.length > 0;
+  const hasBody = typeof body.body === "string";
+
+  if (!hasChannelId && !hasBody) {
+    return apiError("Provide channelId and/or body to update");
+  }
+
+  // channelId change is admin-only
+  if (hasChannelId && !isAdmin(user)) {
+    return apiError("Only admins can move posts between channels", 403);
+  }
+
+  // body edit requires ownership or admin, plus edit window check
+  if (hasBody && !isAdmin(user)) {
+    if (user.id !== post.authorId) {
+      return apiError("Forbidden", 403);
+    }
+    if (!isWithinWindow(post.createdAt, EDIT_WINDOW_MS)) {
+      return apiError("Edit window has expired (5 minutes)", 403);
+    }
+  }
+
+  if (hasBody) {
+    if (body.body.trim().length < 10 || body.body.length > 10000) {
+      return apiError("Body must be between 10 and 10000 characters");
+    }
+  }
+
+  if (hasChannelId) {
+    const channel = await prisma.channel.findUnique({ where: { id: body.channelId } });
+    if (!channel) {
+      return apiError("Channel not found", 404);
+    }
+  }
+
+  const data: Record<string, unknown> = {};
+  if (hasBody) {
+    data.body = body.body;
+    data.editedAt = new Date();
+  }
+  if (hasChannelId) {
+    data.channelId = body.channelId;
   }
 
   const updated = await prisma.post.update({
     where: { id },
-    data: { body: body.body, editedAt: new Date() },
+    data,
   });
 
   return NextResponse.json(updated);

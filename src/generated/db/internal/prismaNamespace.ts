@@ -397,7 +397,9 @@ export const ModelName = {
   Reaction: 'Reaction',
   Report: 'Report',
   ProfileComment: 'ProfileComment',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  LoginLog: 'LoginLog',
+  Bookmark: 'Bookmark'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "channel" | "post" | "reply" | "reaction" | "report" | "profileComment" | "notification"
+    modelProps: "user" | "channel" | "post" | "reply" | "reaction" | "report" | "profileComment" | "notification" | "loginLog" | "bookmark"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1009,6 +1011,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LoginLog: {
+      payload: Prisma.$LoginLogPayload<ExtArgs>
+      fields: Prisma.LoginLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoginLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoginLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>
+        }
+        findFirst: {
+          args: Prisma.LoginLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoginLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>
+        }
+        findMany: {
+          args: Prisma.LoginLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>[]
+        }
+        create: {
+          args: Prisma.LoginLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>
+        }
+        createMany: {
+          args: Prisma.LoginLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LoginLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>[]
+        }
+        delete: {
+          args: Prisma.LoginLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>
+        }
+        update: {
+          args: Prisma.LoginLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoginLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoginLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LoginLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.LoginLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginLogPayload>
+        }
+        aggregate: {
+          args: Prisma.LoginLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoginLog>
+        }
+        groupBy: {
+          args: Prisma.LoginLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoginLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoginLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoginLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    Bookmark: {
+      payload: Prisma.$BookmarkPayload<ExtArgs>
+      fields: Prisma.BookmarkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BookmarkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BookmarkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        findFirst: {
+          args: Prisma.BookmarkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BookmarkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        findMany: {
+          args: Prisma.BookmarkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+        }
+        create: {
+          args: Prisma.BookmarkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        createMany: {
+          args: Prisma.BookmarkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BookmarkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+        }
+        delete: {
+          args: Prisma.BookmarkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        update: {
+          args: Prisma.BookmarkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        deleteMany: {
+          args: Prisma.BookmarkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BookmarkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BookmarkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+        }
+        upsert: {
+          args: Prisma.BookmarkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        aggregate: {
+          args: Prisma.BookmarkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBookmark>
+        }
+        groupBy: {
+          args: Prisma.BookmarkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookmarkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BookmarkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookmarkCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1059,6 +1209,7 @@ export const UserScalarFieldEnum = {
   bannerUrl: 'bannerUrl',
   isVip: 'isVip',
   vipExpiresAt: 'vipExpiresAt',
+  isOwner: 'isOwner',
   nameStyle: 'nameStyle',
   tokenVersion: 'tokenVersion',
   createdAt: 'createdAt'
@@ -1116,7 +1267,8 @@ export const ReactionScalarFieldEnum = {
   createdAt: 'createdAt',
   userId: 'userId',
   postId: 'postId',
-  replyId: 'replyId'
+  replyId: 'replyId',
+  profileCommentId: 'profileCommentId'
 } as const
 
 export type ReactionScalarFieldEnum = (typeof ReactionScalarFieldEnum)[keyof typeof ReactionScalarFieldEnum]
@@ -1153,12 +1305,33 @@ export const NotificationScalarFieldEnum = {
   userId: 'userId',
   actorId: 'actorId',
   postId: 'postId',
+  profileCommentId: 'profileCommentId',
   message: 'message',
   read: 'read',
   createdAt: 'createdAt'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const LoginLogScalarFieldEnum = {
+  id: 'id',
+  ip: 'ip',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type LoginLogScalarFieldEnum = (typeof LoginLogScalarFieldEnum)[keyof typeof LoginLogScalarFieldEnum]
+
+
+export const BookmarkScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  postId: 'postId'
+} as const
+
+export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1362,6 +1535,8 @@ export type GlobalOmitConfig = {
   report?: Prisma.ReportOmit
   profileComment?: Prisma.ProfileCommentOmit
   notification?: Prisma.NotificationOmit
+  loginLog?: Prisma.LoginLogOmit
+  bookmark?: Prisma.BookmarkOmit
 }
 
 /* Types for Logging */

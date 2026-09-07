@@ -81,3 +81,13 @@ export type ProfileComment = Prisma.ProfileCommentModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model LoginLog
+ * 
+ */
+export type LoginLog = Prisma.LoginLogModel
+/**
+ * Model Bookmark
+ * 
+ */
+export type Bookmark = Prisma.BookmarkModel
