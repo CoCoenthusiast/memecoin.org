@@ -13,15 +13,13 @@ type Props = {
   required?: boolean
 }
 
-const MENTION_REGEX = /@[A-Za-z0-9_]+/g
-
 function highlightValue(value: string): ReactNode[] {
   if (!value) return []
   const nodes: ReactNode[] = []
   let last = 0
+  const regex = /@[A-Za-z0-9_]+/g
   let m: RegExpExecArray | null
-  MENTION_REGEX.lastIndex = 0
-  while ((m = MENTION_REGEX.exec(value)) !== null) {
+  while ((m = regex.exec(value)) !== null) {
     if (m.index > last) nodes.push(value.slice(last, m.index))
     nodes.push(
       <span key={m.index} className="text-neon font-semibold">

@@ -18,7 +18,10 @@ export function useMentions(
     const el = textareaRef.current
     if (!el) return
     const caret = el.selectionStart
-    const text = el.value
+    // Use the React-controlled `value` prop as the source of truth for the
+    // text content. The caret position must come from the DOM, but the text
+    // itself is derived from `value` to stay in sync with React's state.
+    const text = value
     let i = caret - 1
     while (i >= 0 && /[A-Za-z0-9_@]/.test(text[i])) {
       if (text[i] === "@") break
@@ -37,7 +40,7 @@ export function useMentions(
     tokenStartRef.current = -1
     setOpen(false)
     return null
-  }, [textareaRef])
+  }, [textareaRef, value])
 
   useEffect(() => {
     const q = refreshToken()
