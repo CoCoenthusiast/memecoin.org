@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import crypto from "crypto";
 import { prisma } from "@/lib/db";
 import { hashPassword, signToken, sessionCookieOptions } from "@/lib/auth";
 import { apiError, getBody, getClientIp, withErrorHandling } from "@/lib/api";
@@ -7,6 +8,7 @@ import {
   isRegistrationBlocked,
   recordRegistration,
 } from "@/lib/rateLimit";
+import { sendVerificationEmail } from "@/lib/email";
 
 export const POST = withErrorHandling(async function POST(
   request: NextRequest
@@ -74,12 +76,17 @@ export const POST = withErrorHandling(async function POST(
 
   const hashedPassword = await hashPassword(body.password);
 
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+  const verificationTokenExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
   const user = await prisma.user.create({
     data: {
       username: body.username,
       usernameLower: body.username.toLowerCase(),
       email: body.email,
       password: hashedPassword,
+      verificationToken,
+      verificationTokenExpiresAt,
     },
     select: { id: true, username: true, email: true, role: true, tokenVersion: true },
   });
@@ -92,6 +99,13 @@ export const POST = withErrorHandling(async function POST(
     token,
     sessionCookieOptions(60 * 60 * 24 * 7)
   );
+
+  // Intentional: fire-and-forget. O e-mail de verificação é secundário —
+  // o usuário já foi criado e logado normalmente. Se o envio falhar, o
+  // usuário pode solicitar um novo link de verificação depois.
+  sendVerificationEmail(user.email, verificationToken).catch((e) => {
+    console.error("Failed to send verification email", e);
+  });
 
   return NextResponse.json({ user }, { status: 201 });
 });

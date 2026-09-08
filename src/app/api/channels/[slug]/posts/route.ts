@@ -20,6 +20,10 @@ export const POST = withErrorHandling(async function POST(
   const { user } = await requireAuth();
   const { slug } = await params;
 
+  if (!user.emailVerified) {
+    return apiError("Please verify your email before posting", 403);
+  }
+
   const body = await getBody<{ title: string; body: string; imageUrl?: string; videoUrl?: string }>(request);
 
   if (!body.title || body.title.length < 1 || body.title.length > 200) {

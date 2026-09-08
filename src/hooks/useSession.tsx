@@ -10,6 +10,7 @@ type Session = {
     isVip: boolean
     vipExpiresAt: string | null
     isOwner: boolean
+    emailVerified: boolean
   } | null
   loading: boolean
 }

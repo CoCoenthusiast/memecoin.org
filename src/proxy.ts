@@ -17,6 +17,7 @@ function isPublicRoute(method: string, pathname: string): boolean {
 
   if (method === "GET") {
     if (p === "/api/auth/me") return true;
+    if (p === "/api/auth/verify-email") return true;
     if (p === "/api/channels") return true;
     if (/^\/api\/channels\/[^/]+$/.test(p)) return true;
     if (p === "/api/home") return true;

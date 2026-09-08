@@ -16,6 +16,7 @@ export type AuthUser = {
   isVip: boolean;
   vipExpiresAt: Date | null;
   isOwner: boolean;
+  emailVerified: boolean;
 };
 
 export function isAdmin(user: { role: string }): boolean {
@@ -93,6 +94,7 @@ export async function getSession(): Promise<{
       vipExpiresAt: true,
       isOwner: true,
       tokenVersion: true,
+      emailVerified: true,
     },
   });
   if (!user) return null;

@@ -12,6 +12,10 @@ export const POST = withErrorHandling(async function POST(
   const { user } = await requireAuth();
   const { id } = await params;
 
+  if (!user.emailVerified) {
+    return apiError("Please verify your email before posting", 403);
+  }
+
   const body = await getBody<{ body: string; parentId?: string }>(request);
 
   if (!body.body || body.body.length < 1) {

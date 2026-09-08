@@ -41,6 +41,10 @@ export const POST = withErrorHandling(async function POST(
   const { username } = await params;
   const usernameLower = username.toLowerCase();
 
+  if (!user.emailVerified) {
+    return apiError("Please verify your email before posting", 403);
+  }
+
   const profile = await prisma.user.findUnique({
     where: { usernameLower },
   });

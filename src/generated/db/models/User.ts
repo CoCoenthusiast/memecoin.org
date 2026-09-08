@@ -48,6 +48,9 @@ export type UserMinAggregateOutputType = {
   isOwner: boolean | null
   nameStyle: string | null
   tokenVersion: number | null
+  emailVerified: boolean | null
+  verificationToken: string | null
+  verificationTokenExpiresAt: Date | null
   createdAt: Date | null
 }
 
@@ -65,6 +68,9 @@ export type UserMaxAggregateOutputType = {
   isOwner: boolean | null
   nameStyle: string | null
   tokenVersion: number | null
+  emailVerified: boolean | null
+  verificationToken: string | null
+  verificationTokenExpiresAt: Date | null
   createdAt: Date | null
 }
 
@@ -82,6 +88,9 @@ export type UserCountAggregateOutputType = {
   isOwner: number
   nameStyle: number
   tokenVersion: number
+  emailVerified: number
+  verificationToken: number
+  verificationTokenExpiresAt: number
   createdAt: number
   _all: number
 }
@@ -109,6 +118,9 @@ export type UserMinAggregateInputType = {
   isOwner?: true
   nameStyle?: true
   tokenVersion?: true
+  emailVerified?: true
+  verificationToken?: true
+  verificationTokenExpiresAt?: true
   createdAt?: true
 }
 
@@ -126,6 +138,9 @@ export type UserMaxAggregateInputType = {
   isOwner?: true
   nameStyle?: true
   tokenVersion?: true
+  emailVerified?: true
+  verificationToken?: true
+  verificationTokenExpiresAt?: true
   createdAt?: true
 }
 
@@ -143,6 +158,9 @@ export type UserCountAggregateInputType = {
   isOwner?: true
   nameStyle?: true
   tokenVersion?: true
+  emailVerified?: true
+  verificationToken?: true
+  verificationTokenExpiresAt?: true
   createdAt?: true
   _all?: true
 }
@@ -247,6 +265,9 @@ export type UserGroupByOutputType = {
   isOwner: boolean
   nameStyle: string | null
   tokenVersion: number
+  emailVerified: boolean
+  verificationToken: string | null
+  verificationTokenExpiresAt: Date | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -287,6 +308,9 @@ export type UserWhereInput = {
   isOwner?: Prisma.BoolFilter<"User"> | boolean
   nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
+  emailVerified?: Prisma.BoolFilter<"User"> | boolean
+  verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  verificationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -315,6 +339,9 @@ export type UserOrderByWithRelationInput = {
   isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
+  emailVerified?: Prisma.SortOrder
+  verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   posts?: Prisma.PostOrderByRelationAggregateInput
   replies?: Prisma.ReplyOrderByRelationAggregateInput
@@ -334,6 +361,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   username?: string
   usernameLower?: string
   email?: string
+  verificationToken?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -346,6 +374,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isOwner?: Prisma.BoolFilter<"User"> | boolean
   nameStyle?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
+  emailVerified?: Prisma.BoolFilter<"User"> | boolean
+  verificationTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -358,7 +388,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sentNotifications?: Prisma.NotificationListRelationFilter
   loginLogs?: Prisma.LoginLogListRelationFilter
   bookmarks?: Prisma.BookmarkListRelationFilter
-}, "id" | "username" | "usernameLower" | "email">
+}, "id" | "username" | "usernameLower" | "email" | "verificationToken">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -374,6 +404,9 @@ export type UserOrderByWithAggregationInput = {
   isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
+  emailVerified?: Prisma.SortOrder
+  verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -399,6 +432,9 @@ export type UserScalarWhereWithAggregatesInput = {
   isOwner?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   nameStyle?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   tokenVersion?: Prisma.IntWithAggregatesFilter<"User"> | number
+  emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  verificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  verificationTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -416,6 +452,9 @@ export type UserCreateInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -444,6 +483,9 @@ export type UserUncheckedCreateInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -472,6 +514,9 @@ export type UserUpdateInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -500,6 +545,9 @@ export type UserUncheckedUpdateInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -528,6 +576,9 @@ export type UserCreateManyInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -545,6 +596,9 @@ export type UserUpdateManyMutationInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -562,6 +616,9 @@ export type UserUncheckedUpdateManyInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -579,6 +636,9 @@ export type UserCountOrderByAggregateInput = {
   isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
+  emailVerified?: Prisma.SortOrder
+  verificationToken?: Prisma.SortOrder
+  verificationTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -600,6 +660,9 @@ export type UserMaxOrderByAggregateInput = {
   isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
+  emailVerified?: Prisma.SortOrder
+  verificationToken?: Prisma.SortOrder
+  verificationTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -617,6 +680,9 @@ export type UserMinOrderByAggregateInput = {
   isOwner?: Prisma.SortOrder
   nameStyle?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
+  emailVerified?: Prisma.SortOrder
+  verificationToken?: Prisma.SortOrder
+  verificationTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -836,6 +902,9 @@ export type UserCreateWithoutPostsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -863,6 +932,9 @@ export type UserUncheckedCreateWithoutPostsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -906,6 +978,9 @@ export type UserUpdateWithoutPostsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -933,6 +1008,9 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -960,6 +1038,9 @@ export type UserCreateWithoutRepliesInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -987,6 +1068,9 @@ export type UserUncheckedCreateWithoutRepliesInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -1030,6 +1114,9 @@ export type UserUpdateWithoutRepliesInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -1057,6 +1144,9 @@ export type UserUncheckedUpdateWithoutRepliesInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1084,6 +1174,9 @@ export type UserCreateWithoutReactionsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1111,6 +1204,9 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1154,6 +1250,9 @@ export type UserUpdateWithoutReactionsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1181,6 +1280,9 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1208,6 +1310,9 @@ export type UserCreateWithoutReportsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1235,6 +1340,9 @@ export type UserUncheckedCreateWithoutReportsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1267,6 +1375,9 @@ export type UserCreateWithoutReportsReceivedInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1294,6 +1405,9 @@ export type UserUncheckedCreateWithoutReportsReceivedInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1337,6 +1451,9 @@ export type UserUpdateWithoutReportsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1364,6 +1481,9 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1402,6 +1522,9 @@ export type UserUpdateWithoutReportsReceivedInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1429,6 +1552,9 @@ export type UserUncheckedUpdateWithoutReportsReceivedInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1456,6 +1582,9 @@ export type UserCreateWithoutWrittenProfileCommentsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1483,6 +1612,9 @@ export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1515,6 +1647,9 @@ export type UserCreateWithoutProfileCommentsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1542,6 +1677,9 @@ export type UserUncheckedCreateWithoutProfileCommentsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1585,6 +1723,9 @@ export type UserUpdateWithoutWrittenProfileCommentsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1612,6 +1753,9 @@ export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1650,6 +1794,9 @@ export type UserUpdateWithoutProfileCommentsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1677,6 +1824,9 @@ export type UserUncheckedUpdateWithoutProfileCommentsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1704,6 +1854,9 @@ export type UserCreateWithoutNotificationsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1731,6 +1884,9 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1763,6 +1919,9 @@ export type UserCreateWithoutSentNotificationsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1790,6 +1949,9 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1833,6 +1995,9 @@ export type UserUpdateWithoutNotificationsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1860,6 +2025,9 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1898,6 +2066,9 @@ export type UserUpdateWithoutSentNotificationsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1925,6 +2096,9 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1952,6 +2126,9 @@ export type UserCreateWithoutLoginLogsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1979,6 +2156,9 @@ export type UserUncheckedCreateWithoutLoginLogsInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2022,6 +2202,9 @@ export type UserUpdateWithoutLoginLogsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2049,6 +2232,9 @@ export type UserUncheckedUpdateWithoutLoginLogsInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2076,6 +2262,9 @@ export type UserCreateWithoutBookmarksInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -2103,6 +2292,9 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   isOwner?: boolean
   nameStyle?: string | null
   tokenVersion?: number
+  emailVerified?: boolean
+  verificationToken?: string | null
+  verificationTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2146,6 +2338,9 @@ export type UserUpdateWithoutBookmarksInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2173,6 +2368,9 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   isOwner?: Prisma.BoolFieldUpdateOperationsInput | boolean
   nameStyle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2321,6 +2519,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
+  emailVerified?: boolean
+  verificationToken?: boolean
+  verificationTokenExpiresAt?: boolean
   createdAt?: boolean
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -2350,6 +2551,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
+  emailVerified?: boolean
+  verificationToken?: boolean
+  verificationTokenExpiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -2367,6 +2571,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
+  emailVerified?: boolean
+  verificationToken?: boolean
+  verificationTokenExpiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -2384,10 +2591,13 @@ export type UserSelectScalar = {
   isOwner?: boolean
   nameStyle?: boolean
   tokenVersion?: boolean
+  emailVerified?: boolean
+  verificationToken?: boolean
+  verificationTokenExpiresAt?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "isOwner" | "nameStyle" | "tokenVersion" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "isOwner" | "nameStyle" | "tokenVersion" | "emailVerified" | "verificationToken" | "verificationTokenExpiresAt" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -2434,6 +2644,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isOwner: boolean
     nameStyle: string | null
     tokenVersion: number
+    emailVerified: boolean
+    verificationToken: string | null
+    verificationTokenExpiresAt: Date | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -2882,6 +3095,9 @@ export interface UserFieldRefs {
   readonly isOwner: Prisma.FieldRef<"User", 'Boolean'>
   readonly nameStyle: Prisma.FieldRef<"User", 'String'>
   readonly tokenVersion: Prisma.FieldRef<"User", 'Int'>
+  readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly verificationToken: Prisma.FieldRef<"User", 'String'>
+  readonly verificationTokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

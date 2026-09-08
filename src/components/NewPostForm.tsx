@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation"
 import { CHANNELS } from "@/lib/constants"
 import { AuthGuard } from "@/components/AuthGuard"
 import { MentionTextarea } from "@/components/MentionTextarea"
+import { useSession } from "@/hooks/useSession"
 import { parseApiError } from "@/lib/api"
 
 export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
+  const { user, refresh } = useSession()
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
   const [selectedChannel, setSelectedChannel] = useState(channelSlug || "")
@@ -16,12 +18,33 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [resendMsg, setResendMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const imageRef = useRef<HTMLInputElement>(null)
   const videoRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
   const activeSlug = channelSlug || selectedChannel
   const isPnlFlex = activeSlug === "pnl-flex"
+
+  async function handleResendVerification() {
+    setResending(true)
+    setResendMsg(null)
+    try {
+      const res = await fetch("/api/auth/resend-verification", { method: "POST" })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok) {
+        setResendMsg({ ok: true, text: "Verification email sent. Check your inbox (and spam)." })
+      } else {
+        setResendMsg({ ok: false, text: data.error || "Failed to send. Please try again." })
+        if (res.status === 400 && String(data.error).includes("already verified")) refresh()
+      }
+    } catch {
+      setResendMsg({ ok: false, text: "Failed to send. Please try again." })
+    } finally {
+      setResending(false)
+    }
+  }
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -136,6 +159,27 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
 
   return (
     <AuthGuard>
+      {user && !user.emailVerified && (
+        <div className="mb-5 p-4 bg-amber-900/20 border border-amber-800/70 rounded-xl flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+          <div className="text-sm">
+            <p className="font-medium text-amber-200">Please verify your email before posting.</p>
+            <p className="text-xs text-amber-400/80 mt-0.5">Check your inbox (and spam) for the verification link.</p>
+            {resendMsg && (
+              <p className={`text-xs mt-1.5 ${resendMsg.ok ? "text-emerald-400" : "text-red-400"}`}>
+                {resendMsg.text}
+              </p>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={handleResendVerification}
+            disabled={resending}
+            className="shrink-0 px-4 py-2 rounded-xl bg-transparent border border-amber-600 text-amber-300 font-medium text-sm transition-all duration-200 hover:bg-amber-600/10 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {resending ? "Sending..." : "Resend verification email"}
+          </button>
+        </div>
+      )}
       {sending && (
         <div className="mb-5 p-4 bg-gray-900/50 border border-gray-800/50 rounded-xl opacity-60">
           <p className="text-sm text-gray-400">Posting &quot;{title}&quot;...</p>
