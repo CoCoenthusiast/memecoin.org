@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
-import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { isUserVip } from "@/lib/vip";
 
 const MAX_SIZE = 2 * 1024 * 1024;
@@ -12,9 +12,9 @@ const VIP_ALLOWED_TYPES = [...ALLOWED_TYPES, "image/gif"];
 const BUCKET = "avatars";
 
 async function ensureBucketPublic() {
-  const { error } = await supabaseAdmin.storage.updateBucket(BUCKET, { public: true });
+  const { error } = await getSupabaseAdmin().storage.updateBucket(BUCKET, { public: true });
   if (error && error.message.includes("Bucket not found")) {
-    await supabaseAdmin.storage.createBucket(BUCKET, { public: true });
+    await getSupabaseAdmin().storage.createBucket(BUCKET, { public: true });
   }
 }
 
@@ -73,7 +73,7 @@ export const POST = withErrorHandling(async function POST(
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  const { error: uploadError } = await supabaseAdmin.storage
+  const { error: uploadError } = await getSupabaseAdmin().storage
     .from(BUCKET)
     .upload(fileName, buffer, { contentType: file.type });
 
@@ -81,7 +81,7 @@ export const POST = withErrorHandling(async function POST(
     return apiError("Failed to upload avatar");
   }
 
-  const { data: urlData } = supabaseAdmin.storage
+  const { data: urlData } = getSupabaseAdmin().storage
     .from(BUCKET)
     .getPublicUrl(fileName);
 

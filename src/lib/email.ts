@@ -1,11 +1,17 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error("RESEND_API_KEY environment variable is required");
+  }
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function sendVerificationEmail(
   email: string,
   token: string
 ): Promise<void> {
+  const resend = getResendClient();
   const verifyUrl = `https://degenscult.com/verify-email?token=${token}`;
 
   await resend.emails.send({
