@@ -3,6 +3,7 @@ import { useState } from "react"
 import { AdminReportsList } from "@/components/AdminReportsList"
 import { VipManagement } from "@/components/VipManagement"
 import { AdminAnalytics } from "@/components/AdminAnalytics"
+import { AdminDailyRecap } from "@/components/AdminDailyRecap"
 import { useSession } from "@/hooks/useSession"
 
 type Report = {
@@ -27,7 +28,7 @@ type AdminPageTabsProps = {
 export function AdminPageTabs({ reports }: AdminPageTabsProps) {
   const { user } = useSession()
   const isOwner = !!user?.isOwner
-  const [activeTab, setActiveTab] = useState<"reports" | "vip" | "analytics">("reports")
+  const [activeTab, setActiveTab] = useState<"reports" | "vip" | "analytics" | "recap">("reports")
 
   return (
     <div>
@@ -64,6 +65,18 @@ export function AdminPageTabs({ reports }: AdminPageTabsProps) {
             Analytics
           </button>
         )}
+        {isOwner && (
+          <button
+            onClick={() => setActiveTab("recap")}
+            className={`pb-3 text-sm font-semibold transition-colors border-b-2 -mb-px ${
+              activeTab === "recap"
+                ? "text-neon border-neon"
+                : "text-gray-500 border-transparent hover:text-gray-300"
+            }`}
+          >
+            Daily Recap
+          </button>
+        )}
       </div>
 
       {activeTab === "reports" && (
@@ -76,6 +89,7 @@ export function AdminPageTabs({ reports }: AdminPageTabsProps) {
 
       {activeTab === "vip" && <VipManagement />}
       {activeTab === "analytics" && isOwner && <AdminAnalytics />}
+      {activeTab === "recap" && isOwner && <AdminDailyRecap />}
     </div>
   )
 }

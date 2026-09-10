@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Logo } from "@/components/Logo"
+import { MarketPanel } from "@/components/MarketPanel"
+import { TrackerFeed } from "@/components/TrackerFeed"
 import { timeAgo } from "@/lib/timeAgo"
 
 type Channel = {
@@ -54,7 +56,10 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_19rem] gap-8 lg:items-start max-w-6xl mx-auto">
+      <MarketPanel />
+      <TrackerFeed />
+
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_14rem] gap-8 lg:items-start max-w-7xl mx-auto xl:pr-64">
         <div className="min-w-0">
           {loading ? (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

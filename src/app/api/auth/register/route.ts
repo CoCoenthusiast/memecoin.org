@@ -100,12 +100,15 @@ export const POST = withErrorHandling(async function POST(
     sessionCookieOptions(60 * 60 * 24 * 7)
   );
 
-  // Intentional: fire-and-forget. O e-mail de verificação é secundário —
-  // o usuário já foi criado e logado normalmente. Se o envio falhar, o
-  // usuário pode solicitar um novo link de verificação depois.
-  sendVerificationEmail(user.email, verificationToken).catch((e) => {
+  // Email verification is secondary — user was already created and logged in.
+  // If sending fails, the user is still registered and can request a resend later.
+  let emailWarning: string | null = null;
+  try {
+    await sendVerificationEmail(user.email, verificationToken);
+  } catch (e) {
     console.error("Failed to send verification email", e);
-  });
+    emailWarning = "We couldn't send a verification email right now. You can request a new one later from your profile.";
+  }
 
-  return NextResponse.json({ user }, { status: 201 });
+  return NextResponse.json({ user, emailWarning }, { status: 201 });
 });

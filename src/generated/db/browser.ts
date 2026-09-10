@@ -67,3 +67,8 @@ export type LoginLog = Prisma.LoginLogModel
  * 
  */
 export type Bookmark = Prisma.BookmarkModel
+/**
+ * Model DailyRecap
+ * 
+ */
+export type DailyRecap = Prisma.DailyRecapModel

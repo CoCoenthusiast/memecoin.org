@@ -399,7 +399,8 @@ export const ModelName = {
   ProfileComment: 'ProfileComment',
   Notification: 'Notification',
   LoginLog: 'LoginLog',
-  Bookmark: 'Bookmark'
+  Bookmark: 'Bookmark',
+  DailyRecap: 'DailyRecap'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "channel" | "post" | "reply" | "reaction" | "report" | "profileComment" | "notification" | "loginLog" | "bookmark"
+    modelProps: "user" | "channel" | "post" | "reply" | "reaction" | "report" | "profileComment" | "notification" | "loginLog" | "bookmark" | "dailyRecap"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1159,6 +1160,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DailyRecap: {
+      payload: Prisma.$DailyRecapPayload<ExtArgs>
+      fields: Prisma.DailyRecapFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DailyRecapFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DailyRecapFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>
+        }
+        findFirst: {
+          args: Prisma.DailyRecapFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DailyRecapFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>
+        }
+        findMany: {
+          args: Prisma.DailyRecapFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>[]
+        }
+        create: {
+          args: Prisma.DailyRecapCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>
+        }
+        createMany: {
+          args: Prisma.DailyRecapCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DailyRecapCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>[]
+        }
+        delete: {
+          args: Prisma.DailyRecapDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>
+        }
+        update: {
+          args: Prisma.DailyRecapUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>
+        }
+        deleteMany: {
+          args: Prisma.DailyRecapDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DailyRecapUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DailyRecapUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>[]
+        }
+        upsert: {
+          args: Prisma.DailyRecapUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyRecapPayload>
+        }
+        aggregate: {
+          args: Prisma.DailyRecapAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDailyRecap>
+        }
+        groupBy: {
+          args: Prisma.DailyRecapGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyRecapGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DailyRecapCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyRecapCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1335,6 +1410,17 @@ export const BookmarkScalarFieldEnum = {
 } as const
 
 export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
+
+
+export const DailyRecapScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type DailyRecapScalarFieldEnum = (typeof DailyRecapScalarFieldEnum)[keyof typeof DailyRecapScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1540,6 +1626,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   loginLog?: Prisma.LoginLogOmit
   bookmark?: Prisma.BookmarkOmit
+  dailyRecap?: Prisma.DailyRecapOmit
 }
 
 /* Types for Logging */

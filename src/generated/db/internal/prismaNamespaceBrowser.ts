@@ -58,7 +58,8 @@ export const ModelName = {
   ProfileComment: 'ProfileComment',
   Notification: 'Notification',
   LoginLog: 'LoginLog',
-  Bookmark: 'Bookmark'
+  Bookmark: 'Bookmark',
+  DailyRecap: 'DailyRecap'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -214,6 +215,17 @@ export const BookmarkScalarFieldEnum = {
 } as const
 
 export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
+
+
+export const DailyRecapScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type DailyRecapScalarFieldEnum = (typeof DailyRecapScalarFieldEnum)[keyof typeof DailyRecapScalarFieldEnum]
 
 
 export const SortOrder = {

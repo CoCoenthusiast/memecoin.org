@@ -18,6 +18,8 @@ function isPublicRoute(method: string, pathname: string): boolean {
   if (method === "GET") {
     if (p === "/api/auth/me") return true;
     if (p === "/api/auth/verify-email") return true;
+    if (p === "/api/market-data") return true;
+    if (p === "/api/daily-recap/latest") return true;
     if (p === "/api/channels") return true;
     if (/^\/api\/channels\/[^/]+$/.test(p)) return true;
     if (p === "/api/home") return true;
@@ -26,6 +28,8 @@ function isPublicRoute(method: string, pathname: string): boolean {
     if (p === "/api/users/search") return true;
     if (/^\/api\/users\/[^/]+$/.test(p)) return true;
     if (/^\/api\/users\/[^/]+\/comments$/.test(p)) return true;
+    if (p === "/api/market-data") return true;
+    if (p === "/api/daily-recap/latest") return true;
     return false;
   }
 
