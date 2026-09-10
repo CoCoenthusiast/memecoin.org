@@ -31,6 +31,8 @@ model User {
   emailVerified Boolean @default(false)
   verificationToken String? @unique
   verificationTokenExpiresAt DateTime?
+  resetToken String? @unique
+  resetTokenExpiresAt DateTime?
   createdAt DateTime @default(now())
 
   posts     Post[]

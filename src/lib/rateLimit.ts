@@ -4,6 +4,9 @@ const WINDOW_MS = 15 * 60 * 1000;
 const MAX_REGISTRATIONS = 5;
 const REGISTER_WINDOW_MS = 60 * 60 * 1000;
 
+const MAX_FORGOT = 5;
+const FORGOT_WINDOW_MS = 15 * 60 * 1000;
+
 type Attempt = {
   count: number;
   blockedUntil: number;
@@ -12,11 +15,13 @@ type Attempt = {
 type Store = {
   __loginAttempts?: Map<string, Attempt>;
   __registerAttempts?: Map<string, Attempt>;
+  __forgotAttempts?: Map<string, Attempt>;
 };
 
 const g = globalThis as unknown as Store;
 const attempts: Map<string, Attempt> = (g.__loginAttempts ??= new Map());
 const registerAttempts: Map<string, Attempt> = (g.__registerAttempts ??= new Map());
+const forgotAttempts: Map<string, Attempt> = (g.__forgotAttempts ??= new Map());
 
 function makeKey(email: string, ip: string): string {
   return `${email.trim().toLowerCase()}|${ip}`;
@@ -106,4 +111,19 @@ export function recordRegistration(ip: string): {
 } {
   if (ip === "unknown") return { blocked: false, retryAfterMin: 0 };
   return recordAttempt(registerAttempts, `ip|${ip}`, MAX_REGISTRATIONS, REGISTER_WINDOW_MS);
+}
+
+export function isForgotPasswordBlocked(ip: string): {
+  blocked: boolean;
+  retryAfterMin: number;
+} {
+  return isBlocked(forgotAttempts, ip, MAX_FORGOT);
+}
+
+export function recordForgotPasswordAttempt(ip: string): {
+  blocked: boolean;
+  retryAfterMin: number;
+} {
+  if (ip === "unknown") return { blocked: false, retryAfterMin: 0 };
+  return recordAttempt(forgotAttempts, ip, MAX_FORGOT, FORGOT_WINDOW_MS);
 }

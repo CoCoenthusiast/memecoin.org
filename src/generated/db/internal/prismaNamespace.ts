@@ -1290,6 +1290,8 @@ export const UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   verificationToken: 'verificationToken',
   verificationTokenExpiresAt: 'verificationTokenExpiresAt',
+  resetToken: 'resetToken',
+  resetTokenExpiresAt: 'resetTokenExpiresAt',
   createdAt: 'createdAt'
 } as const
 

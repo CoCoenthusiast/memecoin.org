@@ -37,7 +37,9 @@ function isPublicRoute(method: string, pathname: string): boolean {
     if (
       p === "/api/auth/login" ||
       p === "/api/auth/register" ||
-      p === "/api/auth/logout"
+      p === "/api/auth/logout" ||
+      p === "/api/auth/forgot-password" ||
+      p === "/api/auth/reset-password"
     ) {
       return true;
     }
