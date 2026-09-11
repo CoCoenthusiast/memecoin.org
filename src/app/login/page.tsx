@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
 import { parseApiError } from "@/lib/api"
+import { PasswordInput } from "@/components/PasswordInput"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -53,22 +54,17 @@ export default function LoginPage() {
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-400 mb-1">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
-              placeholder="••••••••"
-              required
-            />
-            <div className="flex justify-end mt-1">
-              <Link href="/forgot-password" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
-                Forgot password?
-              </Link>
-            </div>
+          <PasswordInput
+            id="login-password"
+            label="Password"
+            value={password}
+            onChange={setPassword}
+            autoComplete="current-password"
+          />
+          <div className="flex justify-end -mt-3">
+            <Link href="/forgot-password" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
+              Forgot password?
+            </Link>
           </div>
 
           {error && (

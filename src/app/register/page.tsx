@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
 import { parseApiError } from "@/lib/api"
+import { PasswordInput } from "@/components/PasswordInput"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -31,8 +32,7 @@ export default function RegisterPage() {
       return
     }
 
-    await refresh()
-    router.push("/")
+    router.push("/verify-email")
   }
 
   return (
@@ -69,20 +69,14 @@ export default function RegisterPage() {
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-400 mb-1">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
-              placeholder="••••••••"
-              required
-              minLength={8}
-              title="At least 8 characters, with at least one uppercase letter and one number"
-            />
-          </div>
+          <PasswordInput
+            id="register-password"
+            label="Password"
+            value={password}
+            onChange={setPassword}
+            autoComplete="new-password"
+            minLength={8}
+          />
 
           {error && (
             <p className="text-sm text-red-400 bg-red-950/50 border border-red-900 rounded-lg px-3 py-2">{error}</p>

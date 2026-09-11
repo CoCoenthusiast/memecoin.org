@@ -14,7 +14,6 @@ function normalize(pathname: string): string {
 
 function isPublicRoute(method: string, pathname: string): boolean {
   const p = normalize(pathname);
-
   if (method === "GET") {
     if (p === "/api/auth/me") return true;
     if (p === "/api/auth/verify-email") return true;
@@ -30,6 +29,7 @@ function isPublicRoute(method: string, pathname: string): boolean {
     if (/^\/api\/users\/[^/]+\/comments$/.test(p)) return true;
     if (p === "/api/market-data") return true;
     if (p === "/api/daily-recap/latest") return true;
+    if (p === "/api/admin/cleanup") return true;  // ADICIONADO
     return false;
   }
 
@@ -39,7 +39,8 @@ function isPublicRoute(method: string, pathname: string): boolean {
       p === "/api/auth/register" ||
       p === "/api/auth/logout" ||
       p === "/api/auth/forgot-password" ||
-      p === "/api/auth/reset-password"
+      p === "/api/auth/reset-password" ||
+      p === "/api/auth/resend-verification"
     ) {
       return true;
     }
@@ -52,11 +53,9 @@ function isPublicRoute(method: string, pathname: string): boolean {
 
 function isAdminRoute(method: string, pathname: string): boolean {
   const p = normalize(pathname);
-
   if (p === "/api/admin" || p.startsWith("/api/admin/")) return true;
   if (method === "POST" && /^\/api\/posts\/[^/]+\/pin$/.test(p)) return true;
   if (method === "PATCH" && /^\/api\/reports\/[^/]+$/.test(p)) return true;
-
   return false;
 }
 

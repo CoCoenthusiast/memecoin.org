@@ -23,10 +23,6 @@ const attempts: Map<string, Attempt> = (g.__loginAttempts ??= new Map());
 const registerAttempts: Map<string, Attempt> = (g.__registerAttempts ??= new Map());
 const forgotAttempts: Map<string, Attempt> = (g.__forgotAttempts ??= new Map());
 
-function makeKey(email: string, ip: string): string {
-  return `${email.trim().toLowerCase()}|${ip}`;
-}
-
 function isBlocked(
   map: Map<string, Attempt>,
   key: string,
@@ -36,9 +32,7 @@ function isBlocked(
   if (!entry) return { blocked: false, retryAfterMin: 0 };
 
   const now = Date.now();
-  if (entry.blockedUntil === 0) {
-    return { blocked: false, retryAfterMin: 0 };
-  }
+  if (entry.blockedUntil === 0) return { blocked: false, retryAfterMin: 0 };
 
   if (now > entry.blockedUntil) {
     map.delete(key);
@@ -126,4 +120,8 @@ export function recordForgotPasswordAttempt(ip: string): {
 } {
   if (ip === "unknown") return { blocked: false, retryAfterMin: 0 };
   return recordAttempt(forgotAttempts, ip, MAX_FORGOT, FORGOT_WINDOW_MS);
+}
+
+function makeKey(email: string, ip: string): string {
+  return `${email.trim().toLowerCase()}|${ip}`;
 }

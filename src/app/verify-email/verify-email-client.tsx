@@ -27,6 +27,8 @@ export function VerifyEmail() {
   const searchParams = useSearchParams()
   const { refresh } = useSession()
   const [status, setStatus] = useState<Status>({ kind: "verifying" })
+  const [email, setEmail] = useState("")
+  const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent">("idle")
 
   useEffect(() => {
     const token = searchParams.get("token")
@@ -74,6 +76,26 @@ export function VerifyEmail() {
     setStatus({ kind: "idle" })
   }, [searchParams, refresh])
 
+  async function handleResend(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email) return
+    setResendStatus("sending")
+    try {
+      const res = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+      if (res.ok) {
+        setResendStatus("sent")
+      } else {
+        setResendStatus("idle")
+      }
+    } catch {
+      setResendStatus("idle")
+    }
+  }
+
   return (
     <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center">
       {status.kind === "verifying" && (
@@ -86,7 +108,13 @@ export function VerifyEmail() {
             ✓
           </div>
           <h1 className="text-xl font-bold text-gray-100 mb-2">Email verified!</h1>
-          <p className="text-sm text-gray-400 mb-6">You can now post.</p>
+          <p className="text-sm text-gray-400 mb-6">You can now log in.</p>
+          <Link
+            href="/login"
+            className="inline-block px-6 py-2.5 rounded-xl bg-neon-glow text-gray-900 font-medium transition-all duration-200 hover:bg-neon-glow/90"
+          >
+            Log in
+          </Link>
         </>
       )}
 
@@ -95,11 +123,30 @@ export function VerifyEmail() {
           <div className="w-14 h-14 mx-auto mb-4 rounded-full border border-red-600 flex items-center justify-center text-red-400 text-2xl">
             !
           </div>
-          <h1 className="text-xl font-bold text-gray-100 mb-2">Couldn't verify your email</h1>
-          <p className="text-sm text-gray-400 mb-2">{status.message}</p>
-          <p className="text-xs text-gray-500 mb-6">
-            You can request a new verification link from your profile after logging in.
-          </p>
+          <h1 className="text-xl font-bold text-gray-100 mb-2">Couldn&apos;t verify your email</h1>
+          <p className="text-sm text-gray-400 mb-6">{status.message}</p>
+
+          {resendStatus === "sent" ? (
+            <p className="text-sm text-neon-glow mb-6">Verification email sent. Check your inbox.</p>
+          ) : (
+            <form onSubmit={handleResend} className="mb-6">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="w-full px-4 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-gray-100 placeholder-gray-500 text-sm mb-3 focus:outline-none focus:border-neon-glow"
+              />
+              <button
+                type="submit"
+                disabled={resendStatus === "sending"}
+                className="w-full px-6 py-2.5 rounded-xl bg-transparent border border-neon-glow text-neon-glow font-medium transition-all duration-200 hover:bg-neon-glow/10 disabled:opacity-50"
+              >
+                {resendStatus === "sending" ? "Sending..." : "Resend verification email"}
+              </button>
+            </form>
+          )}
         </>
       )}
 
@@ -112,12 +159,34 @@ export function VerifyEmail() {
           <p className="text-sm text-gray-400 mb-6">
             We sent a verification link to your email. Check your inbox (and spam) to confirm your address.
           </p>
+
+          {resendStatus === "sent" ? (
+            <p className="text-sm text-neon-glow mb-6">Verification email sent. Check your inbox.</p>
+          ) : (
+            <form onSubmit={handleResend} className="mb-6">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="w-full px-4 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-gray-100 placeholder-gray-500 text-sm mb-3 focus:outline-none focus:border-neon-glow"
+              />
+              <button
+                type="submit"
+                disabled={resendStatus === "sending"}
+                className="w-full px-6 py-2.5 rounded-xl bg-transparent border border-neon-glow text-neon-glow font-medium transition-all duration-200 hover:bg-neon-glow/10 disabled:opacity-50"
+              >
+                {resendStatus === "sending" ? "Sending..." : "Resend verification email"}
+              </button>
+            </form>
+          )}
         </>
       )}
 
       <Link
         href="/"
-        className="inline-block px-6 py-2.5 rounded-xl bg-transparent border border-neon-glow text-neon-glow font-medium transition-all duration-200 hover:bg-neon-glow/10"
+        className="inline-block px-6 py-2.5 rounded-xl bg-transparent border border-gray-700 text-gray-400 font-medium transition-all duration-200 hover:bg-gray-800"
       >
         Back to home
       </Link>

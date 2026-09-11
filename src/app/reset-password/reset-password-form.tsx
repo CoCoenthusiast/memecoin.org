@@ -3,6 +3,7 @@ import { useState, useEffect, FormEvent } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { parseApiError } from "@/lib/api"
+import { PasswordInput } from "@/components/PasswordInput"
 
 type Status = "idle" | "submitting" | "success"
 
@@ -99,33 +100,21 @@ export function ResetPasswordForm() {
           <p className="text-sm text-gray-400 text-center mb-6">Your password must be at least 8 characters, with at least one uppercase letter and one number.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-400 mb-1">New password</label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
-                placeholder="••••••••"
-                required
-                minLength={8}
-              />
-            </div>
+            <PasswordInput
+              id="new-password"
+              label="New password"
+              value={password}
+              onChange={setPassword}
+              autoComplete="new-password"
+            />
 
-            <div>
-              <label htmlFor="confirm" className="block text-sm font-medium text-gray-400 mb-1">Confirm password</label>
-              <input
-                id="confirm"
-                type="password"
-                value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-950 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
-                placeholder="••••••••"
-                required
-                minLength={8}
-              />
-            </div>
+            <PasswordInput
+              id="new-password-confirm"
+              label="Confirm password"
+              value={confirm}
+              onChange={setConfirm}
+              autoComplete="new-password"
+            />
 
             {error && (
               <p className="text-sm text-red-400 bg-red-950/50 border border-red-900 rounded-lg px-3 py-2">{error}</p>

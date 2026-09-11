@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import crypto from "crypto";
 import { prisma } from "@/lib/db";
-import { hashPassword, signToken, sessionCookieOptions } from "@/lib/auth";
+import { hashPassword } from "@/lib/auth";
 import { apiError, getBody, getClientIp, withErrorHandling } from "@/lib/api";
 import {
   isRegistrationBlocked,
@@ -88,27 +87,21 @@ export const POST = withErrorHandling(async function POST(
       verificationToken,
       verificationTokenExpiresAt,
     },
-    select: { id: true, username: true, email: true, role: true, tokenVersion: true },
+    select: { id: true, email: true },
   });
 
-  const token = signToken({ userId: user.id, role: user.role, tokenVersion: user.tokenVersion });
-
-  const cookieStore = await cookies();
-  cookieStore.set(
-    "token",
-    token,
-    sessionCookieOptions(60 * 60 * 24 * 7)
-  );
-
-  // Email verification is secondary — user was already created and logged in.
-  // If sending fails, the user is still registered and can request a resend later.
+  // Email verification is mandatory — user must verify before logging in.
+  // If sending fails, the user can still request a resend from the verify-email page.
   let emailWarning: string | null = null;
   try {
     await sendVerificationEmail(user.email, verificationToken);
   } catch (e) {
     console.error("Failed to send verification email", e);
-    emailWarning = "We couldn't send a verification email right now. You can request a new one later from your profile.";
+    emailWarning = "We couldn't send a verification email right now. Please request a new one from the verification page.";
   }
 
-  return NextResponse.json({ user, emailWarning }, { status: 201 });
+  return NextResponse.json(
+    { message: "Account created. Please check your email to verify your account before logging in.", emailWarning },
+    { status: 201 }
+  );
 });

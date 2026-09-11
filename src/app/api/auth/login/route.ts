@@ -35,7 +35,7 @@ export const POST = withErrorHandling(async function POST(
 
   const user = await prisma.user.findUnique({
     where: { email: body.email },
-    select: { id: true, username: true, email: true, role: true, password: true, tokenVersion: true },
+    select: { id: true, username: true, email: true, role: true, password: true, tokenVersion: true, emailVerified: true },
   });
 
   if (!user) {
@@ -47,6 +47,10 @@ export const POST = withErrorHandling(async function POST(
   if (!valid) {
     recordFailedLogin(body.email, ip);
     return apiError("Invalid email or password", 401);
+  }
+
+  if (!user.emailVerified) {
+    return apiError("Please verify your email before logging in. Check your inbox for the verification link.", 403);
   }
 
   clearLoginAttempts(body.email, ip);
