@@ -18,8 +18,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://degenscult.vercel.app"),
   title: "degenscult",
   description: "Community forum for memecoin discussion and trading culture",
+  applicationName: "degenscult",
   icons: {
     icon: "/favicon.svg",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "degenscult",
+    title: "degenscult",
+    description: "Community forum for memecoin discussion and trading culture",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "degenscult" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "degenscult",
+    description: "Community forum for memecoin discussion and trading culture",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "degenscult" }],
   },
 };
 
