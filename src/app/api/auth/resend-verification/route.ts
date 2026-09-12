@@ -48,11 +48,11 @@ export const POST = withErrorHandling(async function POST(
       data: { verificationToken, verificationTokenExpiresAt },
     });
 
-    // Intentional: fire-and-forget. Se o envio falhar o usuário pode
-    // tentar novamente — o link anterior continua válido até expirar.
-    sendVerificationEmail(userEmail, verificationToken).catch((e) => {
+    try {
+      await sendVerificationEmail(userEmail, verificationToken);
+    } catch (e) {
       console.error("Failed to resend verification email", e);
-    });
+    }
   }
 
   return NextResponse.json({ ok: true });

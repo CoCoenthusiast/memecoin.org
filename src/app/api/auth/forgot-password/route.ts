@@ -32,10 +32,7 @@ export const POST = withErrorHandling(async function POST(
     select: { id: true, email: true },
   });
 
-  console.log("[forgot-password] user encontrado:", !!user);
-
   if (user) {
-    console.log("[forgot-password] Enviando email para:", user.email);
     const resetToken = crypto.randomBytes(32).toString("hex");
     const resetTokenExpiresAt = new Date(Date.now() + RESET_TOKEN_EXPIRY_MS);
 
@@ -44,12 +41,11 @@ export const POST = withErrorHandling(async function POST(
       data: { resetToken, resetTokenExpiresAt },
     });
 
-    // Intentional: fire-and-forget. Password reset email is secondary —
-    // we always return success to the client regardless of email delivery.
-    sendPasswordResetEmail(user.email, resetToken).catch((e) => {
+    try {
+      await sendPasswordResetEmail(user.email, resetToken);
+    } catch (e) {
       console.error("Failed to send password reset email", e);
-    });
-    console.log("[forgot-password] sendPasswordResetEmail chamado");
+    }
   }
 
   // Always return success — never reveal whether the email exists
