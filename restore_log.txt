@@ -1,0 +1,1280 @@
+SET
+SET
+SET
+SET
+SET
+SET
+ set_config 
+------------
+ 
+(1 row)
+
+SET
+SET
+SET
+SET
+psql:backup_20260905.sql:26: ERROR:  schema "auth" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:35: ERROR:  schema "extensions" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:44: ERROR:  schema "graphql" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:53: ERROR:  schema "graphql_public" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:62: ERROR:  schema "pgbouncer" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:71: ERROR:  schema "realtime" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:80: ERROR:  schema "storage" already exists
+ALTER SCHEMA
+psql:backup_20260905.sql:89: ERROR:  schema "vault" already exists
+ALTER SCHEMA
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+CREATE EXTENSION
+COMMENT
+psql:backup_20260905.sql:158: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:170: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:182: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:195: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:209: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:221: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:233: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:244: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:260: ERROR:  permission denied for schema auth
+ALTER TYPE
+psql:backup_20260905.sql:272: ERROR:  type "Role" already exists
+ALTER TYPE
+psql:backup_20260905.sql:287: ERROR:  permission denied for schema realtime
+ALTER TYPE
+psql:backup_20260905.sql:310: ERROR:  permission denied for schema realtime
+ALTER TYPE
+psql:backup_20260905.sql:324: ERROR:  permission denied for schema realtime
+ALTER TYPE
+psql:backup_20260905.sql:340: ERROR:  permission denied for schema realtime
+ALTER TYPE
+psql:backup_20260905.sql:354: ERROR:  permission denied for schema realtime
+ALTER TYPE
+psql:backup_20260905.sql:367: ERROR:  permission denied for schema storage
+ALTER TYPE
+psql:backup_20260905.sql:384: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:backup_20260905.sql:393: ERROR:  must be owner of function auth.email
+psql:backup_20260905.sql:408: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:backup_20260905.sql:425: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:backup_20260905.sql:434: ERROR:  must be owner of function auth.role
+psql:backup_20260905.sql:449: ERROR:  permission denied for schema auth
+ALTER FUNCTION
+psql:backup_20260905.sql:458: ERROR:  must be owner of function auth.uid
+psql:backup_20260905.sql:497: ERROR:  function "grant_pg_cron_access" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:506: ERROR:  must be owner of function extensions.grant_pg_cron_access
+psql:backup_20260905.sql:554: ERROR:  function "grant_pg_graphql_access" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:563: ERROR:  must be owner of function extensions.grant_pg_graphql_access
+psql:backup_20260905.sql:615: ERROR:  function "grant_pg_net_access" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:624: ERROR:  must be owner of function extensions.grant_pg_net_access
+psql:backup_20260905.sql:658: ERROR:  function "pgrst_ddl_watch" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:692: ERROR:  function "pgrst_drop_watch" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:753: ERROR:  function "set_graphql_placeholder" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:762: ERROR:  must be owner of function extensions.set_graphql_placeholder
+psql:backup_20260905.sql:795: ERROR:  permission denied for schema graphql_public
+ALTER FUNCTION
+psql:backup_20260905.sql:821: ERROR:  permission denied for schema pgbouncer
+ALTER FUNCTION
+psql:backup_20260905.sql:856: ERROR:  function "rls_auto_enable" already exists with same argument types
+ALTER FUNCTION
+psql:backup_20260905.sql:1233: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1264: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1299: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1320: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1361: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1435: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1467: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1539: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1558: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1594: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1621: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1743: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1754: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1767: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1781: ERROR:  permission denied for schema realtime
+ALTER FUNCTION
+psql:backup_20260905.sql:1814: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1846: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1865: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1883: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1906: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1924: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1944: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1961: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:1979: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2027: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2244: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2259: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2280: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2542: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2667: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2729: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+psql:backup_20260905.sql:2745: ERROR:  permission denied for schema storage
+ALTER FUNCTION
+SET
+SET
+psql:backup_20260905.sql:2764: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.audit_log_entries (
+                     ^
+psql:backup_20260905.sql:2767: ERROR:  must be owner of table audit_log_entries
+psql:backup_20260905.sql:2773: ERROR:  must be owner of table audit_log_entries
+psql:backup_20260905.sql:2824: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.custom_oauth_providers (
+                     ^
+psql:backup_20260905.sql:2827: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:2851: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.flow_state (
+                     ^
+psql:backup_20260905.sql:2854: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:2860: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:2877: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.identities (
+                     ^
+psql:backup_20260905.sql:2880: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:2886: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:2893: ERROR:  must be owner of relation identities
+psql:backup_20260905.sql:2906: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.instances (
+                     ^
+psql:backup_20260905.sql:2909: ERROR:  must be owner of table instances
+psql:backup_20260905.sql:2915: ERROR:  must be owner of table instances
+psql:backup_20260905.sql:2928: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.mfa_amr_claims (
+                     ^
+psql:backup_20260905.sql:2931: ERROR:  must be owner of table mfa_amr_claims
+psql:backup_20260905.sql:2937: ERROR:  must be owner of table mfa_amr_claims
+psql:backup_20260905.sql:2952: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.mfa_challenges (
+                     ^
+psql:backup_20260905.sql:2955: ERROR:  must be owner of table mfa_challenges
+psql:backup_20260905.sql:2961: ERROR:  must be owner of table mfa_challenges
+psql:backup_20260905.sql:2982: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.mfa_factors (
+                     ^
+psql:backup_20260905.sql:2985: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:2991: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:2998: ERROR:  must be owner of relation mfa_factors
+psql:backup_20260905.sql:3031: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.oauth_authorizations (
+                     ^
+psql:backup_20260905.sql:3034: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:3045: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.oauth_client_states (
+                     ^
+psql:backup_20260905.sql:3048: ERROR:  must be owner of table oauth_client_states
+psql:backup_20260905.sql:3054: ERROR:  must be owner of table oauth_client_states
+psql:backup_20260905.sql:3079: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.oauth_clients (
+                     ^
+psql:backup_20260905.sql:3082: ERROR:  must be owner of table oauth_clients
+psql:backup_20260905.sql:3098: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.oauth_consents (
+                     ^
+psql:backup_20260905.sql:3101: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:3116: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.one_time_tokens (
+                     ^
+psql:backup_20260905.sql:3119: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:3135: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.refresh_tokens (
+                     ^
+psql:backup_20260905.sql:3138: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:3144: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:3156: ERROR:  permission denied for schema auth
+psql:backup_20260905.sql:3159: ERROR:  must be owner of sequence refresh_tokens_id_seq
+psql:backup_20260905.sql:3165: ERROR:  must be owner of sequence refresh_tokens_id_seq
+psql:backup_20260905.sql:3185: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.saml_providers (
+                     ^
+psql:backup_20260905.sql:3188: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:3194: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:3211: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.saml_relay_states (
+                     ^
+psql:backup_20260905.sql:3214: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:3220: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:3229: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.schema_migrations (
+                     ^
+psql:backup_20260905.sql:3232: ERROR:  must be owner of table schema_migrations
+psql:backup_20260905.sql:3238: ERROR:  must be owner of table schema_migrations
+psql:backup_20260905.sql:3262: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.sessions (
+                     ^
+psql:backup_20260905.sql:3265: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:3271: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:3278: ERROR:  must be owner of relation sessions
+psql:backup_20260905.sql:3285: ERROR:  must be owner of relation sessions
+psql:backup_20260905.sql:3292: ERROR:  must be owner of relation sessions
+psql:backup_20260905.sql:3306: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.sso_domains (
+                     ^
+psql:backup_20260905.sql:3309: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:3315: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:3329: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.sso_providers (
+                     ^
+psql:backup_20260905.sql:3332: ERROR:  must be owner of table sso_providers
+psql:backup_20260905.sql:3338: ERROR:  must be owner of table sso_providers
+psql:backup_20260905.sql:3345: ERROR:  must be owner of relation sso_providers
+psql:backup_20260905.sql:3389: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.users (
+                     ^
+psql:backup_20260905.sql:3392: ERROR:  must be owner of table users
+psql:backup_20260905.sql:3398: ERROR:  must be owner of table users
+psql:backup_20260905.sql:3405: ERROR:  must be owner of relation users
+psql:backup_20260905.sql:3420: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.webauthn_challenges (
+                     ^
+psql:backup_20260905.sql:3423: ERROR:  must be owner of table webauthn_challenges
+psql:backup_20260905.sql:3444: ERROR:  permission denied for schema auth
+LINE 1: CREATE TABLE auth.webauthn_credentials (
+                     ^
+psql:backup_20260905.sql:3447: ERROR:  must be owner of table webauthn_credentials
+psql:backup_20260905.sql:3458: ERROR:  relation "Channel" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3475: ERROR:  relation "Notification" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3497: ERROR:  relation "Post" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3512: ERROR:  relation "ProfileComment" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3528: ERROR:  relation "Reaction" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3545: ERROR:  relation "Reply" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3563: ERROR:  relation "Report" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3586: ERROR:  relation "User" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3604: ERROR:  relation "_prisma_migrations" already exists
+ALTER TABLE
+psql:backup_20260905.sql:3625: ERROR:  permission denied for schema realtime
+LINE 1: CREATE TABLE realtime.messages (
+                     ^
+psql:backup_20260905.sql:3628: ERROR:  must be owner of table messages
+psql:backup_20260905.sql:3637: ERROR:  permission denied for schema realtime
+LINE 1: CREATE TABLE realtime.schema_migrations (
+                     ^
+psql:backup_20260905.sql:3640: ERROR:  must be owner of table schema_migrations
+psql:backup_20260905.sql:3657: ERROR:  permission denied for schema realtime
+LINE 1: CREATE TABLE realtime.subscription (
+                     ^
+psql:backup_20260905.sql:3660: ERROR:  must be owner of table subscription
+psql:backup_20260905.sql:3673: ERROR:  must be owner of table subscription
+psql:backup_20260905.sql:3696: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.buckets (
+                     ^
+psql:backup_20260905.sql:3699: ERROR:  must be owner of table buckets
+psql:backup_20260905.sql:3705: ERROR:  must be owner of relation buckets
+psql:backup_20260905.sql:3720: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.buckets_analytics (
+                     ^
+psql:backup_20260905.sql:3723: ERROR:  must be owner of table buckets_analytics
+psql:backup_20260905.sql:3734: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.buckets_vectors (
+                     ^
+psql:backup_20260905.sql:3737: ERROR:  must be owner of table buckets_vectors
+psql:backup_20260905.sql:3748: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.migrations (
+                     ^
+psql:backup_20260905.sql:3751: ERROR:  must be owner of table migrations
+psql:backup_20260905.sql:3773: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.objects (
+                     ^
+psql:backup_20260905.sql:3776: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:3782: ERROR:  must be owner of relation objects
+psql:backup_20260905.sql:3800: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.s3_multipart_uploads (
+                     ^
+psql:backup_20260905.sql:3803: ERROR:  must be owner of table s3_multipart_uploads
+psql:backup_20260905.sql:3820: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.s3_multipart_uploads_parts (
+                     ^
+psql:backup_20260905.sql:3823: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:backup_20260905.sql:3839: ERROR:  permission denied for schema storage
+LINE 1: CREATE TABLE storage.vector_indexes (
+                     ^
+psql:backup_20260905.sql:3842: ERROR:  must be owner of table vector_indexes
+psql:backup_20260905.sql:3848: ERROR:  must be owner of table refresh_tokens
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+psql:backup_20260905.sql:3983: ERROR:  permission denied for table schema_migrations
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+COPY 0
+psql:backup_20260905.sql:4124: ERROR:  duplicate key value violates unique constraint "Channel_pkey"
+DETAIL:  Key (id)=(cmss5gqpb0000noin0ajjk39j) already exists.
+CONTEXT:  COPY Channel, line 1
+psql:backup_20260905.sql:4161: ERROR:  insert or update on table "Notification" violates foreign key constraint "Notification_userId_fkey"
+DETAIL:  Key (userId)=(cmt29l92e000004l9x9f4mboa) is not present in table "User".
+psql:backup_20260905.sql:4222: ERROR:  insert or update on table "Post" violates foreign key constraint "Post_authorId_fkey"
+DETAIL:  Key (authorId)=(cmss5h0g10008noin8zls6key) is not present in table "User".
+COPY 0
+psql:backup_20260905.sql:4288: ERROR:  insert or update on table "Reaction" violates foreign key constraint "Reaction_userId_fkey"
+DETAIL:  Key (userId)=(cmss5h1cw000anoinilyorjs2) is not present in table "User".
+psql:backup_20260905.sql:4331: ERROR:  insert or update on table "Reply" violates foreign key constraint "Reply_authorId_fkey"
+DETAIL:  Key (authorId)=(cmss5h1cx000bnoinrkb6qiol) is not present in table "User".
+psql:backup_20260905.sql:4363: ERROR:  insert or update on table "Report" violates foreign key constraint "Report_reporterId_fkey"
+DETAIL:  Key (reporterId)=(cmt29l92e000004l9x9f4mboa) is not present in table "User".
+psql:backup_20260905.sql:4384: ERROR:  duplicate key value violates unique constraint "User_username_key"
+DETAIL:  Key (username)=(CoCo) already exists.
+CONTEXT:  COPY User, line 12
+psql:backup_20260905.sql:4404: ERROR:  duplicate key value violates unique constraint "_prisma_migrations_pkey"
+DETAIL:  Key (id)=(d31acb33-155e-4e8f-bcde-b800744dbc23) already exists.
+CONTEXT:  COPY _prisma_migrations, line 1
+psql:backup_20260905.sql:4494: ERROR:  duplicate key value violates unique constraint "schema_migrations_pkey"
+DETAIL:  Key (version)=(20211116024918) already exists.
+CONTEXT:  COPY schema_migrations, line 1
+COPY 0
+psql:backup_20260905.sql:4513: ERROR:  duplicate key value violates unique constraint "buckets_pkey"
+DETAIL:  Key (id)=(avatars) already exists.
+CONTEXT:  COPY buckets, line 1: "avatars	avatars	\N	2026-08-28 16:17:38.299202+00	2026-08-28 16:17:38.299202+00	t	f	\N	\N	\N	STANDARD..."
+COPY 0
+psql:backup_20260905.sql:4528: ERROR:  permission denied for table buckets_vectors
+psql:backup_20260905.sql:4536: ERROR:  permission denied for table migrations
+psql:backup_20260905.sql:4620: ERROR:  duplicate key value violates unique constraint "objects_pkey"
+DETAIL:  Key (id)=(1408a0a3-a3a3-407b-a616-cab19d5ba20e) already exists.
+CONTEXT:  COPY objects, line 1
+COPY 0
+COPY 0
+psql:backup_20260905.sql:4643: ERROR:  permission denied for table vector_indexes
+psql:backup_20260905.sql:4651: ERROR:  permission denied for table secrets
+ setval 
+--------
+      1
+(1 row)
+
+ setval 
+--------
+      1
+(1 row)
+
+psql:backup_20260905.sql:4674: ERROR:  must be owner of table mfa_amr_claims
+psql:backup_20260905.sql:4682: ERROR:  must be owner of table audit_log_entries
+psql:backup_20260905.sql:4690: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:4698: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:4706: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:4714: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:4722: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:4730: ERROR:  must be owner of table instances
+psql:backup_20260905.sql:4738: ERROR:  must be owner of table mfa_amr_claims
+psql:backup_20260905.sql:4746: ERROR:  must be owner of table mfa_challenges
+psql:backup_20260905.sql:4754: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:4762: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:4770: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:4778: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:4786: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:4794: ERROR:  must be owner of table oauth_client_states
+psql:backup_20260905.sql:4802: ERROR:  must be owner of table oauth_clients
+psql:backup_20260905.sql:4810: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:4818: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:4826: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:4834: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:4842: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:4850: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:4858: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:4866: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:4874: ERROR:  must be owner of table schema_migrations
+psql:backup_20260905.sql:4882: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:4890: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:4898: ERROR:  must be owner of table sso_providers
+psql:backup_20260905.sql:4906: ERROR:  must be owner of table users
+psql:backup_20260905.sql:4914: ERROR:  must be owner of table users
+psql:backup_20260905.sql:4922: ERROR:  must be owner of table webauthn_challenges
+psql:backup_20260905.sql:4930: ERROR:  must be owner of table webauthn_credentials
+psql:backup_20260905.sql:4938: ERROR:  multiple primary keys for table "Channel" are not allowed
+psql:backup_20260905.sql:4946: ERROR:  multiple primary keys for table "Notification" are not allowed
+psql:backup_20260905.sql:4954: ERROR:  multiple primary keys for table "Post" are not allowed
+psql:backup_20260905.sql:4962: ERROR:  multiple primary keys for table "ProfileComment" are not allowed
+psql:backup_20260905.sql:4970: ERROR:  multiple primary keys for table "Reaction" are not allowed
+psql:backup_20260905.sql:4978: ERROR:  multiple primary keys for table "Reply" are not allowed
+psql:backup_20260905.sql:4986: ERROR:  multiple primary keys for table "Report" are not allowed
+psql:backup_20260905.sql:4994: ERROR:  multiple primary keys for table "User" are not allowed
+psql:backup_20260905.sql:5002: ERROR:  multiple primary keys for table "_prisma_migrations" are not allowed
+psql:backup_20260905.sql:5010: ERROR:  must be owner of table messages
+psql:backup_20260905.sql:5018: ERROR:  must be owner of table messages
+psql:backup_20260905.sql:5026: ERROR:  must be owner of table subscription
+psql:backup_20260905.sql:5034: ERROR:  must be owner of table schema_migrations
+psql:backup_20260905.sql:5042: ERROR:  must be owner of table buckets_analytics
+psql:backup_20260905.sql:5050: ERROR:  must be owner of table buckets
+psql:backup_20260905.sql:5058: ERROR:  must be owner of table buckets_vectors
+psql:backup_20260905.sql:5066: ERROR:  must be owner of table migrations
+psql:backup_20260905.sql:5074: ERROR:  must be owner of table migrations
+psql:backup_20260905.sql:5082: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:5090: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:backup_20260905.sql:5098: ERROR:  must be owner of table s3_multipart_uploads
+psql:backup_20260905.sql:5106: ERROR:  must be owner of table vector_indexes
+psql:backup_20260905.sql:5113: ERROR:  must be owner of table audit_log_entries
+psql:backup_20260905.sql:5120: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5127: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:5134: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:5141: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:5148: ERROR:  must be owner of table custom_oauth_providers
+psql:backup_20260905.sql:5155: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5162: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5169: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:5176: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:5183: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:5190: ERROR:  must be owner of index identities_email_idx
+psql:backup_20260905.sql:5197: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:5204: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:5211: ERROR:  must be owner of table oauth_client_states
+psql:backup_20260905.sql:5218: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:5225: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5232: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5239: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5246: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5253: ERROR:  must be owner of table mfa_challenges
+psql:backup_20260905.sql:5260: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:5267: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:5274: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:5281: ERROR:  must be owner of table oauth_clients
+psql:backup_20260905.sql:5288: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:5295: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:5302: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:5309: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:5316: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:5323: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:5330: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5337: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5344: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:5351: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:5358: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:5365: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:5372: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:5379: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:5386: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:5393: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:5400: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:5407: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:5414: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:5421: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:5428: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:5435: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:5442: ERROR:  must be owner of table sso_providers
+psql:backup_20260905.sql:5449: ERROR:  must be owner of table sso_providers
+psql:backup_20260905.sql:5456: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:5463: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:5470: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5477: ERROR:  must be owner of index users_email_partial_key
+psql:backup_20260905.sql:5484: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5491: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5498: ERROR:  must be owner of table users
+psql:backup_20260905.sql:5505: ERROR:  must be owner of table webauthn_challenges
+psql:backup_20260905.sql:5512: ERROR:  must be owner of table webauthn_challenges
+psql:backup_20260905.sql:5519: ERROR:  must be owner of table webauthn_credentials
+psql:backup_20260905.sql:5526: ERROR:  must be owner of table webauthn_credentials
+psql:backup_20260905.sql:5533: ERROR:  relation "Channel_slug_key" already exists
+psql:backup_20260905.sql:5540: ERROR:  relation "Notification_read_idx" already exists
+psql:backup_20260905.sql:5547: ERROR:  relation "Notification_userId_idx" already exists
+psql:backup_20260905.sql:5554: ERROR:  relation "Notification_userId_read_idx" already exists
+psql:backup_20260905.sql:5561: ERROR:  relation "Post_channelId_lastActivityAt_idx" already exists
+psql:backup_20260905.sql:5568: ERROR:  relation "Post_lastActivityAt_idx" already exists
+psql:backup_20260905.sql:5575: ERROR:  relation "Reaction_userId_postId_key" already exists
+psql:backup_20260905.sql:5582: ERROR:  relation "Reaction_userId_replyId_key" already exists
+psql:backup_20260905.sql:5589: ERROR:  relation "Reply_authorId_idx" already exists
+psql:backup_20260905.sql:5596: ERROR:  relation "Reply_postId_createdAt_idx" already exists
+psql:backup_20260905.sql:5603: ERROR:  relation "Report_reporterId_postId_key" already exists
+psql:backup_20260905.sql:5610: ERROR:  relation "Report_reporterId_replyId_key" already exists
+psql:backup_20260905.sql:5617: ERROR:  relation "Report_reporterId_reportedUserId_key" already exists
+psql:backup_20260905.sql:5624: ERROR:  relation "Report_status_idx" already exists
+psql:backup_20260905.sql:5631: ERROR:  relation "User_email_key" already exists
+psql:backup_20260905.sql:5638: ERROR:  relation "User_usernameLower_key" already exists
+psql:backup_20260905.sql:5645: ERROR:  relation "User_username_key" already exists
+psql:backup_20260905.sql:5652: ERROR:  must be owner of table subscription
+psql:backup_20260905.sql:5659: ERROR:  must be owner of table messages
+psql:backup_20260905.sql:5666: ERROR:  must be owner of table subscription
+psql:backup_20260905.sql:5673: ERROR:  must be owner of table buckets
+psql:backup_20260905.sql:5680: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:5687: ERROR:  must be owner of table buckets_analytics
+psql:backup_20260905.sql:5694: ERROR:  must be owner of table s3_multipart_uploads
+psql:backup_20260905.sql:5701: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:5708: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:5715: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:5722: ERROR:  must be owner of table vector_indexes
+psql:backup_20260905.sql:5729: ERROR:  trigger "tr_check_filters" for relation "subscription" already exists
+psql:backup_20260905.sql:5736: ERROR:  trigger "enforce_bucket_name_length_trigger" for relation "buckets" already exists
+psql:backup_20260905.sql:5743: ERROR:  trigger "protect_buckets_delete" for relation "buckets" already exists
+psql:backup_20260905.sql:5750: ERROR:  trigger "protect_objects_delete" for relation "objects" already exists
+psql:backup_20260905.sql:5757: ERROR:  trigger "update_objects_updated_at" for relation "objects" already exists
+psql:backup_20260905.sql:5765: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:5773: ERROR:  must be owner of table mfa_amr_claims
+psql:backup_20260905.sql:5781: ERROR:  must be owner of table mfa_challenges
+psql:backup_20260905.sql:5789: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:5797: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:5805: ERROR:  must be owner of table oauth_authorizations
+psql:backup_20260905.sql:5813: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:5821: ERROR:  must be owner of table oauth_consents
+psql:backup_20260905.sql:5829: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:5837: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:5845: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:5853: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:5861: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:5869: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:5877: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:5885: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:5893: ERROR:  must be owner of table webauthn_challenges
+psql:backup_20260905.sql:5901: ERROR:  must be owner of table webauthn_credentials
+psql:backup_20260905.sql:5909: ERROR:  constraint "Notification_actorId_fkey" for relation "Notification" already exists
+psql:backup_20260905.sql:5917: ERROR:  constraint "Notification_postId_fkey" for relation "Notification" already exists
+psql:backup_20260905.sql:5925: ERROR:  constraint "Notification_userId_fkey" for relation "Notification" already exists
+psql:backup_20260905.sql:5933: ERROR:  constraint "Post_authorId_fkey" for relation "Post" already exists
+psql:backup_20260905.sql:5941: ERROR:  constraint "Post_channelId_fkey" for relation "Post" already exists
+psql:backup_20260905.sql:5949: ERROR:  constraint "ProfileComment_authorId_fkey" for relation "ProfileComment" already exists
+psql:backup_20260905.sql:5957: ERROR:  constraint "ProfileComment_profileUserId_fkey" for relation "ProfileComment" already exists
+psql:backup_20260905.sql:5965: ERROR:  constraint "Reaction_postId_fkey" for relation "Reaction" already exists
+psql:backup_20260905.sql:5973: ERROR:  constraint "Reaction_replyId_fkey" for relation "Reaction" already exists
+psql:backup_20260905.sql:5981: ERROR:  constraint "Reaction_userId_fkey" for relation "Reaction" already exists
+psql:backup_20260905.sql:5989: ERROR:  constraint "Reply_authorId_fkey" for relation "Reply" already exists
+psql:backup_20260905.sql:5997: ERROR:  constraint "Reply_parentId_fkey" for relation "Reply" already exists
+psql:backup_20260905.sql:6005: ERROR:  constraint "Reply_postId_fkey" for relation "Reply" already exists
+psql:backup_20260905.sql:6013: ERROR:  constraint "Report_postId_fkey" for relation "Report" already exists
+psql:backup_20260905.sql:6021: ERROR:  constraint "Report_replyId_fkey" for relation "Report" already exists
+psql:backup_20260905.sql:6029: ERROR:  constraint "Report_reportedUserId_fkey" for relation "Report" already exists
+psql:backup_20260905.sql:6037: ERROR:  constraint "Report_reporterId_fkey" for relation "Report" already exists
+psql:backup_20260905.sql:6045: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:6053: ERROR:  must be owner of table s3_multipart_uploads
+psql:backup_20260905.sql:6061: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:backup_20260905.sql:6069: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:backup_20260905.sql:6077: ERROR:  must be owner of table vector_indexes
+psql:backup_20260905.sql:6084: ERROR:  must be owner of table audit_log_entries
+psql:backup_20260905.sql:6090: ERROR:  must be owner of table flow_state
+psql:backup_20260905.sql:6096: ERROR:  must be owner of table identities
+psql:backup_20260905.sql:6102: ERROR:  must be owner of table instances
+psql:backup_20260905.sql:6108: ERROR:  must be owner of table mfa_amr_claims
+psql:backup_20260905.sql:6114: ERROR:  must be owner of table mfa_challenges
+psql:backup_20260905.sql:6120: ERROR:  must be owner of table mfa_factors
+psql:backup_20260905.sql:6126: ERROR:  must be owner of table one_time_tokens
+psql:backup_20260905.sql:6132: ERROR:  must be owner of table refresh_tokens
+psql:backup_20260905.sql:6138: ERROR:  must be owner of table saml_providers
+psql:backup_20260905.sql:6144: ERROR:  must be owner of table saml_relay_states
+psql:backup_20260905.sql:6150: ERROR:  must be owner of table schema_migrations
+psql:backup_20260905.sql:6156: ERROR:  must be owner of table sessions
+psql:backup_20260905.sql:6162: ERROR:  must be owner of table sso_domains
+psql:backup_20260905.sql:6168: ERROR:  must be owner of table sso_providers
+psql:backup_20260905.sql:6174: ERROR:  must be owner of table users
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+psql:backup_20260905.sql:6234: ERROR:  must be owner of table messages
+psql:backup_20260905.sql:6240: ERROR:  must be owner of table buckets
+psql:backup_20260905.sql:6246: ERROR:  must be owner of table buckets_analytics
+psql:backup_20260905.sql:6252: ERROR:  must be owner of table buckets_vectors
+psql:backup_20260905.sql:6258: ERROR:  must be owner of table migrations
+psql:backup_20260905.sql:6264: ERROR:  must be owner of table objects
+psql:backup_20260905.sql:6270: ERROR:  must be owner of table s3_multipart_uploads
+psql:backup_20260905.sql:6276: ERROR:  must be owner of table s3_multipart_uploads_parts
+psql:backup_20260905.sql:6282: ERROR:  must be owner of table vector_indexes
+psql:backup_20260905.sql:6288: ERROR:  publication "supabase_realtime" already exists
+ALTER PUBLICATION
+psql:backup_20260905.sql:6297: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:backup_20260905.sql:6298: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:backup_20260905.sql:6299: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:backup_20260905.sql:6300: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:backup_20260905.sql:6301: WARNING:  no privileges were granted for "auth"
+GRANT
+psql:backup_20260905.sql:6302: WARNING:  no privileges were granted for "auth"
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:backup_20260905.sql:6329: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+GRANT
+GRANT
+psql:backup_20260905.sql:6340: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:backup_20260905.sql:6352: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:6360: WARNING:  no privileges were granted for "email"
+GRANT
+psql:backup_20260905.sql:6367: WARNING:  no privileges were granted for "jwt"
+GRANT
+psql:backup_20260905.sql:6368: WARNING:  no privileges were granted for "jwt"
+GRANT
+psql:backup_20260905.sql:6375: WARNING:  no privileges were granted for "role"
+GRANT
+psql:backup_20260905.sql:6382: WARNING:  no privileges were granted for "uid"
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+psql:backup_20260905.sql:6515: WARNING:  no privileges could be revoked for "grant_pg_cron_access"
+REVOKE
+psql:backup_20260905.sql:6516: WARNING:  no privileges were granted for "grant_pg_cron_access"
+GRANT
+psql:backup_20260905.sql:6517: WARNING:  no privileges were granted for "grant_pg_cron_access"
+GRANT
+psql:backup_20260905.sql:6524: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:6531: WARNING:  no privileges could be revoked for "grant_pg_net_access"
+REVOKE
+psql:backup_20260905.sql:6532: WARNING:  no privileges were granted for "grant_pg_net_access"
+GRANT
+psql:backup_20260905.sql:6533: WARNING:  no privileges were granted for "grant_pg_net_access"
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+psql:backup_20260905.sql:6765: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:6772: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:6779: ERROR:  grant options cannot be granted back to your own grantor
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+psql:backup_20260905.sql:6876: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:backup_20260905.sql:6877: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:backup_20260905.sql:6878: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:backup_20260905.sql:6879: WARNING:  no privileges were granted for "graphql"
+GRANT
+psql:backup_20260905.sql:6886: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:6893: ERROR:  permission denied for function get_auth
+psql:backup_20260905.sql:6894: ERROR:  permission denied for function get_auth
+psql:backup_20260905.sql:6901: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:backup_20260905.sql:6902: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:backup_20260905.sql:6903: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:backup_20260905.sql:6904: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:backup_20260905.sql:6905: WARNING:  no privileges were granted for "apply_rls"
+GRANT
+psql:backup_20260905.sql:6912: WARNING:  no privileges were granted for "broadcast_changes"
+GRANT
+psql:backup_20260905.sql:6913: WARNING:  no privileges were granted for "broadcast_changes"
+GRANT
+psql:backup_20260905.sql:6920: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:backup_20260905.sql:6921: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:backup_20260905.sql:6922: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:backup_20260905.sql:6923: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:backup_20260905.sql:6924: WARNING:  no privileges were granted for "build_prepared_statement_sql"
+GRANT
+psql:backup_20260905.sql:6931: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:backup_20260905.sql:6932: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:backup_20260905.sql:6933: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:backup_20260905.sql:6934: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:backup_20260905.sql:6935: WARNING:  no privileges were granted for "cast"
+GRANT
+psql:backup_20260905.sql:6942: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6943: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6944: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6945: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6946: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6953: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6954: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6955: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6956: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6957: WARNING:  no privileges were granted for "check_equality_op"
+GRANT
+psql:backup_20260905.sql:6964: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:backup_20260905.sql:6965: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:backup_20260905.sql:6966: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:backup_20260905.sql:6967: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:backup_20260905.sql:6968: WARNING:  no privileges were granted for "is_visible_through_filters"
+GRANT
+psql:backup_20260905.sql:6975: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:backup_20260905.sql:6976: WARNING:  no privileges were granted for "list_changes"
+GRANT
+psql:backup_20260905.sql:6983: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:backup_20260905.sql:6984: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:backup_20260905.sql:6985: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:backup_20260905.sql:6986: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:backup_20260905.sql:6987: WARNING:  no privileges were granted for "quote_wal2json"
+GRANT
+psql:backup_20260905.sql:6994: WARNING:  no privileges were granted for "send"
+GRANT
+psql:backup_20260905.sql:6995: WARNING:  no privileges were granted for "send"
+GRANT
+psql:backup_20260905.sql:7002: WARNING:  no privileges were granted for "send_binary"
+GRANT
+psql:backup_20260905.sql:7003: WARNING:  no privileges were granted for "send_binary"
+GRANT
+psql:backup_20260905.sql:7010: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:backup_20260905.sql:7011: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:backup_20260905.sql:7012: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:backup_20260905.sql:7013: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:backup_20260905.sql:7014: WARNING:  no privileges were granted for "subscription_check_filters"
+GRANT
+psql:backup_20260905.sql:7021: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:backup_20260905.sql:7022: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:backup_20260905.sql:7023: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:backup_20260905.sql:7024: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:backup_20260905.sql:7025: WARNING:  no privileges were granted for "to_regrole"
+GRANT
+psql:backup_20260905.sql:7032: WARNING:  no privileges were granted for "topic"
+GRANT
+psql:backup_20260905.sql:7033: WARNING:  no privileges were granted for "topic"
+GRANT
+psql:backup_20260905.sql:7040: WARNING:  no privileges were granted for "wal2json_escape_identifier"
+GRANT
+psql:backup_20260905.sql:7041: WARNING:  no privileges were granted for "wal2json_escape_identifier"
+GRANT
+psql:backup_20260905.sql:7048: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7056: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7064: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:backup_20260905.sql:7073: WARNING:  no privileges were granted for "audit_log_entries"
+GRANT
+psql:backup_20260905.sql:7074: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7081: WARNING:  no privileges were granted for "custom_oauth_providers"
+GRANT
+psql:backup_20260905.sql:7082: WARNING:  no privileges were granted for "custom_oauth_providers"
+GRANT
+psql:backup_20260905.sql:7089: WARNING:  no privileges were granted for "flow_state"
+GRANT
+psql:backup_20260905.sql:7090: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7098: WARNING:  no privileges were granted for "identities"
+GRANT
+psql:backup_20260905.sql:7099: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:backup_20260905.sql:7108: WARNING:  no privileges were granted for "instances"
+GRANT
+psql:backup_20260905.sql:7109: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7116: WARNING:  no privileges were granted for "mfa_amr_claims"
+GRANT
+psql:backup_20260905.sql:7117: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7125: WARNING:  no privileges were granted for "mfa_challenges"
+GRANT
+psql:backup_20260905.sql:7126: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7134: WARNING:  no privileges were granted for "mfa_factors"
+GRANT
+psql:backup_20260905.sql:7135: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7143: WARNING:  no privileges were granted for "oauth_authorizations"
+GRANT
+psql:backup_20260905.sql:7144: WARNING:  no privileges were granted for "oauth_authorizations"
+GRANT
+psql:backup_20260905.sql:7151: WARNING:  no privileges were granted for "oauth_client_states"
+GRANT
+psql:backup_20260905.sql:7152: WARNING:  no privileges were granted for "oauth_client_states"
+GRANT
+psql:backup_20260905.sql:7159: WARNING:  no privileges were granted for "oauth_clients"
+GRANT
+psql:backup_20260905.sql:7160: WARNING:  no privileges were granted for "oauth_clients"
+GRANT
+psql:backup_20260905.sql:7167: WARNING:  no privileges were granted for "oauth_consents"
+GRANT
+psql:backup_20260905.sql:7168: WARNING:  no privileges were granted for "oauth_consents"
+GRANT
+psql:backup_20260905.sql:7175: WARNING:  no privileges were granted for "one_time_tokens"
+GRANT
+psql:backup_20260905.sql:7176: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:backup_20260905.sql:7185: WARNING:  no privileges were granted for "refresh_tokens"
+GRANT
+psql:backup_20260905.sql:7186: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7193: WARNING:  no privileges were granted for "refresh_tokens_id_seq"
+GRANT
+psql:backup_20260905.sql:7194: WARNING:  no privileges were granted for "refresh_tokens_id_seq"
+GRANT
+psql:backup_20260905.sql:7201: WARNING:  no privileges were granted for "saml_providers"
+GRANT
+psql:backup_20260905.sql:7202: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7210: WARNING:  no privileges were granted for "saml_relay_states"
+GRANT
+psql:backup_20260905.sql:7211: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7219: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7226: WARNING:  no privileges were granted for "sessions"
+GRANT
+psql:backup_20260905.sql:7227: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7235: WARNING:  no privileges were granted for "sso_domains"
+GRANT
+psql:backup_20260905.sql:7236: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7244: WARNING:  no privileges were granted for "sso_providers"
+GRANT
+psql:backup_20260905.sql:7245: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+GRANT
+psql:backup_20260905.sql:7254: WARNING:  no privileges were granted for "users"
+GRANT
+psql:backup_20260905.sql:7255: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7262: WARNING:  no privileges were granted for "webauthn_challenges"
+GRANT
+psql:backup_20260905.sql:7263: WARNING:  no privileges were granted for "webauthn_challenges"
+GRANT
+psql:backup_20260905.sql:7270: WARNING:  no privileges were granted for "webauthn_credentials"
+GRANT
+psql:backup_20260905.sql:7271: WARNING:  no privileges were granted for "webauthn_credentials"
+GRANT
+REVOKE
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+psql:backup_20260905.sql:7377: WARNING:  no privileges were granted for "messages"
+GRANT
+psql:backup_20260905.sql:7378: WARNING:  no privileges were granted for "messages"
+GRANT
+psql:backup_20260905.sql:7379: WARNING:  no privileges were granted for "messages"
+GRANT
+psql:backup_20260905.sql:7380: WARNING:  no privileges were granted for "messages"
+GRANT
+psql:backup_20260905.sql:7381: WARNING:  no privileges were granted for "messages"
+GRANT
+psql:backup_20260905.sql:7388: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:backup_20260905.sql:7389: WARNING:  no privileges were granted for "schema_migrations"
+GRANT
+psql:backup_20260905.sql:7396: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:backup_20260905.sql:7397: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:backup_20260905.sql:7398: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:backup_20260905.sql:7399: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:backup_20260905.sql:7400: WARNING:  no privileges were granted for "subscription"
+GRANT
+psql:backup_20260905.sql:7407: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:backup_20260905.sql:7408: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:backup_20260905.sql:7409: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:backup_20260905.sql:7410: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+psql:backup_20260905.sql:7411: WARNING:  no privileges were granted for "subscription_id_seq"
+GRANT
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+psql:backup_20260905.sql:7423: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7430: WARNING:  no privileges were granted for "buckets_analytics"
+GRANT
+psql:backup_20260905.sql:7431: WARNING:  no privileges were granted for "buckets_analytics"
+GRANT
+psql:backup_20260905.sql:7432: WARNING:  no privileges were granted for "buckets_analytics"
+GRANT
+psql:backup_20260905.sql:7439: WARNING:  no privileges were granted for "buckets_vectors"
+GRANT
+psql:backup_20260905.sql:7440: WARNING:  no privileges were granted for "buckets_vectors"
+GRANT
+psql:backup_20260905.sql:7441: WARNING:  no privileges were granted for "buckets_vectors"
+GRANT
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+psql:backup_20260905.sql:7453: ERROR:  grant options cannot be granted back to your own grantor
+psql:backup_20260905.sql:7460: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:backup_20260905.sql:7461: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:backup_20260905.sql:7462: WARNING:  no privileges were granted for "s3_multipart_uploads"
+GRANT
+psql:backup_20260905.sql:7469: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:backup_20260905.sql:7470: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:backup_20260905.sql:7471: WARNING:  no privileges were granted for "s3_multipart_uploads_parts"
+GRANT
+psql:backup_20260905.sql:7478: WARNING:  no privileges were granted for "vector_indexes"
+GRANT
+psql:backup_20260905.sql:7479: WARNING:  no privileges were granted for "vector_indexes"
+GRANT
+psql:backup_20260905.sql:7480: WARNING:  no privileges were granted for "vector_indexes"
+GRANT
+psql:backup_20260905.sql:7487: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7495: ERROR:  grant options cannot be granted back to your own grantor
+GRANT
+psql:backup_20260905.sql:7503: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7504: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7511: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7512: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7519: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7520: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7527: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7534: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7541: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7548: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7549: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7550: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7551: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7558: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7559: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7560: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7561: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7568: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7569: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7570: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7571: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7578: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7579: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7580: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7581: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7588: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7589: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7590: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7591: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7598: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7599: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7600: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7601: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+psql:backup_20260905.sql:7615: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7616: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7617: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7618: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+psql:backup_20260905.sql:7632: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7633: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7634: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7635: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:backup_20260905.sql:7652: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7653: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7654: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7655: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7662: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7663: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7670: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7671: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7678: ERROR:  permission denied to change default privileges
+psql:backup_20260905.sql:7679: ERROR:  permission denied to change default privileges
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+psql:backup_20260905.sql:7718: ERROR:  event trigger "ensure_rls" already exists
+ALTER EVENT TRIGGER
+psql:backup_20260905.sql:7729: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.set_graphql_placeholder" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:backup_20260905.sql:7740: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.grant_pg_cron_access" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:backup_20260905.sql:7751: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.grant_pg_graphql_access" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:backup_20260905.sql:7762: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.grant_pg_net_access" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:backup_20260905.sql:7772: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.pgrst_ddl_watch" is owned by a superuser
+ALTER EVENT TRIGGER
+psql:backup_20260905.sql:7782: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+DETAIL:  The current user "postgres" is not a superuser and the function "extensions.pgrst_drop_watch" is owned by a superuser
+ALTER EVENT TRIGGER

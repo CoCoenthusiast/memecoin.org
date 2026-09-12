@@ -3,17 +3,16 @@ import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { cleanupUnverifiedUsers } from "@/lib/cleanup";
 
-const cleanupSecret = process.env.CLEANUP_SECRET;
-
-if (!cleanupSecret) {
-  throw new Error("CLEANUP_SECRET environment variable is required");
-}
-
 // Rate limiting simples por IP: 5 tentativas em 15 min
 // Armazena no globalThis de forma compatível com o padrão do projeto
 const rateLimitMap: Map<string, {count: number; blockedUntil: number}> = new Map();
 
 export const GET = async function cleanup(request: NextRequest) {
+  const cleanupSecret = process.env.CLEANUP_SECRET;
+  if (!cleanupSecret) {
+    return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
+  }
+
   const authHeader = request.headers.get("x-cleanup-secret");
 
   if (authHeader !== cleanupSecret) {
