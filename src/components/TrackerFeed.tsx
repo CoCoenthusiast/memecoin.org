@@ -33,7 +33,7 @@ export function TrackerFeed() {
 
   return (
     <aside
-      className="fixed top-0 right-0 bottom-0 w-72 z-30 hidden xl:flex flex-col border-l border-gray-800 bg-[#0a0a0a]"
+      className="fixed top-0 right-0 bottom-0 w-88 z-30 hidden xl:flex flex-col border-l border-gray-800 bg-[#0a0a0a]"
       aria-label="Tracker feed"
     >
       <header className="px-5 pt-12 pb-3">
