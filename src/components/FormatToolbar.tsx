@@ -15,7 +15,7 @@ export function FormatToolbar({ value, onChange, textareaRef }: FormatToolbarPro
     const el = textareaRef.current
     if (el) {
       const pos = Math.min(pendingCaret, el.value.length)
-      el.focus()
+      el.focus({ preventScroll: true })
       el.setSelectionRange(pos, pos)
     }
     setPendingCaret(null)

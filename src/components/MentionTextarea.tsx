@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useCallback, type ReactNode } from "react"
+import { useRef, useCallback, useEffect, type ReactNode } from "react"
 import { FormatToolbar } from "@/components/FormatToolbar"
 import { useMentions } from "@/components/useMentions"
 
@@ -55,6 +55,15 @@ export function MentionTextarea({
     hl.scrollTop = el.scrollTop
     hl.scrollLeft = el.scrollLeft
   }, [])
+
+  useEffect(() => {
+    if (!open) return
+    function onScroll() {
+      close()
+    }
+    window.addEventListener("scroll", onScroll, true)
+    return () => window.removeEventListener("scroll", onScroll, true)
+  }, [open, close])
 
   return (
     <div>

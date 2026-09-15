@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useRef, useMemo } from "react"
+import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { useSession } from "@/hooks/useSession"
 import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
@@ -80,17 +80,61 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
     return () => document.removeEventListener("mousedown", onClickOutside)
   }, [moveOpen])
 
+  const recalculateMenuPosition = useCallback(() => {
+    if (!triggerRef.current) return
+    const rect = triggerRef.current.getBoundingClientRect()
+    const menuHeight = REASONS.length * 36 + 8
+    const spaceBelow = window.innerHeight - rect.bottom
+    const openUp = spaceBelow < menuHeight + 8
+    const top = openUp
+      ? rect.top - menuHeight - 4
+      : rect.bottom + 4
+    const left = Math.min(rect.right, window.innerWidth - 176)
+    setMenuPos({ top, left })
+  }, [])
+
+  const recalculateMovePosition = useCallback(() => {
+    if (!moveTriggerRef.current) return
+    const rect = moveTriggerRef.current.getBoundingClientRect()
+    const menuHeight = 200
+    const spaceBelow = window.innerHeight - rect.bottom
+    const openUp = spaceBelow < menuHeight + 8
+    const top = openUp
+      ? rect.top - menuHeight - 4
+      : rect.bottom + 4
+    const left = Math.min(rect.right, window.innerWidth - 200)
+    setMovePos({ top, left })
+  }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    function onMove() {
+      recalculateMenuPosition()
+    }
+    window.addEventListener("scroll", onMove, true)
+    window.addEventListener("resize", onMove)
+    return () => {
+      window.removeEventListener("scroll", onMove, true)
+      window.removeEventListener("resize", onMove)
+    }
+  }, [menuOpen, recalculateMenuPosition])
+
+  useEffect(() => {
+    if (!moveOpen) return
+    function onMove() {
+      recalculateMovePosition()
+    }
+    window.addEventListener("scroll", onMove, true)
+    window.addEventListener("resize", onMove)
+    return () => {
+      window.removeEventListener("scroll", onMove, true)
+      window.removeEventListener("resize", onMove)
+    }
+  }, [moveOpen, recalculateMovePosition])
+
   function toggleMenu() {
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      const menuHeight = REASONS.length * 36 + 8
-      const spaceBelow = window.innerHeight - rect.bottom
-      const openUp = spaceBelow < menuHeight + 8
-      const top = openUp
-        ? rect.top - menuHeight - 4
-        : rect.bottom + 4
-      const left = Math.min(rect.right, window.innerWidth - 176)
-      setMenuPos({ top, left })
+    if (!menuOpen) {
+      recalculateMenuPosition()
     }
     setMenuOpen((v) => !v)
   }
@@ -102,16 +146,8 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
         .then(setChannels)
         .catch(() => setChannels([]))
     }
-    if (moveTriggerRef.current) {
-      const rect = moveTriggerRef.current.getBoundingClientRect()
-      const menuHeight = 200
-      const spaceBelow = window.innerHeight - rect.bottom
-      const openUp = spaceBelow < menuHeight + 8
-      const top = openUp
-        ? rect.top - menuHeight - 4
-        : rect.bottom + 4
-      const left = Math.min(rect.right, window.innerWidth - 200)
-      setMovePos({ top, left })
+    if (!moveOpen) {
+      recalculateMovePosition()
     }
     setMoveOpen((v) => !v)
   }

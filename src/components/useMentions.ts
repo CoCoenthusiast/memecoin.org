@@ -85,7 +85,7 @@ export function useMentions(
     setOpen(false)
     requestAnimationFrame(() => {
       const caret = start + 1 + name.length + 1
-      el.focus()
+      el.focus({ preventScroll: true })
       el.setSelectionRange(caret, caret)
     })
   }
