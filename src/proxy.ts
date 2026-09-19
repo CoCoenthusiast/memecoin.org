@@ -40,7 +40,8 @@ function isPublicRoute(method: string, pathname: string): boolean {
       p === "/api/auth/logout" ||
       p === "/api/auth/forgot-password" ||
       p === "/api/auth/reset-password" ||
-      p === "/api/auth/resend-verification"
+      p === "/api/auth/resend-verification" ||
+      p === "/api/admin/send-digest"  // ADICIONADO
     ) {
       return true;
     }
