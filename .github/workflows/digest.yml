@@ -1,6 +1,8 @@
-name: Manual Digest Trigger
+name: Daily Digest
 
 on:
+  schedule:
+    - cron: '0 3 * * *'  # Runs daily at 03:00 UTC (low movement period)
   workflow_dispatch:
 
 jobs:
