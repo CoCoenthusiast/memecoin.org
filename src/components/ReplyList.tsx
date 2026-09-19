@@ -192,7 +192,7 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
 
             <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
               <span className="flex items-center gap-1.5">
-                {reply.author.avatarUrl && (
+                {isUserVip(reply.author) && reply.author.avatarUrl && (
                   <img
                     src={reply.author.avatarUrl}
                     alt={reply.author.username}

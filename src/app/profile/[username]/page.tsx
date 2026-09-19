@@ -199,10 +199,14 @@ export default function ProfilePage() {
   if (loading) return <div className="text-center text-gray-500 py-12">Loading...</div>
   if (!profile) return <div className="text-center text-gray-500 py-12">User not found</div>
 
+  const profileIsVip = isUserVip(profile)
+  const showBanner = profileIsVip && !!profile.bannerUrl
+  const showAvatar = profileIsVip && !!profile.avatarUrl
+
   return (
     <div>
       <div className="relative bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden mb-6">
-        {profile.bannerUrl && (
+        {showBanner && (
           <>
             <img
               src={profile.bannerUrl}
@@ -214,11 +218,11 @@ export default function ProfilePage() {
         )}
         <div
           className={`relative flex items-start gap-6 min-h-[300px] ${
-            profile.bannerUrl ? "p-8 pt-6" : "p-8"
+            showBanner ? "p-8 pt-6" : "p-8"
           }`}
         >
           <div className="flex-shrink-0">
-            {profile.avatarUrl ? (
+            {showAvatar ? (
               <img
                 src={profile.avatarUrl}
                 alt={profile.username}

@@ -29,7 +29,8 @@ export function StyledUsername({
   isOwner?: boolean;
   className?: string;
 }) {
-  const style = nameStyleFromJson(nameStyle);
+  const applyStyle = isVip === true || isOwner === true;
+  const style = applyStyle ? nameStyleFromJson(nameStyle) : null;
   const Name = style ? (
     <StyledName text={username} style={style} />
   ) : (

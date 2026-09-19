@@ -87,7 +87,7 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
 
         <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
           <span className="flex items-center gap-1.5">
-            {post.author.avatarUrl && (
+            {isUserVip(post.author) && post.author.avatarUrl && (
               <img
                 src={post.author.avatarUrl}
                 alt={post.author.username}

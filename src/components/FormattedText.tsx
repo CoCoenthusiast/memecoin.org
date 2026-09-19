@@ -63,7 +63,7 @@ function renderInline(text: string, mentionData: MentionDataMap): React.ReactNod
         );
       } else {
         const md = mentionData[username.toLowerCase()];
-        const hasStyle = !!(md && md.nameStyle);
+        const hasStyle = !!(md && md.nameStyle && (md.isVip || md.isOwner));
         nodes.push(
           <Link
             key={k}

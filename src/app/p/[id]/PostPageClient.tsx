@@ -121,7 +121,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
         <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
         <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
           <span className="flex items-center gap-1.5">
-            {post.author.avatarUrl && (
+            {isUserVip(post.author) && post.author.avatarUrl && (
               <img
                 src={post.author.avatarUrl}
                 alt={post.author.username}
