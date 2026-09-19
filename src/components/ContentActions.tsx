@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { useSession } from "@/hooks/useSession"
 import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
+import { VIP_CHANNEL_SLUG } from "@/lib/constants";
 
 function withinDeleteWindow(createdAt: string | Date): boolean {
   return isWithinWindow(createdAt, DELETE_WINDOW_MS);
@@ -55,6 +56,22 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
   }, [user, targetType, authorId, createdAt])
 
   const canMove = !!user && user.role === "ADMIN" && targetType === "post"
+
+  // Determine if current post is in VIP channel
+  const isInVipChannel = useMemo(() => {
+    if (!channels || !currentChannelId) return false
+    const ch = channels.find((c) => c.id === currentChannelId)
+    return ch?.slug === VIP_CHANNEL_SLUG
+  }, [channels, currentChannelId])
+
+  // Fetch channels on mount for VIP check + move menu
+  useEffect(() => {
+    if (!canMove) return
+    fetch("/api/channels")
+      .then((r) => r.ok ? r.json() : [])
+      .then(setChannels)
+      .catch(() => setChannels([]))
+  }, [canMove])
 
   useEffect(() => {
     if (!menuOpen) return
@@ -140,12 +157,6 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
   }
 
   function toggleMoveMenu() {
-    if (!moveOpen && !channels) {
-      fetch("/api/channels")
-        .then((r) => r.ok ? r.json() : [])
-        .then(setChannels)
-        .catch(() => setChannels([]))
-    }
     if (!moveOpen) {
       recalculateMovePosition()
     }
@@ -275,7 +286,7 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
         </button>
       )}
 
-      {canMove && (
+      {canMove && !isInVipChannel && (
         <button
           ref={moveTriggerRef}
           onClick={(e) => {
@@ -332,7 +343,9 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
           {!channels ? (
             <div className="px-3 py-2 text-sm text-gray-500">Loading...</div>
           ) : (
-            channels.map((channel) => {
+            channels
+              .filter((ch) => ch.slug !== VIP_CHANNEL_SLUG)
+              .map((channel) => {
               const isCurrent = channel.id === currentChannelId
               return (
                 <button

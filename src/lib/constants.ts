@@ -6,4 +6,7 @@ export const CHANNELS = [
   { slug: "best-setup", name: "Best Setup", description: "Share your trading setups, tools, and workflows" },
   { slug: "solana", name: "Solana", description: "Solana-chain memecoins discussion" },
   { slug: "robinhood", name: "Robinhood", description: "Robinhood-related token discussion" },
+  { slug: "vip-lounge", name: "VIP Lounge", description: "Exclusive channel for VIP members" },
 ] as const;
+
+export const VIP_CHANNEL_SLUG = "vip-lounge";

@@ -3,6 +3,8 @@ import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
 import { notifyMentions } from "@/lib/mentions";
+import { isUserVip } from "@/lib/vip";
+import { VIP_CHANNEL_SLUG } from "@/lib/constants";
 
 function isValidSupabaseUrl(urlStr: string): boolean {
   try {
@@ -48,14 +50,25 @@ export const POST = withErrorHandling(async function POST(
       console.error("Invalid video URL rejected:", body.videoUrl);
       return apiError("Invalid video URL");
     }
-    if (slug !== "pnl-flex") {
-      return apiError("Videos are only allowed in PnL Flex");
+    if (slug !== "pnl-flex" && slug !== VIP_CHANNEL_SLUG) {
+      return apiError("Videos are only allowed in PnL Flex and VIP Lounge");
     }
   }
 
   const channel = await prisma.channel.findUnique({ where: { slug } });
   if (!channel) {
     return apiError("Channel not found", 404);
+  }
+
+  // VIP Lounge is restricted to VIP users
+  if (slug === VIP_CHANNEL_SLUG) {
+    const fullUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { isVip: true, vipExpiresAt: true },
+    });
+    if (!fullUser || !isUserVip(fullUser)) {
+      return apiError("VIP Lounge is exclusive to VIP members", 403);
+    }
   }
 
   const post = await prisma.post.create({

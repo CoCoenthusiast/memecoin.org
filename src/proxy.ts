@@ -29,7 +29,7 @@ function isPublicRoute(method: string, pathname: string): boolean {
     if (/^\/api\/users\/[^/]+\/comments$/.test(p)) return true;
     if (p === "/api/market-data") return true;
     if (p === "/api/daily-recap/latest") return true;
-    if (p === "/api/admin/cleanup") return true;  // ADICIONADO
+    if (p === "/api/admin/cleanup") return true;
     return false;
   }
 

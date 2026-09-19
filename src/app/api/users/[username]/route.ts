@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
+import { vipChannelFilter } from "@/lib/vipChannel";
 
 export const GET = withErrorHandling(async function GET(
   _request: NextRequest,
@@ -8,6 +9,7 @@ export const GET = withErrorHandling(async function GET(
 ) {
   const { username } = await params;
   const usernameLower = username.toLowerCase();
+  const vipFilter = await vipChannelFilter();
 
   const user = await prisma.user.findUnique({
     where: { usernameLower },
@@ -28,6 +30,7 @@ export const GET = withErrorHandling(async function GET(
         },
       },
       posts: {
+        where: vipFilter,
         orderBy: { createdAt: "desc" },
         take: 10,
         select: {

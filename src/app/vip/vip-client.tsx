@@ -50,6 +50,19 @@ export function VipPageClient() {
       </section>
 
       <section className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <h2 className="text-lg font-semibold text-gray-100 mb-4">VIP Lounge</h2>
+        <p className="text-gray-300 text-sm leading-relaxed mb-4">
+          VIP members get access to an exclusive channel called{" "}
+          <span className="text-neon font-semibold">VIP Lounge</span>, visible only in the sidebar while you have VIP status. Once your VIP expires, the channel disappears with the rest of the perks.
+        </p>
+        <div className="bg-gray-950 border border-neon-glow/30 rounded-lg p-4">
+          <p className="text-sm leading-relaxed text-gray-200">
+            Inside the VIP Lounge you can share <span className="text-neon font-semibold">photos and videos up to 5MB</span> directly in the channel. This upload allowance is exclusive to VIP members, other channels on the forum do not have it.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
         <h2 className="text-lg font-semibold text-gray-100 mb-4">How to become VIP</h2>
         <p className="text-gray-300 text-sm leading-relaxed mb-4">
           Send exactly <span className="text-neon font-semibold">0.15 SOL</span> to the forum wallet below. Double check the address before you confirm the transfer, because transactions on Solana cannot be reversed.

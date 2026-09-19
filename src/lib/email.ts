@@ -1,5 +1,8 @@
 import { Resend } from "resend";
 
+const SENDER = "degenscult <noreply@degenscult.com>";
+const MAX_EMAILS_PER_RUN = 80;
+
 function getResendClient() {
   if (!process.env.RESEND_API_KEY) {
     throw new Error("RESEND_API_KEY environment variable is required");
@@ -10,6 +13,8 @@ function getResendClient() {
 function getAppUrl(): string {
   return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 }
+
+export { MAX_EMAILS_PER_RUN };
 
 export async function sendVerificationEmail(
   email: string,
@@ -47,7 +52,7 @@ export async function sendPasswordResetEmail(
   const resetUrl = `${getAppUrl()}/reset-password?token=${token}`;
 
   await resend.emails.send({
-    from: "degenscult <noreply@degenscult.com>",
+    from: SENDER,
     to: email,
     subject: "Reset your password - degenscult",
     html: `
@@ -61,6 +66,58 @@ export async function sendPasswordResetEmail(
         </a>
         <p style="color: #888; font-size: 13px; line-height: 1.5;">
           This link expires in 1 hour. If you didn't request a reset, you can safely ignore this email.
+        </p>
+      </div>
+    `,
+  });
+}
+
+export type ReplyDigestItem = {
+  postId: string;
+  postTitle: string;
+  actorUsername: string;
+  count: number;
+};
+
+export async function sendReplyDigestEmail(
+  email: string,
+  username: string,
+  replies: ReplyDigestItem[]
+): Promise<void> {
+  const resend = getResendClient();
+  const appUrl = getAppUrl();
+  const unsubscribeUrl = `${appUrl}/settings`;
+
+  const postLinks = replies
+    .map((r) => {
+      const postUrl = `${appUrl}/p/${r.postId}`;
+      const countLabel = r.count > 1 ? ` (${r.count} replies)` : "";
+      return `<li style="margin-bottom:8px"><a href="${postUrl}" style="color:#00ff88;text-decoration:none">${r.postTitle}</a>${countLabel} by <strong>${r.actorUsername}</strong></li>`;
+    })
+    .join("");
+
+  const totalReplies = replies.reduce((sum, r) => sum + r.count, 0);
+  const heading =
+    totalReplies === 1
+      ? "You have 1 new reply on your posts on degenscult"
+      : `You have ${totalReplies} new replies on your posts on degenscult`;
+
+  await resend.emails.send({
+    from: SENDER,
+    to: email,
+    subject: `${totalReplies} new ${totalReplies === 1 ? "reply" : "replies"} on degenscult`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 32px;">
+        <h2 style="color: #1a1a2e; margin-bottom: 16px;">${heading}</h2>
+        <ul style="padding-left:20px;margin-bottom:24px">
+          ${postLinks}
+        </ul>
+        <a href="${appUrl}" style="display: inline-block; background: #00ff88; color: #1a1a2e; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 24px;">
+          View on degenscult
+        </a>
+        <p style="color: #888; font-size: 12px; line-height: 1.5; margin-top: 24px; border-top: 1px solid #eee; padding-top: 16px;">
+          You're receiving this because you have email notifications enabled.
+          <a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Manage email preferences</a>
         </p>
       </div>
     `,

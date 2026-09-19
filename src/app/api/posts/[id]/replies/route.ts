@@ -4,6 +4,7 @@ import { requireAuth, isAdmin } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
 import { notifyMentions } from "@/lib/mentions";
 import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
+import { isChannelIdAccessible } from "@/lib/vipChannel";
 
 export const POST = withErrorHandling(async function POST(
   request: NextRequest,
@@ -27,6 +28,11 @@ export const POST = withErrorHandling(async function POST(
 
   const post = await prisma.post.findUnique({ where: { id } });
   if (!post) {
+    return apiError("Post not found", 404);
+  }
+
+  // VIP Lounge access check
+  if (!(await isChannelIdAccessible(post.channelId))) {
     return apiError("Post not found", 404);
   }
 

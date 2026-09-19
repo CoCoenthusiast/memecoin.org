@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
+import { isChannelAccessible } from "@/lib/vipChannel";
 
 export const GET = withErrorHandling(async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+
+  if (!(await isChannelAccessible(slug))) {
+    return apiError("Channel not found", 404);
+  }
 
   const channel = await prisma.channel.findUnique({
     where: { slug },

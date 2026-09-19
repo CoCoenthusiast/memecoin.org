@@ -3,6 +3,8 @@ import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth, isAdmin } from "@/lib/auth";
 import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
+import { isChannelIdAccessible, isChannelAccessible } from "@/lib/vipChannel";
+import { VIP_CHANNEL_SLUG } from "@/lib/constants";
 
 export const GET = withErrorHandling(async function GET(
   _request: NextRequest,
@@ -10,7 +12,21 @@ export const GET = withErrorHandling(async function GET(
 ) {
   const { id } = await params;
 
-  const [post, replies, postReactions] = await Promise.all([
+  const post = await prisma.post.findUnique({
+    where: { id },
+    select: { channelId: true },
+  });
+
+  if (!post) {
+    return apiError("Post not found", 404);
+  }
+
+  // VIP Lounge access check
+  if (!(await isChannelIdAccessible(post.channelId))) {
+    return apiError("Post not found", 404);
+  }
+
+  const [fullPost, replies, postReactions] = await Promise.all([
     prisma.post.findUnique({
       where: { id },
       select: {
@@ -42,7 +58,7 @@ export const GET = withErrorHandling(async function GET(
     }),
   ]);
 
-  if (!post) {
+  if (!fullPost) {
     return apiError("Post not found", 404);
   }
 
@@ -50,7 +66,7 @@ export const GET = withErrorHandling(async function GET(
     console.error("Failed to increment view count", e);
   });
 
-  return NextResponse.json({ ...post, replies, reactions: postReactions });
+  return NextResponse.json({ ...fullPost, replies, reactions: postReactions });
 });
 
 export const DELETE = withErrorHandling(async function DELETE(
@@ -133,6 +149,14 @@ export const PATCH = withErrorHandling(async function PATCH(
     const channel = await prisma.channel.findUnique({ where: { id: body.channelId } });
     if (!channel) {
       return apiError("Channel not found", 404);
+    }
+
+    // Block moving posts to/from VIP-only channels
+    const sourceChannel = await prisma.channel.findUnique({ where: { id: post.channelId }, select: { slug: true } });
+    const isSourceVip = sourceChannel?.slug === VIP_CHANNEL_SLUG;
+    const isDestVip = channel.slug === VIP_CHANNEL_SLUG;
+    if (isSourceVip || isDestVip) {
+      return apiError("Cannot move posts in or out of VIP-only channels", 403);
     }
   }
 

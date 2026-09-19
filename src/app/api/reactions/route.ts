@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
+import { isChannelIdAccessible } from "@/lib/vipChannel";
 
 const VALID_TYPES = ["Like", "Dislike", "Funny", "Sad"] as const;
 
@@ -33,6 +34,12 @@ export const POST = withErrorHandling(async function POST(
   let existing: { id: string; type: string } | null = null;
 
   if (hasPost) {
+    // VIP Lounge access check
+    const reactionPost = await prisma.post.findUnique({ where: { id: body.postId! }, select: { channelId: true } });
+    if (reactionPost && !(await isChannelIdAccessible(reactionPost.channelId))) {
+      return apiError("Post not found", 404);
+    }
+
     existing = await prisma.reaction.findUnique({
       where: { userId_postId: { userId: user.id, postId: body.postId! } },
     });

@@ -1,11 +1,12 @@
 "use client"
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { CHANNELS } from "@/lib/constants"
+import { CHANNELS, VIP_CHANNEL_SLUG } from "@/lib/constants"
 import { AuthGuard } from "@/components/AuthGuard"
 import { MentionTextarea } from "@/components/MentionTextarea"
 import { useSession } from "@/hooks/useSession"
 import { parseApiError } from "@/lib/api"
+import { isUserVip } from "@/lib/vip"
 
 export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const { user, refresh } = useSession()
@@ -26,6 +27,8 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
 
   const activeSlug = channelSlug || selectedChannel
   const isPnlFlex = activeSlug === "pnl-flex"
+  const isVipLounge = activeSlug === VIP_CHANNEL_SLUG
+  const allowsMedia = isPnlFlex || isVipLounge
 
   async function handleResendVerification() {
     setResending(true)
@@ -56,6 +59,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
     try {
       const form = new FormData()
       form.append("image", file)
+      if (activeSlug) form.append("channelSlug", activeSlug)
 
       const res = await fetch("/api/upload/post-image", { method: "POST", body: form })
       if (!res.ok) {
@@ -84,6 +88,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
     try {
       const form = new FormData()
       form.append("video", file)
+      if (activeSlug) form.append("channelSlug", activeSlug)
 
       const res = await fetch("/api/upload/post-video", { method: "POST", body: form })
       if (!res.ok) {
@@ -157,6 +162,11 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
     }
   }
 
+  const userVip = user ? isUserVip(user) : false
+  const visibleChannels = userVip
+    ? CHANNELS
+    : CHANNELS.filter((ch) => ch.slug !== VIP_CHANNEL_SLUG)
+
   return (
     <AuthGuard>
       {user && !user.emailVerified && (
@@ -216,7 +226,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
               className="w-full px-4 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 focus:outline-none focus:ring-2 focus:ring-neon-glow focus:border-transparent"
             >
               <option value="">Select a channel</option>
-              {CHANNELS.map((channel) => (
+              {visibleChannels.map((channel) => (
                 <option key={channel.slug} value={channel.slug}>
                   {channel.name}
                 </option>
@@ -239,7 +249,7 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
           />
         </div>
 
-        {isPnlFlex && (
+        {allowsMedia && (
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
               Image (optional)
@@ -272,10 +282,10 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
           </div>
         )}
 
-        {isPnlFlex && (
+        {allowsMedia && (
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
-              Video (optional, PnL Flex only)
+              Video (optional{isVipLounge ? ", up to 5MB for VIPs" : ", PnL Flex only"})
             </label>
             {videoUrl ? (
               <div className="relative inline-block">

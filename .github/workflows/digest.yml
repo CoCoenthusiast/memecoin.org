@@ -1,0 +1,17 @@
+name: Manual Digest Trigger
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger digest email send
+        env:
+          DIGEST_SECRET: ${{ secrets.DIGEST_SECRET }}
+          DIGEST_API_URL: ${{ secrets.DIGEST_API_URL }}
+        run: |
+          curl -s -X POST "${DIGEST_API_URL}" \
+            -H "x-digest-secret: ${DIGEST_SECRET}" \
+            -H "Content-Type: application/json"

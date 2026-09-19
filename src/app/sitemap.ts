@@ -1,12 +1,24 @@
 import { MetadataRoute } from "next"
 import { prisma } from "@/lib/db"
+import { VIP_CHANNEL_SLUG } from "@/lib/constants"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://degenscult.vercel.app"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const vipChannel = await prisma.channel.findUnique({
+    where: { slug: VIP_CHANNEL_SLUG },
+    select: { id: true },
+  });
+
   const [channels, posts] = await Promise.all([
-    prisma.channel.findMany({ select: { slug: true } }),
-    prisma.post.findMany({ select: { id: true, updatedAt: true } }),
+    prisma.channel.findMany({
+      where: vipChannel ? { id: { not: vipChannel.id } } : undefined,
+      select: { slug: true },
+    }),
+    prisma.post.findMany({
+      where: vipChannel ? { channelId: { not: vipChannel.id } } : undefined,
+      select: { id: true, updatedAt: true },
+    }),
   ])
 
   const channelEntries: MetadataRoute.Sitemap = channels.map((ch) => ({

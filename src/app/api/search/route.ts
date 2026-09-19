@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { withErrorHandling } from "@/lib/api";
+import { vipChannelFilter } from "@/lib/vipChannel";
 
 export const GET = withErrorHandling(async function GET(
   request: NextRequest
@@ -15,11 +16,13 @@ export const GET = withErrorHandling(async function GET(
     return NextResponse.json([]);
   }
 
+  const vipFilter = await vipChannelFilter();
   const where: {
     title?: object;
     OR?: object[];
     author?: { username?: { equals: string }; usernameLower?: { equals: string } };
-  } = {};
+    channelId?: { not: string };
+  } = { ...vipFilter };
 
   if (titlesOnly) {
     where.title = { contains: q };

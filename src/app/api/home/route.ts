@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { withErrorHandling } from "@/lib/api";
+import { vipChannelFilter } from "@/lib/vipChannel";
 
 export const GET = withErrorHandling(async function GET() {
+  const vipFilter = await vipChannelFilter();
+
   const [activePosts, postCount, memberCount] = await Promise.all([
     prisma.post.findMany({
+      where: vipFilter,
       orderBy: { lastActivityAt: "desc" },
       take: 3,
       select: {
@@ -15,7 +19,7 @@ export const GET = withErrorHandling(async function GET() {
         author: { select: { username: true } },
       },
     }),
-    prisma.post.count(),
+    prisma.post.count({ where: vipFilter }),
     prisma.user.count(),
   ]);
 

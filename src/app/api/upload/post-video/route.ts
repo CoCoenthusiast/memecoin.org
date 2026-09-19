@@ -2,8 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { apiError, withErrorHandling } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { isUserVip } from "@/lib/vip";
+import { prisma } from "@/lib/db";
+import { VIP_CHANNEL_SLUG } from "@/lib/constants";
 
-const MAX_SIZE = 1 * 1024 * 1024;
+const DEFAULT_MAX_SIZE = 1 * 1024 * 1024; // 1MB
+const VIP_MAX_SIZE = 5 * 1024 * 1024; // 5MB for VIP Lounge
 const ALLOWED_TYPES = ["video/mp4", "video/webm", "video/quicktime"];
 const BUCKET = "post-videos";
 
@@ -25,11 +29,26 @@ export const POST = withErrorHandling(async function POST(
     return apiError("No file provided");
   }
 
+  const channelSlug = form.get("channelSlug");
+
+  // Determine max size: 5MB for VIP Lounge, 1MB for others
+  let maxSize = DEFAULT_MAX_SIZE;
+  if (channelSlug === VIP_CHANNEL_SLUG) {
+    const fullUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { isVip: true, vipExpiresAt: true },
+    });
+    if (fullUser && isUserVip(fullUser)) {
+      maxSize = VIP_MAX_SIZE;
+    }
+  }
+
   if (!ALLOWED_TYPES.includes(file.type)) {
     return apiError("Invalid file type. Only MP4, WebM or QuickTime are allowed");
   }
-  if (file.size > MAX_SIZE) {
-    return apiError("File too large. Maximum size is 1MB");
+  if (file.size > maxSize) {
+    const maxMb = maxSize === VIP_MAX_SIZE ? "5MB" : "1MB";
+    return apiError(`File too large. Maximum size is ${maxMb}`);
   }
 
   await ensureBucketPublic();

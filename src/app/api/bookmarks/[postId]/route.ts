@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { apiError, withErrorHandling } from "@/lib/api";
+import { isChannelIdAccessible } from "@/lib/vipChannel";
 
 export const POST = withErrorHandling(async function POST(
   _request: NextRequest,
@@ -10,8 +11,13 @@ export const POST = withErrorHandling(async function POST(
   const { user } = await requireAuth();
   const { postId } = await params;
 
-  const post = await prisma.post.findUnique({ where: { id: postId }, select: { id: true } });
+  const post = await prisma.post.findUnique({ where: { id: postId }, select: { id: true, channelId: true } });
   if (!post) {
+    return apiError("Post not found", 404);
+  }
+
+  // VIP Lounge access check
+  if (!(await isChannelIdAccessible(post.channelId))) {
     return apiError("Post not found", 404);
   }
 
