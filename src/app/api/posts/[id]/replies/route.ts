@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { requireAuth, isAdmin } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
 import { notifyMentions } from "@/lib/mentions";
+import { notifyAtAll } from "@/lib/notifyAll";
 import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
 import { isChannelIdAccessible } from "@/lib/vipChannel";
 
@@ -91,6 +92,8 @@ export const POST = withErrorHandling(async function POST(
   }
 
   notifyMentions(body.body, { id: user.id, username: user.username }, id, "comment");
+
+  notifyAtAll(body.body, { id: user.id, username: user.username, role: user.role, isOwner: user.isOwner }, id, post.channelId, "comment");
 
   // Intentional: fire-and-forget. lastActivityAt é metadata de ordenação —
   // se falhar, o post ainda existe com o novo reply; apenas a posição na

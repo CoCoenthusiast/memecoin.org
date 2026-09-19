@@ -3,10 +3,21 @@ import { useState, useEffect, useCallback, useRef } from "react"
 
 type Suggestion = { id: string; username: string; avatarUrl?: string | null }
 
+const ALL_MENTION: Suggestion = { id: "@all", username: "all" }
+
+function allPrefix(q: string): boolean {
+  return "all".startsWith(q.toLowerCase())
+}
+
+function prependAll(users: Suggestion[]): Suggestion[] {
+  return [ALL_MENTION, ...users]
+}
+
 export function useMentions(
   value: string,
   onChange: (v: string) => void,
-  textareaRef: React.RefObject<HTMLTextAreaElement | null>
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>,
+  canMentionAll = false
 ) {
   const [open, setOpen] = useState(false)
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
@@ -57,20 +68,20 @@ export function useMentions(
       }
       try {
         const res = await fetch(`/api/users/search?q=${encodeURIComponent(q)}`)
-        if (res.ok && !cancelled) {
-          const data = await res.json()
-          setSuggestions(data.users ?? [])
+        const users = res.ok ? ((await res.json()).users ?? []) : []
+        if (!cancelled) {
+          setSuggestions(canMentionAll && allPrefix(q) ? prependAll(users) : users)
           setActiveIndex(0)
         }
       } catch {
-        if (!cancelled) setSuggestions([])
+        if (!cancelled) setSuggestions(canMentionAll && allPrefix(q) ? [ALL_MENTION] : [])
       }
     }, 200)
     return () => {
       cancelled = true
       clearTimeout(t)
     }
-  }, [value, refreshToken])
+  }, [value, refreshToken, canMentionAll])
 
   function select(sug: Suggestion | undefined) {
     if (!sug) return

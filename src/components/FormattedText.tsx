@@ -55,32 +55,40 @@ function renderInline(text: string, mentionData: MentionDataMap): React.ReactNod
       );
     } else if (mention) {
       const username = mention.slice(1);
-      const md = mentionData[username.toLowerCase()];
-      const hasStyle = !!(md && md.nameStyle);
-      nodes.push(
-        <Link
-          key={k}
-          href={`/profile/${username}`}
-          onClick={(e) => e.stopPropagation()}
-          className={
-            hasStyle
-              ? ""
-              : "text-neon font-semibold hover:text-neon-light underline decoration-neon/30 underline-offset-2 transition-colors"
-          }
-        >
-          <StyledUsername
-            username={mention}
-            nameStyle={md?.nameStyle}
-            isVip={md?.isVip}
-            isOwner={md?.isOwner}
+      if (username.toLowerCase() === "all") {
+        nodes.push(
+          <span key={k} className="text-neon font-semibold">
+            @all
+          </span>
+        );
+      } else {
+        const md = mentionData[username.toLowerCase()];
+        const hasStyle = !!(md && md.nameStyle);
+        nodes.push(
+          <Link
+            key={k}
+            href={`/profile/${username}`}
+            onClick={(e) => e.stopPropagation()}
             className={
               hasStyle
-                ? "font-semibold text-neon underline decoration-neon/30 underline-offset-2"
-                : ""
+                ? ""
+                : "text-neon font-semibold hover:text-neon-light underline decoration-neon/30 underline-offset-2 transition-colors"
             }
-          />
-        </Link>
-      );
+          >
+            <StyledUsername
+              username={mention}
+              nameStyle={md?.nameStyle}
+              isVip={md?.isVip}
+              isOwner={md?.isOwner}
+              className={
+                hasStyle
+                  ? "font-semibold text-neon underline decoration-neon/30 underline-offset-2"
+                  : ""
+              }
+            />
+          </Link>
+        );
+      }
     }
     lastIndex = TOKEN_REGEX.lastIndex;
   }

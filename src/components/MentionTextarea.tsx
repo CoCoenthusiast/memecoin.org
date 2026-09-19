@@ -2,6 +2,7 @@
 import { useRef, useCallback, useEffect, type ReactNode } from "react"
 import { FormatToolbar } from "@/components/FormatToolbar"
 import { useMentions } from "@/components/useMentions"
+import { useSession } from "@/hooks/useSession"
 
 type Props = {
   id?: string
@@ -43,10 +44,13 @@ export function MentionTextarea({
 }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null)
   const highlightRef = useRef<HTMLDivElement>(null)
+  const { user, loading } = useSession()
+  const canMentionAll = !loading && !!user && (user.role === "ADMIN" || user.isOwner)
   const { open, suggestions, activeIndex, select, handleKeyDown, close } = useMentions(
     value,
     onChange,
-    ref
+    ref,
+    canMentionAll
   )
 
   const syncScroll = useCallback((el: HTMLTextAreaElement) => {

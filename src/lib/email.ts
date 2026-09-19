@@ -123,3 +123,37 @@ export async function sendReplyDigestEmail(
     `,
   });
 }
+
+export async function sendAtAllEmail(
+  email: string,
+  actorUsername: string,
+  kind: "post" | "comment",
+  postUrl: string
+): Promise<void> {
+  const resend = getResendClient();
+  const appUrl = getAppUrl();
+  const unsubscribeUrl = `${appUrl}/settings`;
+
+  const label = kind === "post" ? "a new post" : "a new comment";
+
+  await resend.emails.send({
+    from: SENDER,
+    to: email,
+    subject: `@all by ${actorUsername} on degenscult`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 32px;">
+        <h2 style="color: #1a1a2e; margin-bottom: 16px;">You've been pinged!</h2>
+        <p style="color: #4a4a6a; line-height: 1.6; margin-bottom: 24px;">
+          <strong>${actorUsername}</strong> mentioned <strong>@all</strong> in ${label} on degenscult.
+        </p>
+        <a href="${postUrl}" style="display: inline-block; background: #00ff88; color: #1a1a2e; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 24px;">
+          View on degenscult
+        </a>
+        <p style="color: #888; font-size: 12px; line-height: 1.5; margin-top: 24px; border-top: 1px solid #eee; padding-top: 16px;">
+          You're receiving this because you have email notifications enabled.
+          <a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Manage email preferences</a>
+        </p>
+      </div>
+    `,
+  });
+}
