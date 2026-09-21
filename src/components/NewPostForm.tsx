@@ -7,6 +7,7 @@ import { MentionTextarea } from "@/components/MentionTextarea"
 import { useSession } from "@/hooks/useSession"
 import { parseApiError } from "@/lib/api"
 import { isUserVip } from "@/lib/vip"
+import { isSessionExpired, SESSION_EXPIRED_MESSAGE } from "@/lib/sessionGate"
 
 export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
   const { user, refresh } = useSession()
@@ -61,7 +62,16 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
       form.append("image", file)
       if (activeSlug) form.append("channelSlug", activeSlug)
 
-      const res = await fetch("/api/upload/post-image", { method: "POST", body: form })
+      const res = await fetch("/api/upload/post-image", { method: "POST", body: form, redirect: "manual" })
+      if (isSessionExpired(res)) {
+        setError(SESSION_EXPIRED_MESSAGE)
+        setUploading(false)
+        setTimeout(() => {
+          router.push("/login")
+          refresh()
+        }, 1500)
+        return
+      }
       if (!res.ok) {
         setError(await parseApiError(res))
         return
@@ -90,7 +100,16 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
       form.append("video", file)
       if (activeSlug) form.append("channelSlug", activeSlug)
 
-      const res = await fetch("/api/upload/post-video", { method: "POST", body: form })
+      const res = await fetch("/api/upload/post-video", { method: "POST", body: form, redirect: "manual" })
+      if (isSessionExpired(res)) {
+        setError(SESSION_EXPIRED_MESSAGE)
+        setUploading(false)
+        setTimeout(() => {
+          router.push("/login")
+          refresh()
+        }, 1500)
+        return
+      }
       if (!res.ok) {
         setError(await parseApiError(res))
         return
@@ -145,7 +164,19 @@ export function NewPostForm({ channelSlug }: { channelSlug?: string }) {
           imageUrl: imageUrl || undefined,
           videoUrl: videoUrl || undefined,
         }),
+        redirect: "manual",
       })
+
+      if (isSessionExpired(res)) {
+        setError(SESSION_EXPIRED_MESSAGE)
+        setSubmitting(false)
+        setSending(false)
+        setTimeout(() => {
+          router.push("/login")
+          refresh()
+        }, 1500)
+        return
+      }
 
       if (!res.ok) {
         setError(await parseApiError(res))

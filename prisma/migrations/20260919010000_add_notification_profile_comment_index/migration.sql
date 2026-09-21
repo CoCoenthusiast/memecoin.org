@@ -1,0 +1,2 @@
+-- No-op: index already exists from migration 20260907130000_add_profile_comment_notifications.
+-- This migration was created to resolve drift detection on the production database.

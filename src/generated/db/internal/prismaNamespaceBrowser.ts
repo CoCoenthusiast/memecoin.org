@@ -98,6 +98,9 @@ export const UserScalarFieldEnum = {
   resetToken: 'resetToken',
   resetTokenExpiresAt: 'resetTokenExpiresAt',
   emailNotificationsEnabled: 'emailNotificationsEnabled',
+  isBanned: 'isBanned',
+  isBannedReason: 'isBannedReason',
+  bannedIps: 'bannedIps',
   createdAt: 'createdAt'
 } as const
 

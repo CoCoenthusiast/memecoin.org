@@ -28,6 +28,8 @@ export const POST = withErrorHandling(async function POST(
 ) {
   const { user } = await requireAuth();
 
+  if (user.isBanned) return apiError("This account has been banned", 403);
+
   const body = await getBody<{
     reason: string;
     postId?: string;

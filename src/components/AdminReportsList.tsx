@@ -24,6 +24,7 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
   const router = useRouter()
   const [busyId, setBusyId] = useState<string | null>(null)
   const [error, setError] = useState("")
+  const [banConfirm, setBanConfirm] = useState<string | null>(null)
 
   async function handleDelete(reportId: string, targetType: "post" | "reply", targetId: string) {
     setBusyId(reportId)
@@ -50,6 +51,28 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
       if (!res.ok) {
         setError(await parseApiError(res))
       } else {
+        router.refresh()
+      }
+    } catch {
+      setError("Something went wrong")
+    } finally {
+      setBusyId(null)
+    }
+  }
+
+  async function handleBan(username: string) {
+    setBusyId(`ban-${username}`)
+    setError("")
+    try {
+      const res = await fetch(`/api/admin/users/${username}/ban`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ban: true, reason: "Drain link / scam" }),
+      })
+      if (!res.ok) {
+        setError(await parseApiError(res))
+      } else {
+        setBanConfirm(null)
         router.refresh()
       }
     } catch {
@@ -125,6 +148,32 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
                 >
                   Delete content
                 </button>
+              )}
+              {report.reportedUser && banConfirm !== report.reportedUser.username && (
+                <button
+                  onClick={() => setBanConfirm(report.reportedUser!.username)}
+                  className="px-3 py-1.5 rounded-lg bg-transparent border border-red-700 text-red-500 text-sm font-medium hover:bg-red-700/10 transition-colors"
+                >
+                  Ban User
+                </button>
+              )}
+              {report.reportedUser && banConfirm === report.reportedUser.username && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-red-400">Ban @{report.reportedUser.username}?</span>
+                  <button
+                    onClick={() => handleBan(report.reportedUser!.username)}
+                    disabled={busyId === `ban-${report.reportedUser!.username}`}
+                    className="px-3 py-1.5 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition-colors disabled:opacity-50"
+                  >
+                    {busyId === `ban-${report.reportedUser!.username}` ? "Banning..." : "Confirm Ban"}
+                  </button>
+                  <button
+                    onClick={() => setBanConfirm(null)}
+                    className="px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 text-sm font-medium hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
               )}
               <button
                 onClick={() => handleResolve(report.id)}

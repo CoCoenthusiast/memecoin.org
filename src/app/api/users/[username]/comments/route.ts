@@ -41,6 +41,8 @@ export const POST = withErrorHandling(async function POST(
   const { username } = await params;
   const usernameLower = username.toLowerCase();
 
+  if (user.isBanned) return apiError("This account has been banned", 403);
+
   if (!user.emailVerified) {
     return apiError("Please verify your email before posting", 403);
   }

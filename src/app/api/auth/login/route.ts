@@ -35,7 +35,7 @@ export const POST = withErrorHandling(async function POST(
 
   const user = await prisma.user.findUnique({
     where: { email: body.email },
-    select: { id: true, username: true, email: true, role: true, password: true, tokenVersion: true, emailVerified: true },
+    select: { id: true, username: true, email: true, role: true, password: true, tokenVersion: true, emailVerified: true, isBanned: true },
   });
 
   if (!user) {
@@ -47,6 +47,19 @@ export const POST = withErrorHandling(async function POST(
   if (!valid) {
     recordFailedLogin(body.email, ip);
     return apiError("Invalid email or password", 401);
+  }
+
+  if (user.isBanned) {
+    return apiError("This account has been banned", 403);
+  }
+
+  // Block login from a banned IP (even if the account itself isn't banned)
+  const bannedIpUser = await prisma.user.findFirst({
+    where: { isBanned: true, bannedIps: { has: ip } },
+    select: { id: true },
+  });
+  if (bannedIpUser) {
+    return apiError("This account has been banned", 403);
   }
 
   if (!user.emailVerified) {

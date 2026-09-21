@@ -23,6 +23,8 @@ export const POST = withErrorHandling(async function POST(
   const { user } = await requireAuth();
   const { slug } = await params;
 
+  if (user.isBanned) return apiError("This account has been banned", 403);
+
   if (!user.emailVerified) {
     return apiError("Please verify your email before posting", 403);
   }

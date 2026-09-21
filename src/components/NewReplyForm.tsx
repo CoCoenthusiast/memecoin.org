@@ -1,8 +1,11 @@
 "use client"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { AuthGuard } from "@/components/AuthGuard"
 import { MentionTextarea } from "@/components/MentionTextarea"
 import { parseApiError } from "@/lib/api"
+import { useSession } from "@/hooks/useSession"
+import { isSessionExpired, SESSION_EXPIRED_MESSAGE } from "@/lib/sessionGate"
 
 type NewReplyFormProps = {
   postId: string
@@ -17,6 +20,8 @@ export function NewReplyForm({ postId, parentReplyId, replyingTo, onSuccess, onC
   const [error, setError] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [optimistic, setOptimistic] = useState<string | null>(null)
+  const { refresh } = useSession()
+  const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -35,7 +40,18 @@ export function NewReplyForm({ postId, parentReplyId, replyingTo, onSuccess, onC
           body: text,
           parentId: parentReplyId || undefined,
         }),
+        redirect: "manual",
       })
+
+      if (isSessionExpired(res)) {
+        setError(SESSION_EXPIRED_MESSAGE)
+        setOptimistic(null)
+        setTimeout(() => {
+          router.push("/login")
+          refresh()
+        }, 1500)
+        return
+      }
 
       if (!res.ok) {
         setError(await parseApiError(res))
