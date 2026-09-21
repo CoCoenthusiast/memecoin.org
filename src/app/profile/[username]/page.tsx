@@ -357,13 +357,13 @@ export default function ProfilePage() {
                     <textarea
                       value={bioDraft}
                       onChange={(e) => setBioDraft(e.target.value)}
-                      maxLength={160}
+                      maxLength={54}
                       rows={2}
                       className="w-full px-2 py-1.5 text-sm bg-gray-950/80 border border-gray-700 rounded-md text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-neon-glow resize-none"
                       placeholder="Write something about yourself..."
                     />
                     <div className="mt-1 flex items-center justify-between">
-                      <span className="text-xs text-gray-400">{bioDraft.length}/160</span>
+                      <span className="text-xs text-gray-400">{bioDraft.length}/54</span>
                       <div className="flex items-center gap-2">
                         {bioError && <span className="text-xs text-red-400">{bioError}</span>}
                         <button
@@ -386,7 +386,7 @@ export default function ProfilePage() {
                 ) : (
                   <>
                     {profile.bio && (
-                      <p className="text-sm text-gray-200 line-clamp-2 leading-snug">{profile.bio}</p>
+                      <p className="text-sm text-gray-200 leading-snug">{profile.bio}</p>
                     )}
                     {isOwner && (
                       <button

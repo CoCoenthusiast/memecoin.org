@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "bio" SET DATA TYPE VARCHAR(54);

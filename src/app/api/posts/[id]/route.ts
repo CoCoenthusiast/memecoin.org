@@ -77,14 +77,8 @@ export const GET = withErrorHandling(async function GET(
     });
   }
 
-  // Build response
-  const responseData: Record<string, unknown> = { ...fullPost, replies, reactions: postReactions };
-
-  // Only include viewsCount if requester is the author
-  if (isAuthor) {
-    const viewsCount = await prisma.postView.count({ where: { postId: id } });
-    responseData.viewsCount = viewsCount;
-  }
+  const viewsCount = await prisma.postView.count({ where: { postId: id } });
+  const responseData: Record<string, unknown> = { ...fullPost, replies, reactions: postReactions, viewsCount };
 
   return NextResponse.json(responseData);
 });

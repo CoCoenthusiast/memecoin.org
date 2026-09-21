@@ -57,21 +57,24 @@ export default async function PostPage({ params }: Props) {
     )
   }
 
-  const post = await prisma.post.findUnique({
-    where: { id },
-    include: {
-      author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
-      channel: { select: { id: true, slug: true, name: true } },
-      replies: {
-        include: {
-          author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
-          parent: { select: { id: true, body: true, author: { select: { username: true } } } },
-          reactions: { select: { id: true, type: true, userId: true } },
+  const [viewsCount, post] = await Promise.all([
+    prisma.postView.count({ where: { postId: id } }),
+    prisma.post.findUnique({
+      where: { id },
+      include: {
+        author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+        channel: { select: { id: true, slug: true, name: true } },
+        replies: {
+          include: {
+            author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+            parent: { select: { id: true, body: true, author: { select: { username: true } } } },
+            reactions: { select: { id: true, type: true, userId: true } },
+          },
         },
+        reactions: { select: { id: true, type: true, userId: true } },
       },
-      reactions: { select: { id: true, type: true, userId: true } },
-    },
-  })
+    }),
+  ])
 
-  return <PostPageClient post={post} />
+  return <PostPageClient post={{ ...post, viewsCount }} />
 }

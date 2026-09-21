@@ -34,7 +34,7 @@ model User {
   resetToken String? @unique
   resetTokenExpiresAt DateTime?
   emailNotificationsEnabled Boolean @default(true)
-  bio String? @db.VarChar(160)
+  bio String? @db.VarChar(54)
   isBanned Boolean @default(false)
   isBannedReason String?
   bannedIps String[]

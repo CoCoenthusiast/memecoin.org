@@ -149,7 +149,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
           </span>
           <span>{timeAgo(post.createdAt)}{post.editedAt && <span className="text-gray-600"> (edited)</span>}</span>
           <span>{post._count?.replies ?? 0} replies</span>
-          {post.viewsCount != null && <span>👁 {formatCount(post.viewsCount)} views</span>}
+          <span>👁 {formatCount(post.viewsCount ?? 0)} views</span>
         </div>
         {editing ? (
           <div className="mb-4">

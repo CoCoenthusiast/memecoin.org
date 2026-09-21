@@ -22,8 +22,8 @@ export const PATCH = withErrorHandling(async function PATCH(
   }
 
   const bio = body.bio.trim();
-  if (bio.length > 160) {
-    return apiError("Bio must be 160 characters or less", 400);
+  if (bio.length > 54) {
+    return apiError("Bio must be 54 characters or less", 400);
   }
 
   await prisma.user.update({
