@@ -4,6 +4,7 @@ import { requireAuth } from "@/lib/auth";
 import { apiError, getBody, withErrorHandling } from "@/lib/api";
 import { notifyMentions } from "@/lib/mentions";
 import { notifyAtAll } from "@/lib/notifyAll";
+import { notifyFollowers } from "@/lib/followers";
 import { isUserVip } from "@/lib/vip";
 import { VIP_CHANNEL_SLUG } from "@/lib/constants";
 
@@ -88,6 +89,8 @@ export const POST = withErrorHandling(async function POST(
   notifyMentions(body.body, { id: user.id, username: user.username }, post.id, "post");
 
   notifyAtAll(body.body, { id: user.id, username: user.username, role: user.role, isOwner: user.isOwner }, post.id, channel.id, "post");
+
+  notifyFollowers({ id: user.id, username: user.username }, post.id, post.title);
 
   return NextResponse.json(post, { status: 201 });
 });

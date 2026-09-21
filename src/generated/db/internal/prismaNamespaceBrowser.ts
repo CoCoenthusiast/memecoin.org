@@ -59,7 +59,9 @@ export const ModelName = {
   Notification: 'Notification',
   LoginLog: 'LoginLog',
   Bookmark: 'Bookmark',
-  DailyRecap: 'DailyRecap'
+  DailyRecap: 'DailyRecap',
+  Follow: 'Follow',
+  PostView: 'PostView'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -98,6 +100,7 @@ export const UserScalarFieldEnum = {
   resetToken: 'resetToken',
   resetTokenExpiresAt: 'resetTokenExpiresAt',
   emailNotificationsEnabled: 'emailNotificationsEnabled',
+  bio: 'bio',
   isBanned: 'isBanned',
   isBannedReason: 'isBannedReason',
   bannedIps: 'bannedIps',
@@ -238,6 +241,26 @@ export const DailyRecapScalarFieldEnum = {
 } as const
 
 export type DailyRecapScalarFieldEnum = (typeof DailyRecapScalarFieldEnum)[keyof typeof DailyRecapScalarFieldEnum]
+
+
+export const FollowScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  followerId: 'followerId',
+  followingId: 'followingId'
+} as const
+
+export type FollowScalarFieldEnum = (typeof FollowScalarFieldEnum)[keyof typeof FollowScalarFieldEnum]
+
+
+export const PostViewScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  postId: 'postId'
+} as const
+
+export type PostViewScalarFieldEnum = (typeof PostViewScalarFieldEnum)[keyof typeof PostViewScalarFieldEnum]
 
 
 export const SortOrder = {

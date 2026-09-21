@@ -17,6 +17,12 @@ import { useMentionData, extractMentions } from "@/hooks/useMentionData"
 import { parseApiError } from "@/lib/api"
 import { timeAgo } from "@/lib/timeAgo"
 
+function formatCount(n: number) {
+  if (n >= 10000) return `${(n / 1000).toFixed(0)}k`
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`
+  return String(n)
+}
+
 type PostPageClientProps = {
   post: any
 }
@@ -143,6 +149,7 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
           </span>
           <span>{timeAgo(post.createdAt)}{post.editedAt && <span className="text-gray-600"> (edited)</span>}</span>
           <span>{post._count?.replies ?? 0} replies</span>
+          {post.viewsCount != null && <span>👁 {formatCount(post.viewsCount)} views</span>}
         </div>
         {editing ? (
           <div className="mb-4">

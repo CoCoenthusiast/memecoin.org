@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { apiError, withErrorHandling } from "@/lib/api";
-import { requireAuth, isAdmin } from "@/lib/auth";
+import { requireAuth, isAdmin, getSession } from "@/lib/auth";
 import { isWithinWindow, DELETE_WINDOW_MS, EDIT_WINDOW_MS } from "@/lib/deleteWindow";
 import { isChannelIdAccessible, isChannelAccessible } from "@/lib/vipChannel";
 import { VIP_CHANNEL_SLUG } from "@/lib/constants";
@@ -14,7 +14,7 @@ export const GET = withErrorHandling(async function GET(
 
   const post = await prisma.post.findUnique({
     where: { id },
-    select: { channelId: true },
+    select: { channelId: true, authorId: true },
   });
 
   if (!post) {
@@ -25,6 +25,10 @@ export const GET = withErrorHandling(async function GET(
   if (!(await isChannelIdAccessible(post.channelId))) {
     return apiError("Post not found", 404);
   }
+
+  const session = await getSession();
+  const viewerId = session?.user?.id;
+  const isAuthor = viewerId === post.authorId;
 
   const [fullPost, replies, postReactions] = await Promise.all([
     prisma.post.findUnique({
@@ -62,11 +66,27 @@ export const GET = withErrorHandling(async function GET(
     return apiError("Post not found", 404);
   }
 
-  prisma.post.update({ where: { id }, data: { viewCount: { increment: 1 } } }).catch((e) => {
-    console.error("Failed to increment view count", e);
-  });
+  // Record view (fire-and-forget): only logged-in users, not the author
+  if (viewerId && !isAuthor) {
+    prisma.postView.upsert({
+      where: { userId_postId: { userId: viewerId, postId: id } },
+      create: { userId: viewerId, postId: id },
+      update: {},
+    }).catch((e) => {
+      console.error("Failed to record post view", e);
+    });
+  }
 
-  return NextResponse.json({ ...fullPost, replies, reactions: postReactions });
+  // Build response
+  const responseData: Record<string, unknown> = { ...fullPost, replies, reactions: postReactions };
+
+  // Only include viewsCount if requester is the author
+  if (isAuthor) {
+    const viewsCount = await prisma.postView.count({ where: { postId: id } });
+    responseData.viewsCount = viewsCount;
+  }
+
+  return NextResponse.json(responseData);
 });
 
 export const DELETE = withErrorHandling(async function DELETE(

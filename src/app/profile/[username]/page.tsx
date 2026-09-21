@@ -21,6 +21,12 @@ function formatDate(dateStr: string) {
   })
 }
 
+function formatCount(n: number) {
+  if (n >= 10000) return `${(n / 1000).toFixed(0)}k`
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`
+  return String(n)
+}
+
 export default function ProfilePage() {
   const params = useParams()
   const username = params.username as string
@@ -54,6 +60,12 @@ export default function ProfilePage() {
   const editCommentTextareaRef = useRef<HTMLTextAreaElement>(null)
   const [avatarDraft, setAvatarDraft] = useState<{ url: string; file: File } | null>(null)
   const [bannerDraft, setBannerDraft] = useState<{ url: string; file: File } | null>(null)
+  const [isFollowing, setFollowing] = useState(false)
+  const [followBusy, setFollowBusy] = useState(false)
+  const [bioDraft, setBioDraft] = useState("")
+  const [bioEditing, setBioEditing] = useState(false)
+  const [savingBio, setSavingBio] = useState(false)
+  const [bioError, setBioError] = useState("")
 
   const isOwner = !!currentUser && currentUser.username === username
   const canGif = isOwner && !!currentUser && isUserVip(currentUser)
@@ -67,6 +79,7 @@ export default function ProfilePage() {
       ])
       setProfile(prof)
       setComments(coms || [])
+      setFollowing(!!prof?.isFollowing)
       const saved = nameStyleFromJson(prof?.nameStyle)
       if (saved) {
         setNameStyle({ ...saved, speed: saved.speed || "medium" })
@@ -126,6 +139,50 @@ export default function ProfilePage() {
       setCommentError("Something went wrong")
     }
     setPosting(false)
+  }
+
+  async function handleFollow() {
+    setFollowBusy(true)
+    try {
+      const res = await fetch(`/api/users/${username}/follow`, {
+        method: isFollowing ? "DELETE" : "POST",
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setFollowing(data.following)
+      }
+    } finally {
+      setFollowBusy(false)
+    }
+  }
+
+  function startBioEdit() {
+    setBioDraft(profile?.bio ?? "")
+    setBioError("")
+    setBioEditing(true)
+  }
+
+  async function handleSaveBio() {
+    setSavingBio(true)
+    setBioError("")
+    try {
+      const res = await fetch(`/api/users/${username}/bio`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bio: bioDraft }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setProfile((p: any) => ({ ...p, bio: data.bio }))
+        setBioEditing(false)
+      } else {
+        setBioError(await parseApiError(res))
+      }
+    } catch {
+      setBioError("Something went wrong")
+    } finally {
+      setSavingBio(false)
+    }
   }
 
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -293,6 +350,56 @@ export default function ProfilePage() {
                 </svg>
               </div>
             )}
+            {(profile.bio || isOwner) && (
+              <div className="w-44 mt-3">
+                {bioEditing ? (
+                  <>
+                    <textarea
+                      value={bioDraft}
+                      onChange={(e) => setBioDraft(e.target.value)}
+                      maxLength={160}
+                      rows={2}
+                      className="w-full px-2 py-1.5 text-sm bg-gray-950/80 border border-gray-700 rounded-md text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-neon-glow resize-none"
+                      placeholder="Write something about yourself..."
+                    />
+                    <div className="mt-1 flex items-center justify-between">
+                      <span className="text-xs text-gray-400">{bioDraft.length}/160</span>
+                      <div className="flex items-center gap-2">
+                        {bioError && <span className="text-xs text-red-400">{bioError}</span>}
+                        <button
+                          onClick={() => setBioEditing(false)}
+                          disabled={savingBio}
+                          className="text-xs text-gray-400 hover:text-white transition-colors disabled:opacity-50"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleSaveBio}
+                          disabled={savingBio}
+                          className="text-xs text-neon hover:opacity-80 transition-opacity disabled:opacity-50"
+                        >
+                          {savingBio ? "Saving..." : "Save"}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {profile.bio && (
+                      <p className="text-sm text-gray-200 line-clamp-2 leading-snug">{profile.bio}</p>
+                    )}
+                    {isOwner && (
+                      <button
+                        onClick={startBioEdit}
+                        className={`text-xs text-gray-400 hover:text-gray-200 transition-colors ${profile.bio ? "mt-1" : ""}`}
+                      >
+                        {profile.bio ? "Edit" : "Add bio"}
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="min-w-0 flex-1">
@@ -306,6 +413,19 @@ export default function ProfilePage() {
                 />
               </h1>
               <ContentActions targetId={profile.id} targetType="user" username={profile.username} onSuccess={loadProfile} />
+              {currentUser && !isOwner && (
+                <button
+                  onClick={handleFollow}
+                  disabled={followBusy}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                    isFollowing
+                      ? "bg-transparent border-gray-600 text-gray-300 hover:border-gray-400 hover:text-white"
+                      : "bg-neon-glow text-gray-950 border-neon-glow hover:bg-neon-glow/90"
+                  }`}
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </button>
+              )}
             </div>
             <p className="text-gray-300 text-sm mt-1">Member since {formatDate(profile.createdAt)}</p>
 
@@ -322,38 +442,24 @@ export default function ProfilePage() {
                 <div className="text-xl font-bold text-neon">{profile.totalReactions}</div>
                 <div className="text-xs text-gray-300">Reactions received</div>
               </div>
+              <div>
+                <div className="text-xl font-bold text-gray-100">{formatCount(profile.followersCount ?? 0)}</div>
+                <div className="text-xs text-gray-300">Followers</div>
+              </div>
             </div>
 
             {isOwner && (
               <div className="mt-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
-                  >
-                    Change photo
-                  </button>
-                  {canBanner && (
-                    <button
-                      onClick={() => bannerInputRef.current?.click()}
-                      className="px-3 py-1.5 rounded-lg bg-transparent border border-neon-glow text-neon-glow text-sm font-medium hover:bg-neon-glow/10 transition-colors"
-                    >
-                      Change banner
-                    </button>
-                  )}
-                  {canBanner && (
-                    <button
-                      onClick={() => setShowStylePanel((v) => !v)}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                        showStylePanel
-                          ? "bg-neon-glow/15 border border-neon-glow text-neon"
-                          : "bg-transparent border border-neon-glow text-neon-glow hover:bg-neon-glow/10"
-                      }`}
-                    >
-                      Customize name
-                    </button>
-                  )}
-                </div>
+                <button
+                  onClick={() => setShowStylePanel((v) => !v)}
+                  className={`text-xs font-medium transition-colors ${
+                    showBanner
+                      ? "bg-black/40 rounded px-2 py-1 text-gray-200 hover:text-white"
+                      : "text-gray-400 hover:text-gray-200"
+                  }`}
+                >
+                  Customize profile
+                </button>
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -376,25 +482,42 @@ export default function ProfilePage() {
                   onChange={handleBannerChange}
                   className="hidden"
                 />
-                {canGif && (
-                  <p className="mt-2 text-xs text-neon">GIF supported</p>
-                )}
-                {uploadError && (
-                  <p className="mt-2 text-sm text-red-400">{uploadError}</p>
-                )}
-                {bannerError && (
-                  <p className="mt-2 text-sm text-red-400">{bannerError}</p>
-                )}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {canBanner && showStylePanel && (
+      {isOwner && showStylePanel && (
         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-100 mb-4">Customize your name</h2>
+          <h2 className="text-lg font-semibold text-gray-100 mb-4">Customize profile</h2>
 
+          <div className="flex flex-wrap items-center gap-3 mb-5">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 text-sm font-medium hover:text-white hover:border-gray-500 transition-colors"
+            >
+              Change photo
+            </button>
+            {canBanner && (
+              <button
+                onClick={() => bannerInputRef.current?.click()}
+                className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 text-sm font-medium hover:text-white hover:border-gray-500 transition-colors"
+              >
+                Change banner
+              </button>
+            )}
+            {canGif && <span className="text-xs text-neon">GIF supported</span>}
+          </div>
+          {uploadError && (
+            <p className="mb-4 text-sm text-red-400">{uploadError}</p>
+          )}
+          {bannerError && (
+            <p className="mb-4 text-sm text-red-400">{bannerError}</p>
+          )}
+
+          {canBanner && (
+            <> 
           <div className="border border-gray-800 rounded-xl bg-gray-950/60 p-4 mb-5 flex items-center justify-center">
             <StyledName text={profile.username} style={nameStyle} className="text-3xl font-bold" />
           </div>
@@ -477,6 +600,8 @@ export default function ProfilePage() {
               </button>
             </div>
           </div>
+            </>
+          )}
         </div>
       )}
 

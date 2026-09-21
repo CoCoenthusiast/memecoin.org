@@ -96,3 +96,13 @@ export type Bookmark = Prisma.BookmarkModel
  * 
  */
 export type DailyRecap = Prisma.DailyRecapModel
+/**
+ * Model Follow
+ * 
+ */
+export type Follow = Prisma.FollowModel
+/**
+ * Model PostView
+ * 
+ */
+export type PostView = Prisma.PostViewModel

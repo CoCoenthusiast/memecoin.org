@@ -34,6 +34,7 @@ model User {
   resetToken String? @unique
   resetTokenExpiresAt DateTime?
   emailNotificationsEnabled Boolean @default(true)
+  bio String? @db.VarChar(160)
   isBanned Boolean @default(false)
   isBannedReason String?
   bannedIps String[]
@@ -56,6 +57,9 @@ model User {
   sentNotifications      Notification[]   @relation("NotificationActor")
   loginLogs              LoginLog[]
   bookmarks             Bookmark[]
+  following             Follow[] @relation("Followee")
+  followers             Follow[] @relation("Follower")
+  postViews             PostView[]
 }
 
 model Channel {
@@ -92,6 +96,7 @@ model Post {
   reports   Report[]
   notifications Notification[]
   bookmarks Bookmark[]
+  views     PostView[]
 
   @@index([lastActivityAt])
   @@index([channelId, lastActivityAt])
@@ -236,4 +241,33 @@ model DailyRecap {
   createdAt DateTime @default(now())
 
   @@index([createdAt])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+
+  follower    User     @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String
+
+  following   User     @relation("Followee", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model PostView {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+
+  @@unique([userId, postId])
+  @@index([postId])
 }
