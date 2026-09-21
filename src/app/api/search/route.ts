@@ -20,7 +20,10 @@ export const GET = withErrorHandling(async function GET(
   const where: {
     title?: object;
     OR?: object[];
-    author?: { username?: { equals: string }; usernameLower?: { equals: string } };
+    author?: {
+      isBanned?: boolean;
+      usernameLower?: { equals: string };
+    };
     channelId?: { not: string };
   } = { ...vipFilter };
 
@@ -44,7 +47,9 @@ export const GET = withErrorHandling(async function GET(
   }
 
   if (member) {
-    where.author = { usernameLower: { equals: member.toLowerCase() } };
+    where.author = { isBanned: false, usernameLower: { equals: member.toLowerCase() } };
+  } else {
+    where.author = { isBanned: false };
   }
 
   const posts = await prisma.post.findMany({

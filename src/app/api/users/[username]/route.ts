@@ -22,6 +22,7 @@ export const GET = withErrorHandling(async function GET(
       isVip: true,
       vipExpiresAt: true,
       isOwner: true,
+      isBanned: true,
       createdAt: true,
       _count: {
         select: {
@@ -53,7 +54,7 @@ export const GET = withErrorHandling(async function GET(
     },
   });
 
-  if (!user) {
+  if (!user || user.isBanned) {
     return apiError("User not found", 404);
   }
 
