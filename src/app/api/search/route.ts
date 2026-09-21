@@ -57,7 +57,7 @@ export const GET = withErrorHandling(async function GET(
     orderBy: { lastActivityAt: "desc" },
     take: 50,
     include: {
-      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
       channel: { select: { slug: true, name: true } },
       _count: { select: { replies: true, reactions: true } },
     },

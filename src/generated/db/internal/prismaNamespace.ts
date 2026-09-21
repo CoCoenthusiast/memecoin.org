@@ -1296,6 +1296,12 @@ export const UserScalarFieldEnum = {
   isBanned: 'isBanned',
   isBannedReason: 'isBannedReason',
   bannedIps: 'bannedIps',
+  avatarPosX: 'avatarPosX',
+  avatarPosY: 'avatarPosY',
+  avatarZoom: 'avatarZoom',
+  bannerPosX: 'bannerPosX',
+  bannerPosY: 'bannerPosY',
+  bannerZoom: 'bannerZoom',
   createdAt: 'createdAt'
 } as const
 

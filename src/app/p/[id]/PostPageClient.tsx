@@ -11,6 +11,7 @@ import { FormatToolbar } from "@/components/FormatToolbar"
 import { FormattedText } from "@/components/FormattedText"
 import { useSession } from "@/hooks/useSession"
 import { StyledUsername } from "@/components/StyledUsername"
+import { MediaImage } from "@/components/MediaImage"
 import { isUserVip } from "@/lib/vip"
 import { useMentionData, extractMentions } from "@/hooks/useMentionData"
 import { parseApiError } from "@/lib/api"
@@ -122,10 +123,13 @@ export default function PostPageClient({ post: initialPost }: PostPageClientProp
         <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
           <span className="flex items-center gap-1.5">
             {isUserVip(post.author) && post.author.avatarUrl && (
-              <img
+              <MediaImage
                 src={post.author.avatarUrl}
+                x={post.author.avatarPosX}
+                y={post.author.avatarPosY}
+                zoom={post.author.avatarZoom}
                 alt={post.author.username}
-                className="w-10 h-10 rounded-lg object-cover border border-gray-700"
+                className="w-10 h-10 rounded-lg border border-gray-700"
               />
             )}
             <Link href={`/profile/${post.author.username}`} className="text-gray-300 hover:text-white transition-colors">

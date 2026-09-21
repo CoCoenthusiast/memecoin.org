@@ -10,7 +10,7 @@ export const GET = withErrorHandling(async function GET(request: NextRequest) {
 
   const users = await prisma.user.findMany({
     where: { isBanned: false, usernameLower: { startsWith: q.toLowerCase() } },
-    select: { id: true, username: true, avatarUrl: true },
+    select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true },
     orderBy: { usernameLower: "asc" },
     take: 8,
   });

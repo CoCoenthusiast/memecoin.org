@@ -50,7 +50,7 @@ export default async function ChannelPage({ params }: Props) {
           createdAt: true,
           viewCount: true,
           pinned: true,
-          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
+          author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true } },
           _count: { select: { replies: true, reactions: true } },
         },
       },

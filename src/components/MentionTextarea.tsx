@@ -3,6 +3,7 @@ import { useRef, useCallback, useEffect, type ReactNode } from "react"
 import { FormatToolbar } from "@/components/FormatToolbar"
 import { useMentions } from "@/components/useMentions"
 import { useSession } from "@/hooks/useSession"
+import { MediaImage } from "@/components/MediaImage"
 
 type Props = {
   id?: string
@@ -90,7 +91,14 @@ export function MentionTextarea({
                 }`}
               >
                 {s.avatarUrl && (
-                  <img src={s.avatarUrl} alt="" className="w-6 h-6 rounded-lg border border-gray-700" />
+                  <MediaImage
+                    src={s.avatarUrl}
+                    x={s.avatarPosX}
+                    y={s.avatarPosY}
+                    zoom={s.avatarZoom}
+                    alt=""
+                    className="w-6 h-6 rounded-lg border border-gray-700"
+                  />
                 )}
                 <span className="whitespace-nowrap">@{s.username}</span>
               </button>

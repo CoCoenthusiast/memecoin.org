@@ -25,7 +25,7 @@ export const GET = withErrorHandling(async function GET(
       body: true,
       createdAt: true,
       editedAt: true,
-      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
       reactions: { select: { id: true, type: true, userId: true } },
     },
   });
@@ -73,7 +73,7 @@ export const POST = withErrorHandling(async function POST(
       body: true,
       createdAt: true,
       editedAt: true,
-      author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
+      author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
     },
   });
 

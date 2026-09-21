@@ -23,7 +23,7 @@ export const GET = withErrorHandling(async function GET(_request: NextRequest) {
       profileCommentId: true,
       createdAt: true,
       actor: {
-        select: { username: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true },
+        select: { username: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true },
       },
       profileComment: {
         select: { profileUser: { select: { username: true } } },

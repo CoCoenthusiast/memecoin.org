@@ -7,6 +7,7 @@ import { FormattedText } from "@/components/FormattedText"
 import { FormatToolbar } from "@/components/FormatToolbar"
 import { NewReplyForm } from "@/components/NewReplyForm"
 import { StyledUsername } from "@/components/StyledUsername"
+import { MediaImage } from "@/components/MediaImage"
 import { isUserVip } from "@/lib/vip"
 import { useMentionData, extractMentions } from "@/hooks/useMentionData"
 import { parseApiError } from "@/lib/api";
@@ -23,6 +24,9 @@ type ReplyItem = {
     id: string
     username: string
     avatarUrl?: string | null
+    avatarPosX?: number | null
+    avatarPosY?: number | null
+    avatarZoom?: number | null
     nameStyle?: string | null
     isVip?: boolean
     vipExpiresAt?: string | null
@@ -193,10 +197,13 @@ export function ReplyList({ replies, currentUserId, onSuccess }: ReplyListProps)
             <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
               <span className="flex items-center gap-1.5">
                 {isUserVip(reply.author) && reply.author.avatarUrl && (
-                  <img
+                  <MediaImage
                     src={reply.author.avatarUrl}
+                    x={reply.author.avatarPosX}
+                    y={reply.author.avatarPosY}
+                    zoom={reply.author.avatarZoom}
                     alt={reply.author.username}
-                    className="w-8 h-8 rounded-lg object-cover border border-gray-700"
+                    className="w-8 h-8 rounded-lg border border-gray-700"
                   />
                 )}
                 <Link

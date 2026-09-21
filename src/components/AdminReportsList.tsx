@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { parseApiError } from "@/lib/api"
+import { MediaImage } from "@/components/MediaImage"
 
 type AdminReportsListProps = {
   reports: Array<{
@@ -16,7 +17,7 @@ type AdminReportsListProps = {
       author: { username: string }
     } | null
     reply: { id: string; body: string; author: { username: string } } | null
-    reportedUser: { id: string; username: string; avatarUrl: string | null } | null
+    reportedUser: { id: string; username: string; avatarUrl: string | null; avatarPosX?: number | null; avatarPosY?: number | null; avatarZoom?: number | null } | null
   }>
 }
 
@@ -113,10 +114,13 @@ export function AdminReportsList({ reports }: AdminReportsListProps) {
               {report.reportedUser && (
                 <div className="flex items-center gap-2">
                   {report.reportedUser.avatarUrl ? (
-                    <img
+                    <MediaImage
                       src={report.reportedUser.avatarUrl}
+                      x={report.reportedUser.avatarPosX}
+                      y={report.reportedUser.avatarPosY}
+                      zoom={report.reportedUser.avatarZoom}
                       alt={report.reportedUser.username}
-                      className="w-10 h-10 rounded-full object-cover border border-gray-700"
+                      className="w-10 h-10 rounded-full border border-gray-700"
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center">

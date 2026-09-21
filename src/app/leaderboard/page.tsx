@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { StyledUsername } from "@/components/StyledUsername";
 import { isUserVip, isUserOwner } from "@/lib/vip";
+import { MediaImage } from "@/components/MediaImage";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,9 @@ export default async function LeaderboardPage() {
       username: true,
       nameStyle: true,
       avatarUrl: true,
+      avatarPosX: true,
+      avatarPosY: true,
+      avatarZoom: true,
       isVip: true,
       vipExpiresAt: true,
       isOwner: true,
@@ -30,6 +34,9 @@ export default async function LeaderboardPage() {
         username: u.username,
         nameStyle: u.nameStyle,
         avatarUrl: u.avatarUrl,
+        avatarPosX: u.avatarPosX,
+        avatarPosY: u.avatarPosY,
+        avatarZoom: u.avatarZoom,
         isVip: isUserVip(u),
         isOwner: isUserOwner(u),
         totalReactions,
@@ -59,10 +66,13 @@ export default async function LeaderboardPage() {
               <div className="w-8 text-center text-lg font-bold text-gray-500">{index + 1}</div>
               <div className="flex-shrink-0">
                 {row.avatarUrl ? (
-                  <img
+                  <MediaImage
                     src={row.avatarUrl}
+                    x={row.avatarPosX}
+                    y={row.avatarPosY}
+                    zoom={row.avatarZoom}
                     alt={row.username}
-                    className="w-12 h-12 rounded-xl object-cover border border-gray-700"
+                    className="w-12 h-12 rounded-xl border border-gray-700"
                   />
                 ) : (
                   <div className="w-12 h-12 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center">

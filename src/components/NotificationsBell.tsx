@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useSession } from "@/hooks/useSession"
 import { StyledUsername } from "@/components/StyledUsername";
 import { timeAgo } from "@/lib/timeAgo"
+import { MediaImage } from "@/components/MediaImage"
 
 type NotificationItem = {
   id: string
@@ -14,7 +15,7 @@ type NotificationItem = {
   profileCommentId?: string | null
   profileUsername?: string | null
   createdAt: string
-  actor?: { username: string; nameStyle?: string | null; isVip?: boolean; isOwner?: boolean } | null
+  actor?: { username: string; nameStyle?: string | null; isVip?: boolean; isOwner?: boolean; avatarUrl?: string | null; avatarPosX?: number | null; avatarPosY?: number | null; avatarZoom?: number | null } | null
 }
 
 const MENU_WIDTH = 320
@@ -151,23 +152,37 @@ export function NotificationsBell({ onNavigate }: { onNavigate?: () => void }) {
                     }}
                     className="block px-4 py-3 hover:bg-gray-800/60 transition-colors border-b border-gray-800/60 last:border-b-0"
                   >
-                    <p className="text-sm text-gray-200 leading-snug">
-                      {n.actor && n.message.startsWith(`${n.actor.username} `) ? (
-                        <>
-                          <StyledUsername
-                            username={`@${n.actor.username}`}
-                            nameStyle={n.actor.nameStyle}
-                            isVip={n.actor.isVip}
-                            isOwner={n.actor.isOwner}
-                            className="text-neon font-semibold"
-                          />
-                          {n.message.slice(n.actor.username.length)}
-                        </>
-                      ) : (
-                        n.message
+                    <div className="flex gap-2.5">
+                      {n.actor?.avatarUrl && (
+                        <MediaImage
+                          src={n.actor.avatarUrl}
+                          alt={n.actor.username}
+                          x={n.actor.avatarPosX}
+                          y={n.actor.avatarPosY}
+                          zoom={n.actor.avatarZoom}
+                          className="w-8 h-8 rounded-lg shrink-0"
+                        />
                       )}
-                    </p>
-                    <span className="text-xs text-gray-500 mt-0.5 inline-block">{timeAgo(n.createdAt)}</span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm text-gray-200 leading-snug">
+                          {n.actor && n.message.startsWith(`${n.actor.username} `) ? (
+                            <>
+                              <StyledUsername
+                                username={`@${n.actor.username}`}
+                                nameStyle={n.actor.nameStyle}
+                                isVip={n.actor.isVip}
+                                isOwner={n.actor.isOwner}
+                                className="text-neon font-semibold"
+                              />
+                              {n.message.slice(n.actor.username.length)}
+                            </>
+                          ) : (
+                            n.message
+                          )}
+                        </p>
+                        <span className="text-xs text-gray-500 mt-0.5 inline-block">{timeAgo(n.createdAt)}</span>
+                      </div>
+                    </div>
                   </Link>
                 ))
               )}

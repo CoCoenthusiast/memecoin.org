@@ -5,6 +5,7 @@ import { ContentActions } from "@/components/ContentActions"
 import { BookmarkButton } from "@/components/BookmarkButton"
 import { useSession } from "@/hooks/useSession"
 import { StyledUsername } from "@/components/StyledUsername"
+import { MediaImage } from "@/components/MediaImage"
 import { isUserVip } from "@/lib/vip";
 import { timeAgo } from "@/lib/timeAgo"
 
@@ -23,6 +24,9 @@ type PostCardProps = {
       id: string
       username: string
       avatarUrl?: string | null
+      avatarPosX?: number | null
+      avatarPosY?: number | null
+      avatarZoom?: number | null
       nameStyle?: string | null
       isVip?: boolean
       vipExpiresAt?: string | null
@@ -88,10 +92,13 @@ export default function PostCard({ post, onContentAction }: PostCardProps) {
         <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
           <span className="flex items-center gap-1.5">
             {isUserVip(post.author) && post.author.avatarUrl && (
-              <img
+              <MediaImage
                 src={post.author.avatarUrl}
+                x={post.author.avatarPosX}
+                y={post.author.avatarPosY}
+                zoom={post.author.avatarZoom}
                 alt={post.author.username}
-                className="relative z-10 w-10 h-10 rounded-lg object-cover border border-gray-700"
+                className="relative z-10 w-10 h-10 rounded-lg border border-gray-700"
               />
             )}
             by{" "}

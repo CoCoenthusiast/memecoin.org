@@ -30,7 +30,7 @@ export const GET = withErrorHandling(async function GET(
           editedAt: true,
           viewCount: true,
           pinned: true,
-          author: { select: { id: true, username: true, avatarUrl: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
+          author: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true, nameStyle: true, isVip: true, vipExpiresAt: true, isOwner: true } },
           _count: { select: { replies: true, reactions: true } },
         },
       },

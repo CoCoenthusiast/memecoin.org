@@ -28,10 +28,22 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   tokenVersion: number | null
+  avatarPosX: number | null
+  avatarPosY: number | null
+  avatarZoom: number | null
+  bannerPosX: number | null
+  bannerPosY: number | null
+  bannerZoom: number | null
 }
 
 export type UserSumAggregateOutputType = {
   tokenVersion: number | null
+  avatarPosX: number | null
+  avatarPosY: number | null
+  avatarZoom: number | null
+  bannerPosX: number | null
+  bannerPosY: number | null
+  bannerZoom: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -56,6 +68,12 @@ export type UserMinAggregateOutputType = {
   emailNotificationsEnabled: boolean | null
   isBanned: boolean | null
   isBannedReason: string | null
+  avatarPosX: number | null
+  avatarPosY: number | null
+  avatarZoom: number | null
+  bannerPosX: number | null
+  bannerPosY: number | null
+  bannerZoom: number | null
   createdAt: Date | null
 }
 
@@ -81,6 +99,12 @@ export type UserMaxAggregateOutputType = {
   emailNotificationsEnabled: boolean | null
   isBanned: boolean | null
   isBannedReason: string | null
+  avatarPosX: number | null
+  avatarPosY: number | null
+  avatarZoom: number | null
+  bannerPosX: number | null
+  bannerPosY: number | null
+  bannerZoom: number | null
   createdAt: Date | null
 }
 
@@ -107,6 +131,12 @@ export type UserCountAggregateOutputType = {
   isBanned: number
   isBannedReason: number
   bannedIps: number
+  avatarPosX: number
+  avatarPosY: number
+  avatarZoom: number
+  bannerPosX: number
+  bannerPosY: number
+  bannerZoom: number
   createdAt: number
   _all: number
 }
@@ -114,10 +144,22 @@ export type UserCountAggregateOutputType = {
 
 export type UserAvgAggregateInputType = {
   tokenVersion?: true
+  avatarPosX?: true
+  avatarPosY?: true
+  avatarZoom?: true
+  bannerPosX?: true
+  bannerPosY?: true
+  bannerZoom?: true
 }
 
 export type UserSumAggregateInputType = {
   tokenVersion?: true
+  avatarPosX?: true
+  avatarPosY?: true
+  avatarZoom?: true
+  bannerPosX?: true
+  bannerPosY?: true
+  bannerZoom?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -142,6 +184,12 @@ export type UserMinAggregateInputType = {
   emailNotificationsEnabled?: true
   isBanned?: true
   isBannedReason?: true
+  avatarPosX?: true
+  avatarPosY?: true
+  avatarZoom?: true
+  bannerPosX?: true
+  bannerPosY?: true
+  bannerZoom?: true
   createdAt?: true
 }
 
@@ -167,6 +215,12 @@ export type UserMaxAggregateInputType = {
   emailNotificationsEnabled?: true
   isBanned?: true
   isBannedReason?: true
+  avatarPosX?: true
+  avatarPosY?: true
+  avatarZoom?: true
+  bannerPosX?: true
+  bannerPosY?: true
+  bannerZoom?: true
   createdAt?: true
 }
 
@@ -193,6 +247,12 @@ export type UserCountAggregateInputType = {
   isBanned?: true
   isBannedReason?: true
   bannedIps?: true
+  avatarPosX?: true
+  avatarPosY?: true
+  avatarZoom?: true
+  bannerPosX?: true
+  bannerPosY?: true
+  bannerZoom?: true
   createdAt?: true
   _all?: true
 }
@@ -306,6 +366,12 @@ export type UserGroupByOutputType = {
   isBanned: boolean
   isBannedReason: string | null
   bannedIps: string[]
+  avatarPosX: number | null
+  avatarPosY: number | null
+  avatarZoom: number | null
+  bannerPosX: number | null
+  bannerPosY: number | null
+  bannerZoom: number | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -355,6 +421,12 @@ export type UserWhereInput = {
   isBanned?: Prisma.BoolFilter<"User"> | boolean
   isBannedReason?: Prisma.StringNullableFilter<"User"> | string | null
   bannedIps?: Prisma.StringNullableListFilter<"User">
+  avatarPosX?: Prisma.FloatNullableFilter<"User"> | number | null
+  avatarPosY?: Prisma.FloatNullableFilter<"User"> | number | null
+  avatarZoom?: Prisma.FloatNullableFilter<"User"> | number | null
+  bannerPosX?: Prisma.FloatNullableFilter<"User"> | number | null
+  bannerPosY?: Prisma.FloatNullableFilter<"User"> | number | null
+  bannerZoom?: Prisma.FloatNullableFilter<"User"> | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -392,6 +464,12 @@ export type UserOrderByWithRelationInput = {
   isBanned?: Prisma.SortOrder
   isBannedReason?: Prisma.SortOrderInput | Prisma.SortOrder
   bannedIps?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   posts?: Prisma.PostOrderByRelationAggregateInput
   replies?: Prisma.ReplyOrderByRelationAggregateInput
@@ -432,6 +510,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isBanned?: Prisma.BoolFilter<"User"> | boolean
   isBannedReason?: Prisma.StringNullableFilter<"User"> | string | null
   bannedIps?: Prisma.StringNullableListFilter<"User">
+  avatarPosX?: Prisma.FloatNullableFilter<"User"> | number | null
+  avatarPosY?: Prisma.FloatNullableFilter<"User"> | number | null
+  avatarZoom?: Prisma.FloatNullableFilter<"User"> | number | null
+  bannerPosX?: Prisma.FloatNullableFilter<"User"> | number | null
+  bannerPosY?: Prisma.FloatNullableFilter<"User"> | number | null
+  bannerZoom?: Prisma.FloatNullableFilter<"User"> | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   posts?: Prisma.PostListRelationFilter
   replies?: Prisma.ReplyListRelationFilter
@@ -469,6 +553,12 @@ export type UserOrderByWithAggregationInput = {
   isBanned?: Prisma.SortOrder
   isBannedReason?: Prisma.SortOrderInput | Prisma.SortOrder
   bannedIps?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -503,6 +593,12 @@ export type UserScalarWhereWithAggregatesInput = {
   isBanned?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isBannedReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   bannedIps?: Prisma.StringNullableListFilter<"User">
+  avatarPosX?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  avatarPosY?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  avatarZoom?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  bannerPosX?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  bannerPosY?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  bannerZoom?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -529,6 +625,12 @@ export type UserCreateInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -566,6 +668,12 @@ export type UserUncheckedCreateInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -603,6 +711,12 @@ export type UserUpdateInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -640,6 +754,12 @@ export type UserUncheckedUpdateInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -677,6 +797,12 @@ export type UserCreateManyInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
 }
 
@@ -703,6 +829,12 @@ export type UserUpdateManyMutationInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -729,6 +861,12 @@ export type UserUncheckedUpdateManyInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -763,11 +901,23 @@ export type UserCountOrderByAggregateInput = {
   isBanned?: Prisma.SortOrder
   isBannedReason?: Prisma.SortOrder
   bannedIps?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   tokenVersion?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -792,6 +942,12 @@ export type UserMaxOrderByAggregateInput = {
   emailNotificationsEnabled?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   isBannedReason?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -817,11 +973,23 @@ export type UserMinOrderByAggregateInput = {
   emailNotificationsEnabled?: Prisma.SortOrder
   isBanned?: Prisma.SortOrder
   isBannedReason?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   tokenVersion?: Prisma.SortOrder
+  avatarPosX?: Prisma.SortOrder
+  avatarPosY?: Prisma.SortOrder
+  avatarZoom?: Prisma.SortOrder
+  bannerPosX?: Prisma.SortOrder
+  bannerPosY?: Prisma.SortOrder
+  bannerZoom?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -869,6 +1037,14 @@ export type IntFieldUpdateOperationsInput = {
 export type UserUpdatebannedIpsInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -1054,6 +1230,12 @@ export type UserCreateWithoutPostsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -1090,6 +1272,12 @@ export type UserUncheckedCreateWithoutPostsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -1142,6 +1330,12 @@ export type UserUpdateWithoutPostsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -1178,6 +1372,12 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1214,6 +1414,12 @@ export type UserCreateWithoutRepliesInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionCreateNestedManyWithoutUserInput
@@ -1250,6 +1456,12 @@ export type UserUncheckedCreateWithoutRepliesInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutUserInput
@@ -1302,6 +1514,12 @@ export type UserUpdateWithoutRepliesInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUpdateManyWithoutUserNestedInput
@@ -1338,6 +1556,12 @@ export type UserUncheckedUpdateWithoutRepliesInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   reactions?: Prisma.ReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1374,6 +1598,12 @@ export type UserCreateWithoutReactionsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1410,6 +1640,12 @@ export type UserUncheckedCreateWithoutReactionsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1462,6 +1698,12 @@ export type UserUpdateWithoutReactionsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1498,6 +1740,12 @@ export type UserUncheckedUpdateWithoutReactionsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1534,6 +1782,12 @@ export type UserCreateWithoutReportsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1570,6 +1824,12 @@ export type UserUncheckedCreateWithoutReportsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1611,6 +1871,12 @@ export type UserCreateWithoutReportsReceivedInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1647,6 +1913,12 @@ export type UserUncheckedCreateWithoutReportsReceivedInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1699,6 +1971,12 @@ export type UserUpdateWithoutReportsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1735,6 +2013,12 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1782,6 +2066,12 @@ export type UserUpdateWithoutReportsReceivedInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -1818,6 +2108,12 @@ export type UserUncheckedUpdateWithoutReportsReceivedInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -1854,6 +2150,12 @@ export type UserCreateWithoutWrittenProfileCommentsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1890,6 +2192,12 @@ export type UserUncheckedCreateWithoutWrittenProfileCommentsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -1931,6 +2239,12 @@ export type UserCreateWithoutProfileCommentsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -1967,6 +2281,12 @@ export type UserUncheckedCreateWithoutProfileCommentsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2019,6 +2339,12 @@ export type UserUpdateWithoutWrittenProfileCommentsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2055,6 +2381,12 @@ export type UserUncheckedUpdateWithoutWrittenProfileCommentsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2102,6 +2434,12 @@ export type UserUpdateWithoutProfileCommentsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2138,6 +2476,12 @@ export type UserUncheckedUpdateWithoutProfileCommentsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2174,6 +2518,12 @@ export type UserCreateWithoutNotificationsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -2210,6 +2560,12 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2251,6 +2607,12 @@ export type UserCreateWithoutSentNotificationsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -2287,6 +2649,12 @@ export type UserUncheckedCreateWithoutSentNotificationsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2339,6 +2707,12 @@ export type UserUpdateWithoutNotificationsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2375,6 +2749,12 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2422,6 +2802,12 @@ export type UserUpdateWithoutSentNotificationsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2458,6 +2844,12 @@ export type UserUncheckedUpdateWithoutSentNotificationsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2494,6 +2886,12 @@ export type UserCreateWithoutLoginLogsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -2530,6 +2928,12 @@ export type UserUncheckedCreateWithoutLoginLogsInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2582,6 +2986,12 @@ export type UserUpdateWithoutLoginLogsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2618,6 +3028,12 @@ export type UserUncheckedUpdateWithoutLoginLogsInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2654,6 +3070,12 @@ export type UserCreateWithoutBookmarksInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyCreateNestedManyWithoutAuthorInput
@@ -2690,6 +3112,12 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   isBanned?: boolean
   isBannedReason?: string | null
   bannedIps?: Prisma.UserCreatebannedIpsInput | string[]
+  avatarPosX?: number | null
+  avatarPosY?: number | null
+  avatarZoom?: number | null
+  bannerPosX?: number | null
+  bannerPosY?: number | null
+  bannerZoom?: number | null
   createdAt?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   replies?: Prisma.ReplyUncheckedCreateNestedManyWithoutAuthorInput
@@ -2742,6 +3170,12 @@ export type UserUpdateWithoutBookmarksInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUpdateManyWithoutAuthorNestedInput
@@ -2778,6 +3212,12 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   isBanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isBannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bannedIps?: Prisma.UserUpdatebannedIpsInput | string[]
+  avatarPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  avatarZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerPosY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bannerZoom?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   replies?: Prisma.ReplyUncheckedUpdateManyWithoutAuthorNestedInput
@@ -2935,6 +3375,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isBanned?: boolean
   isBannedReason?: boolean
   bannedIps?: boolean
+  avatarPosX?: boolean
+  avatarPosY?: boolean
+  avatarZoom?: boolean
+  bannerPosX?: boolean
+  bannerPosY?: boolean
+  bannerZoom?: boolean
   createdAt?: boolean
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -2973,6 +3419,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isBanned?: boolean
   isBannedReason?: boolean
   bannedIps?: boolean
+  avatarPosX?: boolean
+  avatarPosY?: boolean
+  avatarZoom?: boolean
+  bannerPosX?: boolean
+  bannerPosY?: boolean
+  bannerZoom?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -2999,6 +3451,12 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isBanned?: boolean
   isBannedReason?: boolean
   bannedIps?: boolean
+  avatarPosX?: boolean
+  avatarPosY?: boolean
+  avatarZoom?: boolean
+  bannerPosX?: boolean
+  bannerPosY?: boolean
+  bannerZoom?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -3025,10 +3483,16 @@ export type UserSelectScalar = {
   isBanned?: boolean
   isBannedReason?: boolean
   bannedIps?: boolean
+  avatarPosX?: boolean
+  avatarPosY?: boolean
+  avatarZoom?: boolean
+  bannerPosX?: boolean
+  bannerPosY?: boolean
+  bannerZoom?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "isOwner" | "nameStyle" | "tokenVersion" | "emailVerified" | "verificationToken" | "verificationTokenExpiresAt" | "resetToken" | "resetTokenExpiresAt" | "emailNotificationsEnabled" | "isBanned" | "isBannedReason" | "bannedIps" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "usernameLower" | "email" | "password" | "role" | "avatarUrl" | "bannerUrl" | "isVip" | "vipExpiresAt" | "isOwner" | "nameStyle" | "tokenVersion" | "emailVerified" | "verificationToken" | "verificationTokenExpiresAt" | "resetToken" | "resetTokenExpiresAt" | "emailNotificationsEnabled" | "isBanned" | "isBannedReason" | "bannedIps" | "avatarPosX" | "avatarPosY" | "avatarZoom" | "bannerPosX" | "bannerPosY" | "bannerZoom" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
@@ -3084,6 +3548,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isBanned: boolean
     isBannedReason: string | null
     bannedIps: string[]
+    avatarPosX: number | null
+    avatarPosY: number | null
+    avatarZoom: number | null
+    bannerPosX: number | null
+    bannerPosY: number | null
+    bannerZoom: number | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -3541,6 +4011,12 @@ export interface UserFieldRefs {
   readonly isBanned: Prisma.FieldRef<"User", 'Boolean'>
   readonly isBannedReason: Prisma.FieldRef<"User", 'String'>
   readonly bannedIps: Prisma.FieldRef<"User", 'String[]'>
+  readonly avatarPosX: Prisma.FieldRef<"User", 'Float'>
+  readonly avatarPosY: Prisma.FieldRef<"User", 'Float'>
+  readonly avatarZoom: Prisma.FieldRef<"User", 'Float'>
+  readonly bannerPosX: Prisma.FieldRef<"User", 'Float'>
+  readonly bannerPosY: Prisma.FieldRef<"User", 'Float'>
+  readonly bannerZoom: Prisma.FieldRef<"User", 'Float'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

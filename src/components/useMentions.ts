@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect, useCallback, useRef } from "react"
 
-type Suggestion = { id: string; username: string; avatarUrl?: string | null }
+type Suggestion = { id: string; username: string; avatarUrl?: string | null; avatarPosX?: number | null; avatarPosY?: number | null; avatarZoom?: number | null }
 
 const ALL_MENTION: Suggestion = { id: "@all", username: "all" }
 

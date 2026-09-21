@@ -37,6 +37,12 @@ model User {
   isBanned Boolean @default(false)
   isBannedReason String?
   bannedIps String[]
+  avatarPosX Float? @default(50)
+  avatarPosY Float? @default(50)
+  avatarZoom Float? @default(1)
+  bannerPosX Float? @default(50)
+  bannerPosY Float? @default(50)
+  bannerZoom Float? @default(1)
   createdAt DateTime @default(now())
 
   posts     Post[]

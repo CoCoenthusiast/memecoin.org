@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import PostCard from "@/components/PostCard"
 import { StyledUsername } from "@/components/StyledUsername"
+import { MediaImage } from "@/components/MediaImage"
 import { isUserVip } from "@/lib/vip"
 
 function formatDate(dateStr: string) {
@@ -77,10 +78,13 @@ export default function SearchPage() {
             <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 flex items-center gap-4 transition-colors group-hover:border-neon-glow/40">
               <div className="flex-shrink-0">
                 {memberProfile.avatarUrl ? (
-                  <img
+                  <MediaImage
                     src={memberProfile.avatarUrl}
+                    x={memberProfile.avatarPosX}
+                    y={memberProfile.avatarPosY}
+                    zoom={memberProfile.avatarZoom}
                     alt={memberProfile.username}
-                    className="w-20 h-20 rounded-xl object-cover border border-gray-700"
+                    className="w-20 h-20 rounded-xl border border-gray-700"
                   />
                 ) : (
                   <div className="w-20 h-20 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center">

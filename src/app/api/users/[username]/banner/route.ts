@@ -11,6 +11,13 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const VIP_ALLOWED_TYPES = [...ALLOWED_TYPES, "image/gif"];
 const BUCKET = "profile-banners";
 
+function clampFloat(value: FormDataEntryValue | null, min: number, max: number, fallback: number): number {
+  if (value === null || value === undefined) return fallback;
+  const n = Number(value);
+  if (isNaN(n)) return fallback;
+  return Math.min(max, Math.max(min, n));
+}
+
 async function ensureBucketPublic() {
   const { error } = await getSupabaseAdmin().storage.updateBucket(BUCKET, { public: true });
   if (error && error.message.includes("Bucket not found")) {
@@ -90,10 +97,15 @@ export const POST = withErrorHandling(async function POST(
     .getPublicUrl(fileName);
 
   const bannerUrl = urlData.publicUrl;
+
+  const posX = clampFloat(form.get("posX"), 0, 100, 50);
+  const posY = clampFloat(form.get("posY"), 0, 100, 50);
+  const zoom = clampFloat(form.get("zoom"), 1, 3, 1);
+
   await prisma.user.update({
     where: { id: profile.id },
-    data: { bannerUrl },
+    data: { bannerUrl, bannerPosX: posX, bannerPosY: posY, bannerZoom: zoom },
   });
 
-  return NextResponse.json({ bannerUrl });
+  return NextResponse.json({ bannerUrl, bannerPosX: posX, bannerPosY: posY, bannerZoom: zoom });
 });

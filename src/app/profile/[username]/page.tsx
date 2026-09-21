@@ -11,6 +11,8 @@ import { StyledName, nameStyleFromJson, type NameStyle } from "@/components/Styl
 import { StyledUsername } from "@/components/StyledUsername"
 import { parseApiError } from "@/lib/api"
 import { timeAgo } from "@/lib/timeAgo"
+import { MediaImage } from "@/components/MediaImage"
+import { ImagePositionModal } from "@/components/ImagePositionModal"
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -50,6 +52,8 @@ export default function ProfilePage() {
   const [savingComment, setSavingComment] = useState(false)
   const [editCommentError, setEditCommentError] = useState("")
   const editCommentTextareaRef = useRef<HTMLTextAreaElement>(null)
+  const [avatarDraft, setAvatarDraft] = useState<{ url: string; file: File } | null>(null)
+  const [bannerDraft, setBannerDraft] = useState<{ url: string; file: File } | null>(null)
 
   const isOwner = !!currentUser && currentUser.username === username
   const canGif = isOwner && !!currentUser && isUserVip(currentUser)
@@ -126,49 +130,97 @@ export default function ProfilePage() {
 
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
+    e.target.value = ""
     if (!file) return
     setUploadError("")
+    const vip = !!currentUser && isUserVip(currentUser)
+    const allowed = vip
+      ? ["image/jpeg", "image/png", "image/webp", "image/gif"]
+      : ["image/jpeg", "image/png", "image/webp"]
+    const max = vip ? 3 * 1024 * 1024 : 2 * 1024 * 1024
+    if (!allowed.includes(file.type)) {
+      setUploadError(vip ? "Invalid file type. Only JPEG, PNG, WebP or GIF are allowed" : "Invalid file type. Only JPEG, PNG or WebP are allowed")
+      return
+    }
+    if (file.size > max) {
+      setUploadError(vip ? "File too large. Maximum size is 3MB" : "File too large. Maximum size is 2MB")
+      return
+    }
+    setAvatarDraft({ url: URL.createObjectURL(file), file })
+  }
+
+  async function handleAvatarUpload(x: number, y: number, zoom: number) {
+    if (!avatarDraft) return
+    setUploadError("")
     const form = new FormData()
-    form.append("avatar", file)
+    form.append("avatar", avatarDraft.file)
+    form.append("posX", String(x))
+    form.append("posY", String(y))
+    form.append("zoom", String(zoom))
+    setAvatarDraft(null)
     try {
-      const res = await fetch(`/api/users/${username}/avatar`, {
-        method: "POST",
-        body: form,
-      })
+      const res = await fetch(`/api/users/${username}/avatar`, { method: "POST", body: form })
       if (res.ok) {
         const data = await res.json()
-        setProfile((p: any) => ({ ...p, avatarUrl: data.avatarUrl }))
+        setProfile((p: any) => ({
+          ...p,
+          avatarUrl: data.avatarUrl,
+          avatarPosX: data.avatarPosX,
+          avatarPosY: data.avatarPosY,
+          avatarZoom: data.avatarZoom,
+        }))
       } else {
         setUploadError(await parseApiError(res))
       }
     } catch {
       setUploadError("Upload failed")
     }
-    e.target.value = ""
   }
 
   async function handleBannerChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
+    e.target.value = ""
     if (!file) return
-    setUploadError("")
+    setBannerError("")
+    const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"]
+    const max = 5 * 1024 * 1024
+    if (!allowed.includes(file.type)) {
+      setBannerError("Invalid file type. Only JPEG, PNG, WebP or GIF are allowed")
+      return
+    }
+    if (file.size > max) {
+      setBannerError("File too large. Maximum size is 5MB")
+      return
+    }
+    setBannerDraft({ url: URL.createObjectURL(file), file })
+  }
+
+  async function handleBannerUpload(x: number, y: number, zoom: number) {
+    if (!bannerDraft) return
     setBannerError("")
     const form = new FormData()
-    form.append("banner", file)
+    form.append("banner", bannerDraft.file)
+    form.append("posX", String(x))
+    form.append("posY", String(y))
+    form.append("zoom", String(zoom))
+    setBannerDraft(null)
     try {
-      const res = await fetch(`/api/users/${username}/banner`, {
-        method: "POST",
-        body: form,
-      })
+      const res = await fetch(`/api/users/${username}/banner`, { method: "POST", body: form })
       if (res.ok) {
         const data = await res.json()
-        setProfile((p: any) => ({ ...p, bannerUrl: data.bannerUrl }))
+        setProfile((p: any) => ({
+          ...p,
+          bannerUrl: data.bannerUrl,
+          bannerPosX: data.bannerPosX,
+          bannerPosY: data.bannerPosY,
+          bannerZoom: data.bannerZoom,
+        }))
       } else {
         setBannerError(await parseApiError(res))
       }
     } catch {
       setBannerError("Upload failed")
     }
-    e.target.value = ""
   }
 
   async function handleSaveStyle() {
@@ -208,10 +260,13 @@ export default function ProfilePage() {
       <div className="relative bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden mb-6">
         {showBanner && (
           <>
-            <img
+            <MediaImage
               src={profile.bannerUrl}
+              x={profile.bannerPosX}
+              y={profile.bannerPosY}
+              zoom={profile.bannerZoom}
               alt=""
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full"
             />
             <div className="absolute inset-0 bg-gray-950/25" />
           </>
@@ -223,10 +278,13 @@ export default function ProfilePage() {
         >
           <div className="flex-shrink-0">
             {showAvatar ? (
-              <img
+              <MediaImage
                 src={profile.avatarUrl}
+                x={profile.avatarPosX}
+                y={profile.avatarPosY}
+                zoom={profile.avatarZoom}
                 alt={profile.username}
-                className="w-44 h-44 rounded-xl object-cover border border-gray-700"
+                className="w-44 h-44 rounded-xl border border-gray-700"
               />
             ) : (
               <div className="w-44 h-44 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center">
@@ -618,6 +676,25 @@ export default function ProfilePage() {
             </div>
           )}
         </div>
+      )}
+
+      {avatarDraft && (
+        <ImagePositionModal
+          objectUrl={avatarDraft.url}
+          title="Position your avatar"
+          shape="square"
+          onCancel={() => setAvatarDraft(null)}
+          onConfirm={handleAvatarUpload}
+        />
+      )}
+      {bannerDraft && (
+        <ImagePositionModal
+          objectUrl={bannerDraft.url}
+          title="Position your banner"
+          shape="banner"
+          onCancel={() => setBannerDraft(null)}
+          onConfirm={handleBannerUpload}
+        />
       )}
     </div>
   )

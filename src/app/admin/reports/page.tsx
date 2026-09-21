@@ -30,7 +30,7 @@ export default async function AdminReportsPage() {
           author: { select: { username: true } },
         },
       },
-      reportedUser: { select: { id: true, username: true, avatarUrl: true } },
+      reportedUser: { select: { id: true, username: true, avatarUrl: true, avatarPosX: true, avatarPosY: true, avatarZoom: true } },
     },
     orderBy: { createdAt: "desc" },
   });
