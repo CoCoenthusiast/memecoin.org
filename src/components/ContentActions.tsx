@@ -24,11 +24,12 @@ type ContentActionsProps = {
   authorId?: string
   createdAt?: string
   currentChannelId?: string
+  username?: string
   onSuccess?: () => void
   onEdit?: () => void
 }
 
-export function ContentActions({ targetId, targetType, authorId, createdAt, currentChannelId, onSuccess, onEdit }: ContentActionsProps) {
+export function ContentActions({ targetId, targetType, authorId, createdAt, currentChannelId, username, onSuccess, onEdit }: ContentActionsProps) {
   const { user } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
   const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(null)
@@ -37,6 +38,8 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
   const [channels, setChannels] = useState<Channel[] | null>(null)
   const [moving, setMoving] = useState(false)
   const [reported, setReported] = useState(false)
+  const [banConfirm, setBanConfirm] = useState(false)
+  const [banning, setBanning] = useState(false)
   const [error, setError] = useState("")
   const triggerRef = useRef<HTMLButtonElement>(null)
   const moveTriggerRef = useRef<HTMLButtonElement>(null)
@@ -56,6 +59,8 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
   }, [user, targetType, authorId, createdAt])
 
   const canMove = !!user && user.role === "ADMIN" && targetType === "post"
+
+  const canBan = targetType === "user" && !!user && user.isOwner === true && user.id !== targetId
 
   // Determine if current post is in VIP channel
   const isInVipChannel = useMemo(() => {
@@ -190,6 +195,28 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
     }
   }
 
+  async function handleBan() {
+    setError("")
+    setBanning(true)
+    try {
+      const res = await fetch(`/api/admin/users/${username}/ban`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ban: true, reason: "Banned from profile" }),
+      })
+      if (res.ok) {
+        setBanConfirm(false)
+        onSuccess?.()
+      } else {
+        setError(await parseApiError(res))
+      }
+    } catch {
+      setError("Something went wrong")
+    } finally {
+      setBanning(false)
+    }
+  }
+
   async function handleDelete() {
     setError("")
     const urlMap: Record<string, string> = {
@@ -286,6 +313,25 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
         </button>
       )}
 
+      {banConfirm && (
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-red-400">Ban @{username}?</span>
+          <button
+            onClick={handleBan}
+            disabled={banning}
+            className="px-3 py-1.5 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition-colors disabled:opacity-50"
+          >
+            {banning ? "Banning..." : "Confirm Ban"}
+          </button>
+          <button
+            onClick={() => setBanConfirm(false)}
+            className="px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 text-sm font-medium hover:bg-gray-700 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
       {canMove && !isInVipChannel && (
         <button
           ref={moveTriggerRef}
@@ -325,6 +371,22 @@ export function ContentActions({ targetId, targetType, authorId, createdAt, curr
               {reason}
             </button>
           ))}
+          {canBan && (
+            <>
+              <div className="border-t border-gray-800 my-1" />
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setMenuOpen(false)
+                  setBanConfirm(true)
+                }}
+                className="block w-full text-left px-3 py-2 text-sm text-red-500 hover:bg-red-900/20 transition-colors"
+              >
+                Ban User
+              </button>
+            </>
+          )}
         </div>,
         document.body
       )}

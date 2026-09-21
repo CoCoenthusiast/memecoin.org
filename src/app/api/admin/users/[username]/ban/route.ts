@@ -25,57 +25,154 @@ export const PATCH = withErrorHandling(async function PATCH(
   });
   if (!target) return apiError("User not found", 404);
 
-  // Cannot ban owners
   if (target.isOwner) return apiError("Cannot ban an owner", 403);
-
-  // Only owners can ban admins
   if (target.role === "ADMIN" && !isOwner(session.user)) {
     return apiError("Only owners can ban admins", 403);
   }
-
-  // Cannot ban yourself
   if (target.id === session.user.id) return apiError("Cannot ban yourself", 403);
 
   const body = await getBody<{ ban: boolean; reason?: string }>(request);
   if (typeof body.ban !== "boolean") return apiError("ban must be a boolean", 400);
 
-  // When banning, collect all unique IPs from LoginLog
-  let bannedIps: string[] | undefined;
+  const targetId = target.id;
+
+  // Collect IPs before anything else
+  let bannedIps: string[] = [];
   if (body.ban) {
     const logs = await prisma.loginLog.findMany({
-      where: { userId: target.id },
+      where: { userId: targetId },
       select: { ip: true },
     });
     bannedIps = [...new Set(logs.map((l) => l.ip))];
   }
 
-  const updateData: {
-    isBanned: boolean;
-    isBannedReason: string | null;
-    tokenVersion: { increment: number };
-    bannedIps?: string[];
-  } = {
-    isBanned: body.ban,
-    isBannedReason: body.ban ? (body.reason || null) : null,
-    tokenVersion: { increment: 1 },
-  };
+  // When banning: delete all user content in a single transaction.
+  // FK deletion order matters — most relations are Restrict, not Cascade.
   if (body.ban) {
-    updateData.bannedIps = bannedIps!;
-  } else {
-    updateData.bannedIps = [];
-  }
+    await prisma.$transaction(async (tx) => {
+      // 1) Reactions on user's posts (Reaction.postId → Post: Restrict)
+      await tx.reaction.deleteMany({
+        where: { post: { authorId: targetId } },
+      });
 
-  const updated = await prisma.user.update({
-    where: { id: target.id },
-    data: updateData,
-    select: { id: true, isBanned: true, tokenVersion: true },
-  });
+      // 2) Reports referencing user's posts (Report.postId → Post: Restrict)
+      await tx.report.deleteMany({
+        where: { post: { authorId: targetId } },
+      });
+
+      // 3) Bookmarks on user's posts (handled by Cascade, but explicit for safety)
+      await tx.bookmark.deleteMany({
+        where: { post: { authorId: targetId } },
+      });
+
+      // 4) Replies on user's posts (Reply.postId → Post: Restrict)
+      //    Must go before post deletion. Also deletes other users' replies.
+      await tx.reply.deleteMany({
+        where: { post: { authorId: targetId } },
+      });
+
+      // 5) Reports referencing user's replies (Report.replyId → Reply: Restrict)
+      await tx.report.deleteMany({
+        where: { reply: { authorId: targetId } },
+      });
+
+      // 6) Reactions on user's replies (Reaction.replyId → Reply: Restrict)
+      await tx.reaction.deleteMany({
+        where: { reply: { authorId: targetId } },
+      });
+
+      // 7) User's own replies on OTHER people's posts (Reply.authorId: Restrict)
+      await tx.reply.deleteMany({
+        where: { authorId: targetId },
+      });
+
+      // 8) Reactions on user's profile comments (Reaction.profileCommentId: Restrict)
+      await tx.reaction.deleteMany({
+        where: { profileComment: { authorId: targetId } },
+      });
+
+      // 9) Notifications referencing user's profile comments
+      //    (Notification.profileCommentId: Cascade, but explicit before delete)
+      await tx.notification.deleteMany({
+        where: { profileComment: { authorId: targetId } },
+      });
+
+      // 10) Profile comments written BY user on OTHER profiles
+      //     (ProfileComment.authorId: Restrict)
+      await tx.profileComment.deleteMany({
+        where: { authorId: targetId },
+      });
+
+      // 11) Profile comments written by OTHERS on user's profile
+      //     (ProfileComment.profileUserId: Restrict)
+      await tx.profileComment.deleteMany({
+        where: { profileUserId: targetId },
+      });
+
+      // 12) User's own posts (Post.authorId: Restrict)
+      //     Replies/reactions already cleared above.
+      await tx.post.deleteMany({
+        where: { authorId: targetId },
+      });
+
+      // 13) Reports filed by user (Report.reporterId: Restrict)
+      await tx.report.deleteMany({
+        where: { reporterId: targetId },
+      });
+
+      // 14) Reports targeting user (Report.reportedUserId: Restrict)
+      await tx.report.deleteMany({
+        where: { reportedUserId: targetId },
+      });
+
+      // 15) User's reactions on other content (Reaction.userId: Restrict)
+      await tx.reaction.deleteMany({
+        where: { userId: targetId },
+      });
+
+      // 16) Notifications sent by user (Notification.actorId: Cascade, explicit)
+      await tx.notification.deleteMany({
+        where: { actorId: targetId },
+      });
+
+      // 17) Notifications for user (Notification.userId: Cascade, explicit)
+      await tx.notification.deleteMany({
+        where: { userId: targetId },
+      });
+
+      // 18) Login logs (LoginLog.userId: Restrict)
+      await tx.loginLog.deleteMany({
+        where: { userId: targetId },
+      });
+
+      // 19) Ban the user + clear tokens
+      await tx.user.update({
+        where: { id: targetId },
+        data: {
+          isBanned: true,
+          isBannedReason: body.reason || null,
+          bannedIps,
+          tokenVersion: { increment: 1 },
+        },
+      });
+    });
+  } else {
+    // Unbanning — no content deletion
+    await prisma.user.update({
+      where: { id: targetId },
+      data: {
+        isBanned: false,
+        isBannedReason: null,
+        bannedIps: [],
+        tokenVersion: { increment: 1 },
+      },
+    });
+  }
 
   return NextResponse.json({
     ok: true,
     username: target.username,
-    isBanned: updated.isBanned,
-    tokenVersion: updated.tokenVersion,
-    bannedIpsCount: body.ban ? bannedIps!.length : 0,
+    isBanned: body.ban,
+    bannedIpsCount: body.ban ? bannedIps.length : 0,
   });
 });

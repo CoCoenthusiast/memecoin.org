@@ -247,7 +247,7 @@ export default function ProfilePage() {
                   isOwner={isUserOwner(profile)}
                 />
               </h1>
-              <ContentActions targetId={profile.id} targetType="user" onSuccess={loadProfile} />
+              <ContentActions targetId={profile.id} targetType="user" username={profile.username} onSuccess={loadProfile} />
             </div>
             <p className="text-gray-300 text-sm mt-1">Member since {formatDate(profile.createdAt)}</p>
 
