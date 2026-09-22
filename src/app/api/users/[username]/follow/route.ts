@@ -29,6 +29,14 @@ export const POST = withErrorHandling(async function POST(
     data: { followerId: user.id, followingId: target.id },
   });
 
+  prisma.notification.create({
+    data: {
+      userId: target.id,
+      actorId: user.id,
+      message: `${user.username} started following you`,
+    },
+  }).catch((e) => console.error("Failed to create follow notification", e));
+
   return NextResponse.json({ ok: true, following: true });
 });
 

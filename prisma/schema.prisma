@@ -57,8 +57,8 @@ model User {
   sentNotifications      Notification[]   @relation("NotificationActor")
   loginLogs              LoginLog[]
   bookmarks             Bookmark[]
-  following             Follow[] @relation("Followee")
-  followers             Follow[] @relation("Follower")
+  following             Follow[] @relation("Follower")
+  followers             Follow[] @relation("Followee")
   postViews             PostView[]
 }
 

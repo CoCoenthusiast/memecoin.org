@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { useParams } from "next/navigation"
+import Link from "next/link"
 import PostCard from "@/components/PostCard"
 import { ContentActions } from "@/components/ContentActions"
 import { FormatToolbar } from "@/components/FormatToolbar"
@@ -66,6 +67,9 @@ export default function ProfilePage() {
   const [bioEditing, setBioEditing] = useState(false)
   const [savingBio, setSavingBio] = useState(false)
   const [bioError, setBioError] = useState("")
+  const [followersOpen, setFollowersOpen] = useState(false)
+  const [followers, setFollowers] = useState<any[]>([])
+  const [loadingFollowers, setLoadingFollowers] = useState(false)
 
   const isOwner = !!currentUser && currentUser.username === username
   const canGif = isOwner && !!currentUser && isUserVip(currentUser)
@@ -183,6 +187,28 @@ export default function ProfilePage() {
     } finally {
       setSavingBio(false)
     }
+  }
+
+  async function openFollowersModal() {
+    setFollowersOpen(true)
+    setLoadingFollowers(true)
+    try {
+      const res = await fetch(`/api/users/${username}/followers`)
+      if (res.ok) {
+        const data = await res.json()
+        setFollowers(data.followers ?? [])
+      } else {
+        setFollowers([])
+      }
+    } catch {
+      setFollowers([])
+    } finally {
+      setLoadingFollowers(false)
+    }
+  }
+
+  function closeFollowersModal() {
+    setFollowersOpen(false)
   }
 
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -442,10 +468,10 @@ export default function ProfilePage() {
                 <div className="text-xl font-bold text-neon">{profile.totalReactions}</div>
                 <div className="text-xs text-gray-300">Reactions received</div>
               </div>
-              <div>
-                <div className="text-xl font-bold text-gray-100">{formatCount(profile.followersCount ?? 0)}</div>
+              <button onClick={openFollowersModal} className="text-left">
+                <div className="text-xl font-bold text-gray-100 transition-colors hover:text-white">{formatCount(profile.followersCount ?? 0)}</div>
                 <div className="text-xs text-gray-300">Followers</div>
-              </div>
+              </button>
             </div>
 
             {isOwner && (
@@ -820,6 +846,71 @@ export default function ProfilePage() {
           onCancel={() => setBannerDraft(null)}
           onConfirm={handleBannerUpload}
         />
+      )}
+
+      {followersOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-black/60"
+          onClick={closeFollowersModal}
+        >
+          <div
+            className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-md shadow-2xl shadow-black/50 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800">
+              <h3 className="text-base font-semibold text-gray-100">Followers</h3>
+              <button
+                onClick={closeFollowersModal}
+                aria-label="Close"
+                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="max-h-80 overflow-y-auto p-2">
+              {loadingFollowers ? (
+                <p className="text-sm text-gray-500 px-4 py-6 text-center">Loading...</p>
+              ) : followers.length === 0 ? (
+                <p className="text-sm text-gray-400 px-4 py-6 text-center">No followers yet</p>
+              ) : (
+                followers.map((f) => (
+                  <Link
+                    key={f.id}
+                    href={`/profile/${f.username}`}
+                    onClick={closeFollowersModal}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/60 transition-colors"
+                  >
+                    {isUserVip(f) && f.avatarUrl ? (
+                      <MediaImage
+                        src={f.avatarUrl}
+                        x={f.avatarPosX}
+                        y={f.avatarPosY}
+                        zoom={f.avatarZoom}
+                        alt={f.username}
+                        className="w-9 h-9 rounded-lg border border-gray-700 shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center shrink-0">
+                        <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                      </div>
+                    )}
+                    <StyledUsername
+                      username={f.username}
+                      nameStyle={f.nameStyle}
+                      isVip={isUserVip(f)}
+                      isOwner={isUserOwner(f)}
+                      className="text-sm text-gray-200"
+                    />
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
